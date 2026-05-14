@@ -931,16 +931,55 @@ function exportICS(who){
 
 // ── SUPABASE ──
 const SQL_CREATE=`create table if not exists asp_items (\n  id bigint primary key,\n  text text not null,\n  who text default 'me',\n  type text default 'task',\n  phase text default '',\n  priority text default 'med',\n  date text,\n  allday boolean default true,\n  start_time text,\n  duration numeric default 1,\n  repeat text default 'none',\n  done boolean default false,\n  created_at timestamptz default now()\n);\nalter table asp_items enable row level security;\ncreate policy "Public" on asp_items for all using (true);`;
-function getCfg(){return{url:localStorage.getItem('asp_sb_url')||'',key:localStorage.getItem('asp_sb_key')||''};}
-function saveCfg(){localStorage.setItem('asp_sb_url',document.getElementById('sb-url').value);localStorage.setItem('asp_sb_key',document.getElementById('sb-key').value);}
+function getCfg(){
+  const urlEl=document.getElementById('sb-url');
+  const keyEl=document.getElementById('sb-key');
+  const url=(urlEl?urlEl.value.trim():'')||localStorage.getItem('asp_sb_url')||'';
+  const key=(keyEl?keyEl.value.trim():'')||localStorage.getItem('asp_sb_key')||'';
+  return{url:url.replace(/\/+$/,''),key};
+}
+function saveCfg(){
+  const url=document.getElementById('sb-url').value.trim().replace(/\/+$/,'');
+  const key=document.getElementById('sb-key').value.trim();
+  localStorage.setItem('asp_sb_url',url);
+  localStorage.setItem('asp_sb_key',key);
+  document.getElementById('sb-url').value=url;
+  document.getElementById('sb-key').value=key;
+}
 async function sbFetch(path,opts={}){
-  const cfg=getCfg();if(!cfg.url||!cfg.key)throw new Error('Not configured');
-  return fetch(cfg.url+'/rest/v1/'+path,{...opts,headers:{'apikey':cfg.key,'Authorization':'Bearer '+cfg.key,'Content-Type':'application/json','Prefer':'return=representation',...(opts.headers||{})}});
+  saveCfg();
+  const cfg=getCfg();
+  if(!cfg.url||!cfg.key)throw new Error('Not configured — enter URL and key in Settings');
+  if(!cfg.url.startsWith('https://'))throw new Error('URL must start with https://');
+  if(!cfg.key.startsWith('eyJ'))throw new Error('Key format invalid — use the anon/public key');
+  const url=cfg.url+'/rest/v1/'+path;
+  return fetch(url,{
+    ...opts,
+    headers:{
+      'apikey':cfg.key,
+      'Authorization':'Bearer '+cfg.key,
+      'Content-Type':'application/json',
+      'Prefer':'return=representation',
+      ...(opts.headers||{})
+    }
+  });
 }
 async function testConn(){
-  const st=document.getElementById('conn-status');st.className='conn-none';st.textContent='Testing…';
-  try{const r=await sbFetch('asp_items?limit=1');if(r.ok){st.className='conn-ok';st.textContent='Connected ✓';toast('Connected');}else{st.className='conn-err';st.textContent='Error '+r.status;}}
-  catch(e){st.className='conn-err';st.textContent='Failed: '+e.message;}
+  saveCfg();
+  const st=document.getElementById('conn-status');
+  st.className='conn-none';st.textContent='Testing…';
+  try{
+    const cfg=getCfg();
+    st.textContent='Connecting to '+cfg.url+'…';
+    const r=await sbFetch('asp_items?limit=1');
+    if(r.ok){
+      st.className='conn-ok';st.textContent='Connected ✓';toast('Connected');
+    } else {
+      let body='';
+      try{const j=await r.json();body=j.message||j.error||JSON.stringify(j);}catch(e){body=r.statusText;}
+      st.className='conn-err';st.textContent='Error '+r.status+': '+body;
+    }
+  }catch(e){st.className='conn-err';st.textContent='Failed: '+e.message;}
 }
 async function pushTasks(){
   try{
