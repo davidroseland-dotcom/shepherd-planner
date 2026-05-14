@@ -591,6 +591,9 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
         <div class="rotation-head"><div class="rotation-title">Meal Prep (Older Boys)</div></div>
         <div id="rot-mealprep" style="padding:12px 14px"></div>
       </div>
+      <div class="sh" style="margin-top:20px">Upcoming Rotations</div>
+      <div style="font-size:14px;color:var(--cream-dim);margin-bottom:10px">Tap a day to expand. Kitchen setup &amp; patrol rotate daily; personal areas are fixed inspection.</div>
+      <div id="rot-future"></div>
     </div>
 
     <!-- ADULTS VIEW -->
@@ -691,6 +694,14 @@ const PEOPLE = ['David','Krista','John','Samuel','Isaiah','Elijah','Nathan','Ben
 const ADULTS = ['David','Krista','John'];
 const OLDER_BOYS = ['Samuel','Isaiah','Elijah','Nathan','Benjamin']; // mow/cook/grounds
 const ALL_CHILDREN = ['Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas']; // rotate kitchen/personal/common
+const SENIOR_KIDS = ['Samuel','Isaiah','Elijah']; // 13+ — kitchen patrol/setup senior slot
+const JUNIOR_KIDS = ['Nathan','Benjamin','Thomas']; // under 13 — kitchen patrol/setup junior slot
+const PERSONAL_CHORES = [
+  'Make own bed',
+  'Tidy own bedroom floor',
+  'Put away own clothes',
+  'Sweep bedroom floor',
+]; // Daily inspection items — not on rotation
 
 // ── DEFAULT CHORE SETS ──
 const DEFAULT_CHORES = {
@@ -782,25 +793,31 @@ function rotateArr(arr, weekNum){ return arr.slice(weekNum % arr.length).concat(
 function advanceRotation(dir){ rotationOffset+=dir; localStorage.setItem('asp_rot_offset',rotationOffset); renderRotation(); renderToday(); renderManage(); }
 function resetRotation(){ rotationOffset=0; localStorage.setItem('asp_rot_offset',0); renderRotation(); renderToday(); renderManage(); }
 
-function getKitchenSetupPair(weekNum){
-  const rotated = rotateArr(ALL_CHILDREN, weekNum);
-  const idx = (new Date().getDay() + weekNum) % ALL_CHILDREN.length;
-  const a = ALL_CHILDREN[idx % ALL_CHILDREN.length];
-  const b = ALL_CHILDREN[(idx+1) % ALL_CHILDREN.length];
-  return [a,b];
+// dayIndex: 0=today by default, positive = days in future
+function getDayIndex(daysAhead){ return Math.floor((Date.now() + daysAhead*86400000) / 86400000); }
+
+function getKitchenSetupPair(weekNum, daysAhead=0){
+  const di = getDayIndex(daysAhead) + (rotationOffset * 7);
+  const senior = SENIOR_KIDS[di % SENIOR_KIDS.length];
+  const junior = JUNIOR_KIDS[di % JUNIOR_KIDS.length];
+  return [senior, junior];
 }
-function getKitchenPatrol(weekNum){
-  return ALL_CHILDREN[weekNum % ALL_CHILDREN.length];
+function getKitchenPatrol(weekNum, daysAhead=0){
+  const di = getDayIndex(daysAhead) + (rotationOffset * 7);
+  const senior = SENIOR_KIDS[(di + 1) % SENIOR_KIDS.length];
+  const junior = JUNIOR_KIDS[(di + 1) % JUNIOR_KIDS.length];
+  return [senior, junior];
 }
-function getPersonalAssignment(person, weekNum){
-  const chores = DEFAULT_CHORES.personal;
-  return chores[weekNum % chores.length];
-}
-function getCommonAssignment(weekNum){
-  const rotated = rotateArr(ALL_CHILDREN, weekNum);
+function getCommonAssignment(weekNum, daysAhead=0){
+  const di = getDayIndex(daysAhead) + (rotationOffset * 7);
+  const rotated = ALL_CHILDREN.slice(di % ALL_CHILDREN.length).concat(ALL_CHILDREN.slice(0, di % ALL_CHILDREN.length));
   const map = {};
-  DEFAULT_CHORES.common.forEach((c,i)=>{ map[rotated[i%ALL_CHILDREN.length]] = c.name; });
+  DEFAULT_CHORES.common.forEach((c,i)=>{ map[rotated[i % ALL_CHILDREN.length]] = c.name; });
   return map;
+}
+// Personal chores are fixed daily inspection items — not on rotation
+function getPersonalChoresForChild(person){
+  return PERSONAL_CHORES.map(c => person==='Thomas' ? (THOMAS_MODS[c]||c) : c);
 }
 function getGroundsAssignment(weekNum){
   const older = rotateArr(OLDER_BOYS, weekNum);
@@ -880,16 +897,16 @@ function renderToday(){
   const el = document.getElementById('today-chores-content');
   const today = todayStr();
   const weekNum = getWeekNumber();
-  const setupPair = getKitchenSetupPair(weekNum);
-  const patrolPerson = getKitchenPatrol(weekNum);
+  const setupPair = getKitchenSetupPair(weekNum, 0);
+  const patrolPair = getKitchenPatrol(weekNum, 0);
   const grounds = getGroundsAssignment(weekNum);
   const mealprep = getMealPrepAssignment(weekNum);
-  const commonMap = getCommonAssignment(weekNum);
+  const commonMap = getCommonAssignment(weekNum, 0);
   const dow = new Date().getDay(); // 0=Sun
 
   let html = '';
 
-  // Kitchen Setup
+  // Kitchen Setup (daily, 2-person: one 13+, one under 13)
   html += `<div class="cat-block">
     <div class="cat-head" onclick="toggleCat(this)">
       <div class="cat-icon">🍽</div>
@@ -909,7 +926,7 @@ function renderToday(){
   });
   html += `</div></div>`;
 
-  // Kitchen Patrol
+  // Kitchen Patrol (daily, 2-person: one 13+, one under 13)
   html += `<div class="cat-block">
     <div class="cat-head" onclick="toggleCat(this)">
       <div class="cat-icon">🧹</div>
@@ -917,30 +934,9 @@ function renderToday(){
       <div class="cat-toggle">▾</div>
     </div>
     <div class="cat-body">`;
-  DEFAULT_CHORES['kitchen-patrol'].forEach(c=>{
-    const key = choreKey(today, c.id);
-    const name = patrolPerson==='Thomas'?(THOMAS_MODS[c.name]||c.name):c.name;
-    html += `<div class="chore-row">
-      <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','${c.id}')"/>
-      <div class="chore-body">
-        <div class="chore-name${choreChecks[key]?' done':''}">${name}</div>
-        <div class="chore-meta">${assigneeChip(patrolPerson)} ${freqBadge('daily')}</div>
-      </div>
-    </div>`;
-  });
-  html += `</div></div>`;
-
-  // Personal Areas
-  html += `<div class="cat-block">
-    <div class="cat-head" onclick="toggleCat(this)">
-      <div class="cat-icon">🛏</div>
-      <div class="cat-name">Personal Areas</div>
-      <div class="cat-toggle">▾</div>
-    </div>
-    <div class="cat-body">`;
-  ALL_CHILDREN.forEach(person=>{
-    DEFAULT_CHORES.personal.filter(c=>c.freq==='daily').forEach(c=>{
-      const key = choreKey(today,c.id+'-'+person);
+  patrolPair.forEach(person=>{
+    DEFAULT_CHORES['kitchen-patrol'].forEach(c=>{
+      const key = choreKey(today, c.id+'-'+person);
       const name = person==='Thomas'?(THOMAS_MODS[c.name]||c.name):c.name;
       html += `<div class="chore-row">
         <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','${c.id}-${person}')"/>
@@ -953,28 +949,54 @@ function renderToday(){
   });
   html += `</div></div>`;
 
-  // Weekly chores (only show on relevant day)
-  const isWeekday = dow>=1 && dow<=6;
-  if(isWeekday){
-    html += `<div class="cat-block">
-      <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-icon">🏠</div>
-        <div class="cat-name">Common Areas (Weekly)</div>
-        <div class="cat-toggle">▾</div>
-      </div>
-      <div class="cat-body">`;
-    Object.entries(commonMap).forEach(([person, choreName])=>{
-      const key = choreKey(today,'common-'+person);
-      const name = person==='Thomas'?(THOMAS_MODS[choreName]||choreName):choreName;
-      html += `<div class="chore-row">
-        <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','common-${person}')"/>
+  // Personal Areas — fixed daily inspection per child (not on rotation)
+  html += `<div class="cat-block">
+    <div class="cat-head" onclick="toggleCat(this)">
+      <div class="cat-icon">🛏</div>
+      <div class="cat-name">Personal Areas — Daily Inspection</div>
+      <div class="cat-toggle">▾</div>
+    </div>
+    <div class="cat-body">`;
+  ALL_CHILDREN.forEach(person=>{
+    const chores = getPersonalChoresForChild(person);
+    html += `<div style="padding:6px 0 2px;border-top:1px solid var(--border-lt)"><span class="assignee-chip" style="margin-bottom:4px;display:inline-block">${person}</span></div>`;
+    chores.forEach((name,i)=>{
+      const key = choreKey(today,'pers-'+person+'-'+i);
+      html += `<div class="chore-row" style="padding-left:12px">
+        <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','pers-${person}-${i}')"/>
         <div class="chore-body">
           <div class="chore-name${choreChecks[key]?' done':''}">${name}</div>
-          <div class="chore-meta">${assigneeChip(person)} ${freqBadge('weekly')}</div>
+          <div class="chore-meta">${freqBadge('daily')}</div>
         </div>
       </div>`;
     });
-    html += `</div></div>`;
+  });
+  html += `</div></div>`;
+
+  // Common Areas — daily rotation
+  html += `<div class="cat-block">
+    <div class="cat-head" onclick="toggleCat(this)">
+      <div class="cat-icon">🏠</div>
+      <div class="cat-name">Common Areas</div>
+      <div class="cat-toggle">▾</div>
+    </div>
+    <div class="cat-body">`;
+  Object.entries(commonMap).forEach(([person, choreName])=>{
+    const key = choreKey(today,'common-'+person);
+    const name = person==='Thomas'?(THOMAS_MODS[choreName]||choreName):choreName;
+    html += `<div class="chore-row">
+      <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','common-${person}')"/>
+      <div class="chore-body">
+        <div class="chore-name${choreChecks[key]?' done':''}">${name}</div>
+        <div class="chore-meta">${assigneeChip(person)} ${freqBadge('daily')}</div>
+      </div>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // Weekly chores (only show on weekdays)
+  const isWeekday = dow>=1 && dow<=6;
+  if(isWeekday){
 
     // Grounds (weekly, older boys)
     html += `<div class="cat-block">
@@ -1052,31 +1074,37 @@ function renderRotation(){
   const weekNum = getWeekNumber();
   document.getElementById('rot-week-label').textContent = `Week ${weekNum}`;
 
-  const setupPair = getKitchenSetupPair(weekNum);
+  // Kitchen Setup — today's pair (daily)
+  const setupPair = getKitchenSetupPair(weekNum, 0);
   document.getElementById('rot-setup').innerHTML = `<div style="font-size:20px;color:var(--cream)">
-    ${setupPair.map(p=>`<span class="assignee-chip" style="margin-right:6px">${p}</span>`).join('')}
+    ${setupPair.map(p=>`<span class="assignee-chip" style="margin-right:6px">${p}</span>`).join('<span style="color:var(--cream-dim);margin-right:6px">+</span>')}
     <span style="color:var(--cream-dim);font-size:18px">— Set table for dinner</span>
+    <div style="font-size:14px;color:var(--cream-dim);margin-top:6px">One 13+ &amp; one under 13, rotates daily</div>
   </div>`;
 
-  const patrol = getKitchenPatrol(weekNum);
+  // Kitchen Patrol — today's pair (daily)
+  const patrolPair = getKitchenPatrol(weekNum, 0);
   document.getElementById('rot-patrol').innerHTML = `<div style="font-size:20px;color:var(--cream)">
-    <span class="assignee-chip" style="margin-right:6px">${patrol}</span>
-    <span style="color:var(--cream-dim);font-size:18px">— Full kitchen patrol after meals</span>
+    ${patrolPair.map(p=>`<span class="assignee-chip" style="margin-right:6px">${p}</span>`).join('<span style="color:var(--cream-dim);margin-right:6px">+</span>')}
+    <span style="color:var(--cream-dim);font-size:18px">— Full kitchen cleanup after meals</span>
+    <div style="font-size:14px;color:var(--cream-dim);margin-top:6px">One 13+ &amp; one under 13, rotates daily</div>
   </div>`;
 
-  // Personal — each child gets one daily chore this week
-  let personalHtml = '<div class="rotation-grid">';
-  ALL_CHILDREN.forEach((person,i)=>{
-    const chore = DEFAULT_CHORES.personal[i % DEFAULT_CHORES.personal.length];
-    const name = person==='Thomas'?(THOMAS_MODS[chore.name]||chore.name):chore.name;
-    personalHtml += `<div class="rotation-cell"><div class="rc-person">${person}</div><div class="rc-chore${person==='Thomas'?' light':''}">${name}</div></div>`;
+  // Personal Areas — fixed daily inspection items per child (not on rotation)
+  let personalHtml = '<div style="font-size:14px;color:var(--amber);margin-bottom:8px;letter-spacing:.05em">DAILY INSPECTION — ALL CHILDREN (not rotated)</div><div class="rotation-grid">';
+  ALL_CHILDREN.forEach(person=>{
+    const chores = getPersonalChoresForChild(person);
+    personalHtml += `<div class="rotation-cell" style="min-width:180px">
+      <div class="rc-person">${person}</div>
+      <div class="rc-chore${person==='Thomas'?' light':''}" style="font-size:13px;line-height:1.7">${chores.map(c=>`• ${c}`).join('<br>')}</div>
+    </div>`;
   });
   personalHtml += '</div>';
   document.getElementById('rot-personal').innerHTML = personalHtml;
 
-  // Common
-  const commonMap = getCommonAssignment(weekNum);
-  let commonHtml = '<div class="rotation-grid">';
+  // Common Areas — today's daily assignment
+  const commonMap = getCommonAssignment(weekNum, 0);
+  let commonHtml = '<div style="font-size:14px;color:var(--amber);margin-bottom:8px;letter-spacing:.05em">TODAY\'S DAILY ROTATION</div><div class="rotation-grid">';
   ALL_CHILDREN.forEach(person=>{
     const choreName = commonMap[person] || '—';
     const name = person==='Thomas'?(THOMAS_MODS[choreName]||choreName):choreName;
@@ -1101,6 +1129,51 @@ function renderRotation(){
       <div class="rotation-cell"><div class="rc-person">${mp.breakfast}</div><div class="rc-chore">Breakfast</div></div>
       <div class="rotation-cell"><div class="rc-person">${mp.lunch}</div><div class="rc-chore">Lunch</div></div>
     </div>`;
+
+  // Future Rotations look-ahead
+  renderFutureRotations(weekNum);
+}
+
+function renderFutureRotations(weekNum){
+  const el = document.getElementById('rot-future');
+  if(!el) return;
+  const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const today = new Date();
+  let html = '';
+  for(let d=1; d<=7; d++){
+    const futDate = new Date(today.getTime() + d*86400000);
+    const label = DAYS[futDate.getDay()] + ' ' + (futDate.getMonth()+1) + '/' + futDate.getDate();
+    const setup = getKitchenSetupPair(weekNum, d);
+    const patrol = getKitchenPatrol(weekNum, d);
+    const common = getCommonAssignment(weekNum, d);
+    html += `<div class="rotation-board" style="margin-bottom:8px">
+      <div class="rotation-head" style="cursor:pointer" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+        <div class="rotation-title">${label}</div>
+        <div style="font-size:12px;color:var(--cream-dim);padding-right:12px">▸</div>
+      </div>
+      <div class="cat-body collapsed" style="padding:10px 14px">
+        <div style="margin-bottom:8px">
+          <span style="font-size:12px;color:var(--amber);letter-spacing:.07em">KITCHEN SETUP</span><br>
+          ${setup.map(p=>`<span class="assignee-chip" style="margin-right:4px">${p}</span>`).join('+')}
+        </div>
+        <div style="margin-bottom:8px">
+          <span style="font-size:12px;color:var(--amber);letter-spacing:.07em">KITCHEN PATROL</span><br>
+          ${patrol.map(p=>`<span class="assignee-chip" style="margin-right:4px">${p}</span>`).join('+')}
+        </div>
+        <div>
+          <span style="font-size:12px;color:var(--amber);letter-spacing:.07em">COMMON AREAS</span><br>
+          <div class="rotation-grid" style="margin-top:4px">
+            ${ALL_CHILDREN.map(person=>{
+              const choreName = common[person]||'—';
+              const name = person==='Thomas'?(THOMAS_MODS[choreName]||choreName):choreName;
+              return `<div class="rotation-cell" style="min-width:120px"><div class="rc-person">${person}</div><div class="rc-chore">${name}</div></div>`;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+  el.innerHTML = html;
 }
 
 // ── ADULTS VIEW ──
@@ -1677,64 +1750,4 @@ function renderStats(){
 }
 function renderWeek(){
   const el=document.getElementById('week-strip'),today=new Date(),todayDs=todayStr();
-  const start=new Date(today);start.setDate(today.getDate()-today.getDay());
-  const dns=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];let html='';
-  for(let i=0;i<7;i++){
-    const d=new Date(start);d.setDate(start.getDate()+i);
-    const ds=d.toISOString().slice(0,10);
-    const di=getItemsForDate(ds).filter(i=>!i.done);
-    html+=`<div class="wday${ds===todayDs?' is-today':''}"><div class="wday-n">${dns[i]}</div><div class="wchips">${di.length?di.map(i=>`<span class="wchip">${i.text}</span>`).join(''):'<span style="font-size:16px;color:var(--smoke)">—</span>'}</div></div>`;
-  }
-  el.innerHTML=html;
-}
-function renderTraining(){
-  document.getElementById('tr-bible').innerHTML=training.bible.length?training.bible.map(i=>`• ${i}`).join('<br>'):'—';
-  document.getElementById('tr-skills').innerHTML=training.skills.length?training.skills.map(i=>`• ${i}`).join('<br>'):'—';
-}
-function addTraining(){const text=document.getElementById('tr-inp').value.trim();if(!text)return;const cat=document.getElementById('tr-cat').value;training[cat].push(text);document.getElementById('tr-inp').value='';saveTr();renderTraining();toast('Added');}
-
-function exportICS(who){
-  const filtered=who==='all'?items.filter(i=>i.start_date):items.filter(i=>i.who===who&&i.start_date);
-  if(!filtered.length){toast('No scheduled items to export');return;}
-  const sl={ambition:'AMBITION (AM)',preparation:'PREPARATION (PM)',planning:'PLANNING (Sat AM)'};
-  const rm={daily:'DAILY',weekly:'WEEKLY',monthly:'MONTHLY'};
-  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//AmericanShepherd//EN\r\n';
-  filtered.forEach(i=>{
-    const sd=i.start_date.replace(/-/g,'');
-    const ed=i.end_date?(new Date(new Date(i.end_date+'T12:00:00').getTime()+86400000).toISOString().slice(0,10).replace(/-/g,'')):sd;
-    const desc=(i.phase?'Session: '+sl[i.phase]+'. ':'')+'Priority: '+i.priority+'. For: '+i.who+'.';
-    ics+='BEGIN:VEVENT\r\n';
-    ics+=`UID:${i.id}@shepherd\r\nDTSTAMP:${sd}T120000Z\r\n`;
-    if(i.allday||!i.start_time){ics+=`DTSTART;VALUE=DATE:${sd}\r\nDTEND;VALUE=DATE:${ed}\r\n`;}
-    else{const[hh,mm]=i.start_time.split(':');const em=parseInt(hh)*60+parseInt(mm)+Math.round((i.duration||1)*60);const eH=String(Math.floor(em/60)).padStart(2,'0'),eM=String(em%60).padStart(2,'0');ics+=`DTSTART:${sd}T${hh}${mm}00\r\nDTEND:${sd}T${eH}${eM}00\r\n`;}
-    ics+=`SUMMARY:${i.text}\r\nDESCRIPTION:${desc}\r\n`;
-    if(i.repeat&&i.repeat!=='none')ics+=`RRULE:FREQ=${rm[i.repeat]}\r\n`;
-    ics+='END:VEVENT\r\n';
-  });
-  ics+='END:VCALENDAR';
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download=(who==='all'?'all':who.toLowerCase())+'-shepherd.ics';a.click();toast('Calendar exported');
-}
-
-function exportJSON(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({items,training},null,2)],{type:'application/json'}));a.download='shepherd-backup.json';a.click();toast('JSON exported');}
-function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(d.items){items=d.items;save_local();}if(d.training){training=d.training;saveTr();}render();toast('Imported');}catch{toast('Import failed');}};r.readAsText(f);}
-function clearAll(){if(!confirm('Delete all items?'))return;items=[];save_local();render();toast('Cleared');}
-
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;document.getElementById('install-btn-wrap').style.display='block';});
-function installPWA(){if(!deferredInstall)return;deferredInstall.prompt();deferredInstall.userChoice.then(r=>{if(r.outcome==='accepted')toast('Installed!');deferredInstall=null;});}
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
-function todayStr(){return new Date().toISOString().slice(0,10);}
-function fmtDate(ds){return new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
-function fmtTime(ts){if(!ts)return'';const[h,m]=ts.split(':');const hr=parseInt(h);return`${hr===0?12:hr>12?hr-12:hr}:${m}${hr<12?'am':'pm'}`;}
-
-// ── INIT ──
-initDate();
-initChoresDate();
-render();
-autoSyncOnOpen();
-initLogin();
-restrictWhoDropdown();
-</script>
-</body>
-</html>
+  const start
