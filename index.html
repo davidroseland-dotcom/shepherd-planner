@@ -407,6 +407,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
   <button class="ntab" onclick="showView('calendar')">Calendar</button>
   <button class="ntab" onclick="showView('family')">Family</button>
   <button class="ntab" onclick="showView('settings')">Settings</button>
+  <button class="ntab" onclick="openChores()" style="color:var(--amber)">Chores</button>
 </nav>
 
 <main>
@@ -538,7 +539,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 
 <!-- ═══════════════ CHORES PANEL ═══════════════ -->
 <div id="chores-panel">
-  <div class="chores-back" onclick="closeChores()">‹ Back to Planner</div>
+  <div class="chores-back" onclick="closeChores()">‹ Back to Planner <span style="font-size:12px;color:var(--smoke);margin-left:8px">(or swipe right)</span></div>
   <div class="chores-hero">
     <div class="chores-title">Household Chores</div>
     <div class="chores-date" id="chores-date"></div>
