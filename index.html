@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0e1118"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Shepherd"/>
+<link rel="manifest" href="manifest.json"/>
+<title>The American Shepherd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#0e1118;--navy-mid:#161c2a;--navy-soft:#1e2640;--navy-card:#1a2035;
+  --amber:#c8860a;--amber-lt:#e8a020;--amber-glow:#d4a843;--gold-pale:#f0d898;
+  --cream:#f0ede0;--cream-dim:#b8b4a0;
+  --brown-dk:#2a1808;--brown-md:#5c3a1e;--brown-lt:#8b5a2b;
+  --red-flag:#8b2020;--blue-flag:#1a2f5e;--smoke:#4a4540;
+  --teal:#1D9E75;--purple:#7F77DD;
+  --border:rgba(200,134,10,0.28);--border-lt:rgba(200,134,10,0.12);
+  --font-d:'Cinzel',serif;--font-b:'Crimson Pro',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--navy)}
+body{color:var(--cream);font-family:var(--font-b);font-size:16px;line-height:1.6;position:relative}
+
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -10%,rgba(200,134,10,0.10) 0%,transparent 65%),
+    radial-gradient(ellipse 60% 40% at 80% 100%,rgba(139,32,32,0.06) 0%,transparent 60%);
+}
+
+#app{position:relative;z-index:1;display:flex;flex-direction:column;height:100dvh;max-width:500px;margin:0 auto}
+
+/* HEADER */
+header{flex-shrink:0;background:linear-gradient(180deg,var(--navy) 70%,transparent);padding:env(safe-area-inset-top,0px) 20px 0}
+.hdr{display:flex;align-items:center;gap:14px;padding:14px 0 12px;border-bottom:1px solid var(--border)}
+.eagle-seal{
+  width:46px;height:46px;flex-shrink:0;border-radius:4px;
+  border:1px solid var(--border);background:var(--brown-dk);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.eagle-seal svg{width:38px;height:38px}
+.hdr-text{}
+.app-name{font-family:var(--font-d);font-size:12px;letter-spacing:0.2em;color:var(--amber-lt);text-transform:uppercase;line-height:1.3}
+.app-tagline{font-size:11px;letter-spacing:0.08em;color:var(--cream-dim);font-style:italic}
+.hdr-date{margin-left:auto;text-align:right;font-family:var(--font-d);font-size:11px;letter-spacing:0.06em;color:var(--cream-dim);line-height:1.4}
+.hdr-date-day{color:var(--amber);font-size:13px}
+
+/* SESSION BAR */
+.session-bar{display:flex;gap:6px;padding:10px 20px 0;flex-shrink:0}
+.sess{flex:1;padding:7px 5px;border-radius:3px;border:1px solid var(--border-lt);background:var(--navy-card);text-align:center;transition:border 0.2s;cursor:default}
+.sess-label{display:block;font-family:var(--font-d);font-size:8.5px;letter-spacing:0.14em;color:var(--amber);text-transform:uppercase}
+.sess-time{font-size:10px;color:var(--cream-dim)}
+.sess.s-ambition{border-left:2px solid var(--teal)}
+.sess.s-preparation{border-left:2px solid var(--amber)}
+.sess.s-planning{border-left:2px solid var(--purple)}
+
+/* NAV */
+nav{flex-shrink:0;display:flex;padding:10px 20px 0;border-bottom:1px solid var(--border-lt)}
+.ntab{
+  flex:1;padding:8px 2px;background:none;border:none;border-bottom:2px solid transparent;
+  font-family:var(--font-d);font-size:9.5px;letter-spacing:0.12em;color:var(--smoke);
+  text-transform:uppercase;cursor:pointer;transition:all 0.2s;
+}
+.ntab.active{color:var(--amber-lt);border-bottom-color:var(--amber)}
+.ntab:hover:not(.active){color:var(--cream-dim)}
+
+/* MAIN */
+main{flex:1;overflow-y:auto;padding:16px 20px 32px;-webkit-overflow-scrolling:touch}
+main::-webkit-scrollbar{width:3px}
+main::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.view{display:none}.view.active{display:block}
+
+/* SECTION HEADING */
+.sh{font-family:var(--font-d);font-size:9px;letter-spacing:0.22em;color:var(--amber);text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border-lt)}
+
+/* INPUTS */
+.irow{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+input[type=text]{
+  flex:1;min-width:120px;background:var(--navy-card);border:1px solid var(--border);border-radius:3px;
+  padding:9px 12px;color:var(--cream);font-family:var(--font-b);font-size:15px;outline:none;transition:border 0.2s;
+}
+input[type=text]:focus{border-color:var(--amber-lt)}
+input[type=text]::placeholder{color:var(--smoke)}
+input[type=date]{
+  background:var(--navy-card);border:1px solid var(--border);border-radius:3px;
+  padding:7px 10px;color:var(--cream-dim);font-family:var(--font-b);font-size:13px;outline:none;
+  color-scheme:dark;
+}
+select{
+  background:var(--navy-card);border:1px solid var(--border);border-radius:3px;
+  padding:8px 8px;color:var(--cream-dim);font-family:var(--font-b);font-size:13px;outline:none;cursor:pointer;
+}
+select option{background:var(--navy-mid);color:var(--cream)}
+
+/* BUTTONS */
+.btn{
+  padding:9px 16px;border-radius:3px;background:var(--amber);border:none;
+  color:var(--navy);font-family:var(--font-d);font-size:10px;letter-spacing:0.1em;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;font-weight:600;
+}
+.btn:hover{background:var(--amber-lt)}.btn:active{transform:scale(0.97)}
+.btn-sm{padding:6px 10px;font-size:9px}
+.btn-ghost{
+  padding:7px 12px;border-radius:3px;background:none;border:1px solid var(--border);
+  color:var(--cream-dim);font-family:var(--font-d);font-size:9px;letter-spacing:0.08em;
+  cursor:pointer;transition:all 0.2s;
+}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+.btn-icon{background:none;border:none;color:var(--smoke);cursor:pointer;padding:4px 6px;font-size:15px;transition:color 0.2s;line-height:1}
+.btn-icon:hover{color:var(--amber)}
+
+/* TASK ITEMS */
+.task-list{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;max-height:40vh;overflow-y:auto}
+.task-list::-webkit-scrollbar{width:3px}
+.task-list::-webkit-scrollbar-thumb{background:var(--border)}
+.ti{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;border-radius:3px;
+  background:var(--navy-card);border:1px solid var(--border-lt);
+  transition:border 0.2s;
+}
+.ti.scheduled{border-left:2px solid var(--teal)}
+.ti.unscheduled{border-left:2px solid var(--amber)}
+.ti input[type=checkbox]{accent-color:var(--amber);width:14px;height:14px;flex-shrink:0;cursor:pointer}
+.ti-text{flex:1;font-size:14px;color:var(--cream)}
+.ti-text.done{text-decoration:line-through;opacity:0.45}
+.badge{font-size:10px;padding:2px 7px;border-radius:2px;font-family:var(--font-d);letter-spacing:0.06em;white-space:nowrap}
+.badge-me{background:rgba(26,47,94,0.8);color:#85B7EB;border:1px solid rgba(56,138,221,0.3)}
+.badge-family{background:rgba(83,74,183,0.2);color:#AFA9EC;border:1px solid rgba(127,119,221,0.3)}
+.badge-unsched{background:rgba(200,134,10,0.15);color:var(--amber);border:1px solid var(--border)}
+.pbadge{font-size:9px;padding:2px 6px;border-radius:2px;font-family:var(--font-d);letter-spacing:0.08em}
+.pb-ambition{background:rgba(29,158,117,0.15);color:#5DCAA5;border:1px solid rgba(29,158,117,0.3)}
+.pb-preparation{background:rgba(200,134,10,0.15);color:var(--amber-glow);border:1px solid var(--border)}
+.pb-planning{background:rgba(127,119,221,0.15);color:#AFA9EC;border:1px solid rgba(127,119,221,0.3)}
+.ti-date{font-size:11px;color:var(--cream-dim);white-space:nowrap}
+
+/* SCHEDULE PROMPT CARD */
+.scard{
+  background:var(--navy-card);border:1px solid var(--border);border-radius:4px;
+  padding:14px;margin-bottom:10px;
+}
+.scard-title{font-size:14px;color:var(--cream);margin-bottom:10px;font-style:italic}
+.scard-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+
+/* CALENDAR */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal-month{font-family:var(--font-d);font-size:14px;letter-spacing:0.1em;color:var(--amber-lt)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:12px}
+.cal-dow{font-family:var(--font-d);font-size:8px;letter-spacing:0.1em;color:var(--smoke);text-align:center;padding:4px 0}
+.cal-day{
+  min-height:46px;border-radius:3px;padding:4px;cursor:pointer;
+  background:var(--navy-card);border:1px solid var(--border-lt);transition:all 0.15s;
+}
+.cal-day:hover{border-color:var(--amber-glow)}
+.cal-day.today{border-color:var(--teal);border-width:1px}
+.cal-day.dim{opacity:0.35}
+.cal-day-n{font-size:11px;font-family:var(--font-d);color:var(--cream-dim)}
+.cal-day.today .cal-day-n{color:var(--teal)}
+.cdot{width:5px;height:5px;border-radius:50%;margin:1px 0}
+.cdot-me{background:#378ADD}
+.cdot-fam{background:var(--purple)}
+
+.day-detail{background:var(--navy-card);border:1px solid var(--border);border-radius:4px;padding:12px;margin-bottom:12px}
+.dd-head{font-family:var(--font-d);font-size:10px;letter-spacing:0.12em;color:var(--amber);margin-bottom:8px}
+.dd-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border-lt);font-size:14px}
+.dd-item:last-child{border-bottom:none}
+
+/* STATS */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat-card{background:var(--navy-card);border:1px solid var(--border-lt);border-radius:3px;padding:12px 8px;text-align:center}
+.stat-n{font-size:26px;font-family:var(--font-d);color:var(--amber-lt)}
+.stat-l{font-size:10px;letter-spacing:0.08em;color:var(--cream-dim)}
+
+/* WEEK STRIP */
+.week-strip{display:flex;flex-direction:column;gap:3px}
+.wday{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border-lt)}
+.wday:last-child{border-bottom:none}
+.wday-n{font-family:var(--font-d);font-size:10px;letter-spacing:0.06em;color:var(--smoke);width:28px;flex-shrink:0;padding-top:3px}
+.wday.is-today .wday-n{color:var(--teal)}
+.wchips{display:flex;flex-wrap:wrap;gap:4px;flex:1}
+.wchip{font-size:12px;padding:3px 8px;border-radius:2px;background:var(--navy-soft);border:1px solid var(--border-lt);color:var(--cream-dim)}
+.wchip.me{border-left:2px solid #378ADD}
+.wchip.family{border-left:2px solid var(--purple)}
+
+/* KIOSK / FAMILY VIEW */
+.kiosk-phases{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:14px}
+.kphase{border-radius:4px;padding:12px;border:1px solid var(--border-lt)}
+.kphase.ambition{border-left:3px solid var(--teal);background:rgba(29,158,117,0.06)}
+.kphase.preparation{border-left:3px solid var(--amber);background:rgba(200,134,10,0.06)}
+.kphase.planning{border-left:3px solid var(--purple);background:rgba(127,119,221,0.06)}
+.kphase-head{font-family:var(--font-d);font-size:9px;letter-spacing:0.18em;margin-bottom:6px}
+.kphase.ambition .kphase-head{color:var(--teal)}
+.kphase.preparation .kphase-head{color:var(--amber)}
+.kphase.planning .kphase-head{color:#AFA9EC}
+.kphase-item{font-size:13px;color:var(--cream-dim);padding:2px 0;display:flex;align-items:center;gap:6px}
+.kphase-item::before{content:'›';color:inherit;opacity:0.6}
+
+/* TRAINING */
+.train-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.train-card{background:var(--navy-card);border:1px solid var(--border-lt);border-radius:3px;padding:10px 12px}
+.train-head{font-family:var(--font-d);font-size:9px;letter-spacing:0.14em;color:var(--amber);margin-bottom:6px}
+.train-item{font-size:12px;color:var(--cream-dim);line-height:1.8}
+
+/* SUPABASE CONFIG PANEL */
+.config-panel{
+  background:var(--navy-card);border:1px solid var(--border);border-radius:4px;
+  padding:14px;margin-bottom:14px;
+}
+.config-row{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.config-label{font-family:var(--font-d);font-size:9px;letter-spacing:0.12em;color:var(--amber-glow)}
+.config-panel input[type=text]{font-size:12px;padding:7px 10px;width:100%}
+.conn-status{font-size:11px;font-style:italic;margin-top:4px}
+.conn-ok{color:var(--teal)}.conn-err{color:#E24B4A}.conn-none{color:var(--smoke)}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border-lt);margin:14px 0}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:28px 16px;color:var(--smoke);font-style:italic;font-size:14px}
+.empty-icon{font-size:28px;margin-bottom:8px;opacity:0.4}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--amber);color:var(--navy);
+  font-family:var(--font-d);font-size:11px;letter-spacing:0.08em;
+  padding:8px 18px;border-radius:3px;
+  opacity:0;transition:all 0.3s;pointer-events:none;z-index:999;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* SCROLLBAR for task list */
+.task-list::-webkit-scrollbar{width:3px}
+.task-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HEADER -->
+<header>
+<div class="hdr">
+  <div class="eagle-seal">
+    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <!-- Eagle silhouette mark -->
+      <g fill="#c8860a">
+        <!-- Body -->
+        <ellipse cx="32" cy="38" rx="11" ry="13"/>
+        <!-- Head -->
+        <circle cx="32" cy="20" r="8"/>
+        <!-- White head overlay -->
+        <circle cx="32" cy="20" r="8" fill="#f0ede0"/>
+        <!-- Beak -->
+        <polygon points="40,19 46,22 40,24" fill="#c8860a"/>
+        <!-- Eye -->
+        <circle cx="37" cy="20" r="1.5" fill="#c8860a"/>
+        <!-- Left wing -->
+        <ellipse cx="17" cy="35" rx="14" ry="7" transform="rotate(-20 17 35)"/>
+        <!-- Right wing -->
+        <ellipse cx="47" cy="35" rx="14" ry="7" transform="rotate(20 47 35)"/>
+        <!-- Tail feathers -->
+        <ellipse cx="32" cy="52" rx="8" ry="5"/>
+        <!-- Talons -->
+        <line x1="26" y1="51" x2="22" y2="57" stroke="#c8860a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="30" y1="52" x2="28" y2="58" stroke="#c8860a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="34" y1="52" x2="36" y2="58" stroke="#c8860a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="51" x2="42" y2="57" stroke="#c8860a" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hdr-text">
+    <div class="app-name">The American Shepherd</div>
+    <div class="app-tagline">Family Command Center</div>
+  </div>
+  <div class="hdr-date" id="hdr-date"></div>
+</div>
+</header>
+
+<!-- SESSION BAR -->
+<div class="session-bar">
+  <div class="sess s-ambition"><span class="sess-label">Ambition</span><span class="sess-time">AM Sync</span></div>
+  <div class="sess s-preparation"><span class="sess-label">Preparation</span><span class="sess-time">PM Sync</span></div>
+  <div class="sess s-planning"><span class="sess-label">Planning</span><span class="sess-time">Sat AM</span></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <button class="ntab active" onclick="showView('tasks')">Tasks</button>
+  <button class="ntab" onclick="showView('schedule')">Schedule</button>
+  <button class="ntab" onclick="showView('calendar')">Calendar</button>
+  <button class="ntab" onclick="showView('family')">Family</button>
+  <button class="ntab" onclick="showView('settings')">Settings</button>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+<!-- TASKS VIEW -->
+<div class="view active" id="view-tasks">
+  <div class="sh">Add Task</div>
+  <div class="irow">
+    <input type="text" id="task-inp" placeholder="Enter task..." onkeydown="if(event.key==='Enter')addTask()"/>
+    <select id="who-sel"><option value="me">Me</option><option value="family">Family</option></select>
+    <select id="phase-sel">
+      <option value="">Any session</option>
+      <option value="ambition">Ambition</option>
+      <option value="preparation">Preparation</option>
+      <option value="planning">Planning</option>
+    </select>
+    <button class="btn" onclick="addTask()">+ Add</button>
+  </div>
+
+  <div class="sh" style="margin-top:4px">Task List</div>
+  <div class="task-list" id="task-list"></div>
+
+  <div id="unsched-block">
+    <div class="sh">Unscheduled — Assign Dates</div>
+    <div id="unsched-prompts"></div>
+  </div>
+</div>
+
+<!-- SCHEDULE VIEW -->
+<div class="view" id="view-schedule">
+  <div class="sh">Date Assignment Queue</div>
+  <div id="sched-queue"></div>
+</div>
+
+<!-- CALENDAR VIEW -->
+<div class="view" id="view-calendar">
+  <div class="cal-nav">
+    <button class="btn-ghost" onclick="prevMonth()">‹ Prev</button>
+    <div class="cal-month" id="cal-month-label"></div>
+    <button class="btn-ghost" onclick="nextMonth()">Next ›</button>
+  </div>
+  <div class="cal-grid" id="cal-grid"></div>
+  <div id="day-detail"></div>
+  <div class="sh" style="margin-top:8px">Export to iOS Calendar</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn-ghost" onclick="exportICS('me')">⊕ My Calendar (.ics)</button>
+    <button class="btn-ghost" onclick="exportICS('family')">⊕ Family Calendar (.ics)</button>
+  </div>
+</div>
+
+<!-- FAMILY / KIOSK VIEW -->
+<div class="view" id="view-family">
+  <div class="sh">Sync Sessions — Today's Tasks</div>
+  <div class="kiosk-phases">
+    <div class="kphase ambition"><div class="kphase-head">AMBITION — AM Sync</div><div id="kp-ambition"></div></div>
+    <div class="kphase preparation"><div class="kphase-head">PREPARATION — PM Sync</div><div id="kp-preparation"></div></div>
+    <div class="kphase planning"><div class="kphase-head">PLANNING — Saturday AM</div><div id="kp-planning"></div></div>
+  </div>
+
+  <div class="sh">This Week</div>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-n" id="s-total">0</div><div class="stat-l">Total</div></div>
+    <div class="stat-card"><div class="stat-n" id="s-sched">0</div><div class="stat-l">Scheduled</div></div>
+    <div class="stat-card"><div class="stat-n" id="s-done">0</div><div class="stat-l">Done</div></div>
+  </div>
+  <div class="week-strip" id="week-strip"></div>
+
+  <div class="divider"></div>
+  <div class="sh">Training Schedule</div>
+  <div class="train-grid">
+    <div class="train-card"><div class="train-head">Bible / Discipleship</div><div class="train-item" id="tr-bible">—</div></div>
+    <div class="train-card"><div class="train-head">Physical / Skills</div><div class="train-item" id="tr-skills">—</div></div>
+  </div>
+  <div class="irow" style="flex-wrap:wrap">
+    <input type="text" id="tr-inp" placeholder="Training item..." style="min-width:130px"/>
+    <select id="tr-cat"><option value="bible">Bible / Discipleship</option><option value="skills">Physical / Skills</option></select>
+    <button class="btn btn-sm" onclick="addTraining()">+ Add</button>
+  </div>
+</div>
+
+<!-- SETTINGS VIEW -->
+<div class="view" id="view-settings">
+  <div class="sh">Supabase Database Connection</div>
+  <div class="config-panel">
+    <div class="config-row">
+      <div class="config-label">Project URL</div>
+      <input type="text" id="sb-url" placeholder="https://xxxx.supabase.co" oninput="saveCfg()"/>
+    </div>
+    <div class="config-row">
+      <div class="config-label">Anon / Public Key</div>
+      <input type="text" id="sb-key" placeholder="eyJ..." oninput="saveCfg()"/>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-sm" onclick="testConnection()">Test Connection</button>
+      <button class="btn-ghost" onclick="syncToSupabase()">↑ Push Tasks</button>
+      <button class="btn-ghost" onclick="syncFromSupabase()">↓ Pull Tasks</button>
+    </div>
+    <div class="conn-status conn-none" id="conn-status">Not connected</div>
+  </div>
+
+  <div class="sh">Database Setup SQL</div>
+  <div style="background:var(--brown-dk);border:1px solid var(--border-lt);border-radius:3px;padding:12px;font-family:monospace;font-size:11px;color:var(--gold-pale);line-height:1.8;white-space:pre-wrap;word-break:break-all;margin-bottom:12px" id="sql-block"></div>
+  <button class="btn-ghost" onclick="copySQL()">Copy SQL</button>
+
+  <div class="divider"></div>
+  <div class="sh">Local Data</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn-ghost" onclick="exportJSON()">↓ Export JSON</button>
+    <button class="btn-ghost" onclick="document.getElementById('import-file').click()">↑ Import JSON</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)"/>
+    <button class="btn-ghost" style="color:#E24B4A;border-color:#E24B4A" onclick="clearAll()">Clear All Tasks</button>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sh">Install as App</div>
+  <div style="font-size:13px;color:var(--cream-dim);line-height:1.8;font-style:italic">
+    iPhone: Open in Safari → Share → "Add to Home Screen"<br/>
+    PC: Open in Chrome → address bar → Install icon → Install
+  </div>
+  <div id="install-btn-wrap" style="margin-top:10px;display:none">
+    <button class="btn" onclick="installPWA()">Install App Now</button>
+  </div>
+</div>
+
+</main>
+</div>
+<div id="toast"></div>
+
+<script>
+// ── STATE ──
+let tasks = JSON.parse(localStorage.getItem('asp_tasks') || '[]');
+let training = JSON.parse(localStorage.getItem('asp_training') || '{"bible":[],"skills":[]}');
+let calDate = new Date(); calDate.setDate(1);
+let selectedDay = null;
+let deferredInstall = null;
+
+const SQL = `-- Run once in Supabase SQL Editor
+create table if not exists asp_tasks (
+  id bigint primary key,
+  text text not null,
+  who text default 'me',
+  phase text default '',
+  date text default null,
+  done boolean default false,
+  created_at timestamptz default now()
+);
+alter table asp_tasks enable row level security;
+create policy "Public access" on asp_tasks for all using (true);`;
+
+// ── SAVE ──
+function save() { localStorage.setItem('asp_tasks', JSON.stringify(tasks)); }
+function saveTr() { localStorage.setItem('asp_training', JSON.stringify(training)); }
+
+// ── HEADER DATE ──
+function initDate() {
+  const d = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('hdr-date').innerHTML =
+    `<div class="hdr-date-day">${days[d.getDay()]}</div>${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+// ── NAV ──
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  [...document.querySelectorAll('.ntab')].find(t => t.textContent.toLowerCase().startsWith(name.slice(0,4)))?.classList.add('active');
+  if (name === 'calendar') renderCal();
+  if (name === 'family') { renderFamily(); renderStats(); renderWeek(); renderTraining(); }
+  if (name === 'schedule') renderSchedQueue();
+  if (name === 'settings') initSettings();
+}
+
+// ── ADD TASK ──
+function addTask() {
+  const inp = document.getElementById('task-inp');
+  const text = inp.value.trim(); if (!text) return;
+  const who = document.getElementById('who-sel').value;
+  const phase = document.getElementById('phase-sel').value;
+  tasks.push({ id: Date.now(), text, who, phase, date: null, done: false });
+  inp.value = ''; save(); render(); toast('Task added');
+}
+
+// ── RENDER ALL ──
+function render() { renderTaskList(); renderUnscheduled(); renderCal(); renderStats(); }
+
+// ── PHASE BADGE ──
+function pb(phase) {
+  if (!phase) return '';
+  const cls = { ambition:'pb-ambition', preparation:'pb-preparation', planning:'pb-planning' };
+  const lbl = { ambition:'Ambition', preparation:'Preparation', planning:'Planning' };
+  return `<span class="pbadge ${cls[phase]||''}">${lbl[phase]||phase}</span>`;
+}
+function wb(who) {
+  return who === 'me'
+    ? `<span class="badge badge-me">Me</span>`
+    : `<span class="badge badge-family">Family</span>`;
+}
+
+// ── TASK LIST ──
+function renderTaskList() {
+  const el = document.getElementById('task-list');
+  if (!tasks.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">✦</div>No tasks yet — add one above</div>'; return; }
+  el.innerHTML = tasks.map(t => `
+    <div class="ti ${t.date ? 'scheduled' : 'unscheduled'}">
+      <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleDone(${t.id})"/>
+      <span class="ti-text${t.done ? ' done' : ''}">${t.text}</span>
+      ${pb(t.phase)} ${wb(t.who)}
+      ${t.date ? `<span class="ti-date">${fmtDate(t.date)}</span>` : `<span class="badge badge-unsched">Unscheduled</span>`}
+      <button class="btn-icon" onclick="removeTask(${t.id})" aria-label="Remove">✕</button>
+    </div>`).join('');
+}
+
+function toggleDone(id) { const t = tasks.find(t => t.id === id); if (t) t.done = !t.done; save(); render(); }
+function removeTask(id) { tasks = tasks.filter(t => t.id !== id); save(); render(); toast('Task removed'); }
+
+// ── UNSCHEDULED PROMPTS ──
+function renderUnscheduled() {
+  const block = document.getElementById('unsched-block');
+  const el = document.getElementById('unsched-prompts');
+  const us = tasks.filter(t => !t.date && !t.done);
+  if (!us.length) { block.style.display = 'none'; return; }
+  block.style.display = 'block';
+  el.innerHTML = us.map(t => `
+    <div class="scard">
+      <div class="scard-title">${t.text} ${wb(t.who)}</div>
+      <div class="scard-row">
+        <input type="date" id="dp-${t.id}" value="${todayStr()}"/>
+        <select id="ph-${t.id}">
+          <option value="">Any</option>
+          <option value="ambition" ${t.phase==='ambition'?'selected':''}>Ambition</option>
+          <option value="preparation" ${t.phase==='preparation'?'selected':''}>Preparation</option>
+          <option value="planning" ${t.phase==='planning'?'selected':''}>Planning</option>
+        </select>
+        <button class="btn btn-sm" onclick="assignFromPrompt(${t.id})">Assign</button>
+        <button class="btn-ghost" onclick="assignToday(${t.id})">Today</button>
+      </div>
+    </div>`).join('');
+}
+
+function assignFromPrompt(id) {
+  const t = tasks.find(t => t.id === id); if (!t) return;
+  t.date = document.getElementById('dp-'+id).value;
+  const ph = document.getElementById('ph-'+id); if (ph) t.phase = ph.value;
+  save(); render(); toast('Date assigned');
+}
+function assignToday(id) {
+  const t = tasks.find(t => t.id === id); if (!t) return;
+  t.date = todayStr(); save(); render(); toast('Assigned to today');
+}
+
+// ── SCHEDULE QUEUE ──
+function renderSchedQueue() {
+  const el = document.getElementById('sched-queue');
+  const us = tasks.filter(t => !t.date && !t.done);
+  if (!us.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">✦</div>All tasks have dates assigned</div>'; return; }
+  el.innerHTML = us.map(t => `
+    <div class="scard">
+      <div class="scard-title">${t.text} ${wb(t.who)}</div>
+      <div class="scard-row">
+        <input type="date" id="sq-${t.id}" value="${todayStr()}"/>
+        <select id="sqph-${t.id}">
+          <option value="">Any</option>
+          <option value="ambition" ${t.phase==='ambition'?'selected':''}>Ambition</option>
+          <option value="preparation" ${t.phase==='preparation'?'selected':''}>Preparation</option>
+          <option value="planning" ${t.phase==='planning'?'selected':''}>Planning</option>
+        </select>
+        <button class="btn btn-sm" onclick="assignFromQueue(${t.id})">Set Date</button>
+      </div>
+    </div>`).join('');
+}
+
+function assignFromQueue(id) {
+  const t = tasks.find(t => t.id === id); if (!t) return;
+  t.date = document.getElementById('sq-'+id).value;
+  const ph = document.getElementById('sqph-'+id); if (ph) t.phase = ph.value;
+  save(); render(); renderSchedQueue(); toast('Date assigned');
+}
+
+// ── CALENDAR ──
+function renderCal() {
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent = months[m] + ' ' + y;
+  const dows = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+  const first = new Date(y, m, 1).getDay();
+  const last = new Date(y, m+1, 0).getDate();
+  const today = todayStr();
+  for (let i = 0; i < first; i++) {
+    const d = new Date(y, m, -first+i+1);
+    html += `<div class="cal-day dim"><div class="cal-day-n">${d.getDate()}</div></div>`;
+  }
+  for (let d = 1; d <= last; d++) {
+    const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dt = tasks.filter(t => t.date === ds);
+    const dots = dt.slice(0,3).map(t => `<div class="cdot ${t.who==='me'?'cdot-me':'cdot-fam'}"></div>`).join('');
+    html += `<div class="cal-day${ds===today?' today':''}${ds===selectedDay?' sel':''}" onclick="selectDay('${ds}')">
+      <div class="cal-day-n">${d}</div>${dots}</div>`;
+  }
+  document.getElementById('cal-grid').innerHTML = html;
+  renderDayDetail();
+}
+
+function selectDay(ds) {
+  selectedDay = selectedDay === ds ? null : ds;
+  renderCal();
+}
+
+function renderDayDetail() {
+  const el = document.getElementById('day-detail');
+  if (!selectedDay) { el.innerHTML = ''; return; }
+  const dt = tasks.filter(t => t.date === selectedDay);
+  if (!dt.length) { el.innerHTML = `<div class="day-detail"><div class="dd-head">${fmtDate(selectedDay)}</div><div style="font-size:13px;color:var(--smoke);font-style:italic">No tasks this day</div></div>`; return; }
+  el.innerHTML = `<div class="day-detail"><div class="dd-head">${fmtDate(selectedDay)}</div>` +
+    dt.map(t => `<div class="dd-item">
+      <input type="checkbox" ${t.done?'checked':''} onchange="toggleDone(${t.id})"/>
+      <span style="${t.done?'text-decoration:line-through;opacity:0.45':''}">${t.text}</span>
+      ${wb(t.who)} ${pb(t.phase)}
+    </div>`).join('') + '</div>';
+}
+
+function prevMonth() { calDate.setMonth(calDate.getMonth()-1); renderCal(); }
+function nextMonth() { calDate.setMonth(calDate.getMonth()+1); renderCal(); }
+
+// ── FAMILY / KIOSK VIEW ──
+function renderFamily() {
+  ['ambition','preparation','planning'].forEach(phase => {
+    const el = document.getElementById('kp-'+phase);
+    const pt = tasks.filter(t => t.phase === phase && !t.done);
+    if (!pt.length) { el.innerHTML = '<div style="font-size:12px;opacity:0.45;font-style:italic">No tasks assigned</div>'; return; }
+    el.innerHTML = pt.map(t => `<div class="kphase-item">${t.text}${t.date?' <span style="font-size:10px;opacity:0.6">'+fmtDate(t.date)+'</span>':''}</div>`).join('');
+  });
+}
+
+function renderStats() {
+  const sched = tasks.filter(t => t.date).length;
+  const done = tasks.filter(t => t.done).length;
+  document.getElementById('s-total').textContent = tasks.length;
+  document.getElementById('s-sched').textContent = sched;
+  document.getElementById('s-done').textContent = done;
+}
+
+function renderWeek() {
+  const el = document.getElementById('week-strip');
+  const today = new Date(); const todayDs = todayStr();
+  const start = new Date(today); start.setDate(today.getDate() - today.getDay());
+  const dns = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(start); d.setDate(start.getDate()+i);
+    const ds = d.toISOString().slice(0,10);
+    const dt = tasks.filter(t => t.date === ds && !t.done);
+    html += `<div class="wday${ds===todayDs?' is-today':''}">
+      <div class="wday-n">${dns[i]}</div>
+      <div class="wchips">${dt.length ? dt.map(t=>`<span class="wchip ${t.who}">${t.text}</span>`).join('') : '<span style="font-size:11px;color:var(--smoke)">—</span>'}</div>
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+
+function renderTraining() {
+  document.getElementById('tr-bible').innerHTML = training.bible.length ? training.bible.map(i=>`• ${i}`).join('<br>') : '—';
+  document.getElementById('tr-skills').innerHTML = training.skills.length ? training.skills.map(i=>`• ${i}`).join('<br>') : '—';
+}
+
+function addTraining() {
+  const text = document.getElementById('tr-inp').value.trim(); if (!text) return;
+  const cat = document.getElementById('tr-cat').value;
+  training[cat].push(text);
+  document.getElementById('tr-inp').value = '';
+  saveTr(); renderTraining(); toast('Training item added');
+}
+
+// ── ICS EXPORT ──
+function exportICS(who) {
+  const filtered = tasks.filter(t => t.who === who && t.date);
+  if (!filtered.length) { toast('No scheduled tasks to export'); return; }
+  const labels = { ambition:'AMBITION (AM)', preparation:'PREPARATION (PM)', planning:'PLANNING (Sat AM)' };
+  let ics = 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//AmericanShepherd//EN\r\nCALNAME:' + (who==='me'?'My Tasks':'Family Tasks') + '\r\n';
+  filtered.forEach(t => {
+    const ds = t.date.replace(/-/g,'');
+    const desc = t.phase ? 'Session: '+labels[t.phase] : '';
+    ics += `BEGIN:VEVENT\r\nUID:${t.id}@shepherd\r\nDTSTAMP:${ds}T120000Z\r\nDTSTART;VALUE=DATE:${ds}\r\nDTEND;VALUE=DATE:${ds}\r\nSUMMARY:${t.text}\r\nDESCRIPTION:${desc}\r\nEND:VEVENT\r\n`;
+  });
+  ics += 'END:VCALENDAR';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+  a.download = (who==='me'?'my':'family')+'-tasks.ics';
+  a.click(); toast('Calendar file exported — open on iPhone to import');
+}
+
+// ── SUPABASE ──
+function getCfg() {
+  return { url: localStorage.getItem('asp_sb_url')||'', key: localStorage.getItem('asp_sb_key')||'' };
+}
+function saveCfg() {
+  localStorage.setItem('asp_sb_url', document.getElementById('sb-url').value);
+  localStorage.setItem('asp_sb_key', document.getElementById('sb-key').value);
+}
+function initSettings() {
+  const cfg = getCfg();
+  document.getElementById('sb-url').value = cfg.url;
+  document.getElementById('sb-key').value = cfg.key;
+  document.getElementById('sql-block').textContent = SQL;
+}
+async function sbFetch(path, opts={}) {
+  const cfg = getCfg();
+  if (!cfg.url || !cfg.key) throw new Error('Not configured');
+  return fetch(cfg.url + '/rest/v1/' + path, {
+    ...opts,
+    headers: { 'apikey': cfg.key, 'Authorization': 'Bearer '+cfg.key, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...(opts.headers||{}) }
+  });
+}
+async function testConnection() {
+  const st = document.getElementById('conn-status');
+  st.className = 'conn-status conn-none'; st.textContent = 'Testing…';
+  try {
+    const r = await sbFetch('asp_tasks?limit=1');
+    if (r.ok) { st.className='conn-status conn-ok'; st.textContent='Connected ✓'; toast('Connection successful'); }
+    else { const e = await r.json(); st.className='conn-status conn-err'; st.textContent='Error: '+(e.message||r.status); }
+  } catch(e) { st.className='conn-status conn-err'; st.textContent='Failed: '+e.message; }
+}
+async function syncToSupabase() {
+  try {
+    const r = await sbFetch('asp_tasks', { method:'DELETE', headers:{'prefer':'return=minimal'} });
+    if (!r.ok && r.status !== 404) throw new Error('Delete failed');
+    if (tasks.length) {
+      const r2 = await sbFetch('asp_tasks', { method:'POST', body: JSON.stringify(tasks) });
+      if (!r2.ok) throw new Error('Insert failed');
+    }
+    toast('Tasks pushed to Supabase');
+  } catch(e) { toast('Push failed: '+e.message); }
+}
+async function syncFromSupabase() {
+  try {
+    const r = await sbFetch('asp_tasks?order=id.asc');
+    if (!r.ok) throw new Error('Fetch failed: '+r.status);
+    tasks = await r.json(); save(); render(); toast('Tasks pulled from Supabase');
+  } catch(e) { toast('Pull failed: '+e.message); }
+}
+function copySQL() {
+  navigator.clipboard.writeText(SQL).then(()=>toast('SQL copied to clipboard'));
+}
+
+// ── LOCAL EXPORT/IMPORT ──
+function exportJSON() {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify({tasks,training},null,2)],{type:'application/json'}));
+  a.download = 'shepherd-backup.json'; a.click(); toast('JSON exported');
+}
+function importJSON(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try {
+      const d = JSON.parse(ev.target.result);
+      if (d.tasks) { tasks = d.tasks; save(); }
+      if (d.training) { training = d.training; saveTr(); }
+      render(); toast('Data imported');
+    } catch(err) { toast('Import failed — invalid JSON'); }
+  };
+  r.readAsText(f);
+}
+function clearAll() {
+  if (!confirm('Delete all tasks? This cannot be undone.')) return;
+  tasks = []; save(); render(); toast('All tasks cleared');
+}
+
+// ── PWA INSTALL ──
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); deferredInstall = e;
+  document.getElementById('install-btn-wrap').style.display = 'block';
+});
+function installPWA() {
+  if (!deferredInstall) return;
+  deferredInstall.prompt();
+  deferredInstall.userChoice.then(r => { if (r.outcome==='accepted') toast('App installed!'); deferredInstall=null; });
+}
+
+// ── SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+
+// ── TOAST ──
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+// ── HELPERS ──
+function todayStr() { return new Date().toISOString().slice(0,10); }
+function fmtDate(ds) {
+  return new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+}
+
+// ── INIT ──
+initDate();
+render();
+</script>
+</body>
+</html>
