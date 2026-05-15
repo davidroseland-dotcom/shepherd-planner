@@ -1967,5 +1967,1212 @@ restrictWhoDropdown();
 loadKioskFields();
 </script>
 
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The American Shepherd — Kiosk Display</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="The%20American%20Shepherd%20%E2%80%94%20Kiosk%20Display_files/css2.css" rel="stylesheet">
+<style>
+:root {
+  --navy:#0e1118; --navy-mid:#161c2a; --navy-card:#1a2035;
+  --amber:#c8860a; --amber-lt:#e8a020; --amber-glow:#d4a843;
+  --cream:#f0ede0; --cream-dim:#b8b4a0;
+  --teal:#1D9E75; --purple:#7F77DD; --red-flag:#8b2020;
+  --smoke:#4a4540;
+  --font-d:'Cinzel',serif; --font-b:'Crimson Pro',serif;
+}
 
+* { box-sizing:border-box; margin:0; padding:0; }
+
+html, body {
+  width:100%; height:100%;
+  background:var(--navy);
+  color:var(--cream);
+  font-family:var(--font-b);
+  overflow:hidden;
+}
+
+/* ── SLIDE CONTAINER ── */
+#kiosk-wrap {
+  width:100vw; height:100vh;
+  position:relative;
+  display:flex; align-items:center; justify-content:center;
+}
+
+.slide {
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  opacity:0;
+  transform:translateX(60px);
+  transition:opacity 0.7s ease, transform 0.7s ease;
+  pointer-events:none;
+  overflow:hidden;
+}
+.slide.active {
+  opacity:1;
+  transform:translateX(0);
+  pointer-events:auto;
+}
+.slide.exit {
+  opacity:0;
+  transform:translateX(-60px);
+}
+
+/* ── SLIDE HEADER BAR ── */
+.slide-header {
+  flex-shrink:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 48px 16px;
+  border-bottom:1px solid rgba(200,134,10,0.2);
+  background:rgba(14,17,24,0.6);
+}
+.slide-badge {
+  font-family:var(--font-d);
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--amber);
+  padding:5px 14px;
+  border:1px solid rgba(200,134,10,0.4);
+  border-radius:2px;
+}
+.slide-app-name {
+  font-family:var(--font-d);
+  font-size:14px;
+  letter-spacing:0.18em;
+  color:var(--amber-lt);
+  text-transform:uppercase;
+}
+.slide-clock {
+  font-family:var(--font-d);
+  font-size:13px;
+  letter-spacing:0.08em;
+  color:var(--cream-dim);
+  text-align:right;
+  line-height:1.5;
+}
+
+/* ── SLIDE BODY ── */
+.slide-body {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 80px;
+  text-align:center;
+  position:relative;
+}
+
+/* ── SLIDE FOOTER ── */
+.slide-footer {
+  flex-shrink:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 48px;
+  border-top:1px solid rgba(200,134,10,0.1);
+}
+
+/* ── PROGRESS DOTS ── */
+.progress-dots {
+  display:flex; gap:8px; align-items:center;
+}
+.dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--smoke);
+  transition:background 0.3s, transform 0.3s;
+}
+.dot.active {
+  background:var(--amber-lt);
+  transform:scale(1.4);
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  flex:1; margin:0 24px;
+  height:2px;
+  background:rgba(200,134,10,0.15);
+  border-radius:2px;
+  overflow:hidden;
+}
+.progress-bar-fill {
+  height:100%;
+  background:linear-gradient(90deg,var(--amber),var(--amber-lt));
+  width:0%;
+  transition:width linear;
+  border-radius:2px;
+}
+
+/* ══════════════════════════════════════════
+   SLIDE TYPE STYLES
+══════════════════════════════════════════ */
+
+/* ── DATE / WEATHER / NEWS ── */
+.datetime-super {
+  font-family:var(--font-d);
+  font-size:72px;
+  letter-spacing:0.04em;
+  color:var(--amber-lt);
+  line-height:1;
+  margin-bottom:8px;
+}
+.datetime-date {
+  font-family:var(--font-d);
+  font-size:28px;
+  letter-spacing:0.14em;
+  color:var(--cream-dim);
+  text-transform:uppercase;
+  margin-bottom:40px;
+}
+.weather-row {
+  display:flex; gap:48px; align-items:flex-start;
+  margin-bottom:36px;
+}
+.weather-block {
+  text-align:center;
+  min-width:120px;
+}
+.weather-icon { font-size:48px; line-height:1; margin-bottom:8px; }
+.weather-temp {
+  font-family:var(--font-d);
+  font-size:32px;
+  letter-spacing:0.05em;
+  color:var(--cream);
+}
+.weather-label {
+  font-size:16px;
+  color:var(--cream-dim);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+.weather-desc {
+  font-size:18px;
+  color:var(--cream-dim);
+  font-style:italic;
+  margin-top:24px;
+}
+.special-news {
+  margin-top:28px;
+  max-width:700px;
+  padding:20px 32px;
+  border:1px solid rgba(200,134,10,0.3);
+  border-radius:4px;
+  background:rgba(200,134,10,0.06);
+}
+.special-news-label {
+  font-family:var(--font-d);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:var(--amber);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+.special-news-text {
+  font-size:26px;
+  color:var(--cream);
+  line-height:1.5;
+}
+
+/* ── VERSE / READING ── */
+.slide-eyebrow {
+  font-family:var(--font-d);
+  font-size:12px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:24px;
+}
+.verse-ref {
+  font-family:var(--font-d);
+  font-size:18px;
+  letter-spacing:0.14em;
+  color:var(--amber-glow);
+  margin-top:24px;
+  text-transform:uppercase;
+}
+.slide-big-text {
+  font-family:var(--font-b);
+  font-size:clamp(28px,3vw,44px);
+  font-weight:300;
+  line-height:1.65;
+  color:var(--cream);
+  max-width:900px;
+  font-style:italic;
+}
+.slide-body-text {
+  font-size:clamp(22px,2.2vw,34px);
+  line-height:1.65;
+  color:var(--cream);
+  max-width:900px;
+}
+
+/* ── DEVOTION ── */
+.devotion-wrap {
+  display:flex; flex-direction:column; align-items:center; gap:32px;
+  max-width:960px; width:100%;
+}
+.devotion-session-badge {
+  font-family:var(--font-d);
+  font-size:13px;
+  letter-spacing:0.2em;
+  padding:8px 24px;
+  border-radius:2px;
+  text-transform:uppercase;
+}
+.devotion-session-badge.ambition {
+  background:rgba(29,158,117,0.12);
+  border:1px solid var(--teal);
+  color:var(--teal);
+}
+.devotion-session-badge.preparation {
+  background:rgba(200,134,10,0.12);
+  border:1px solid var(--amber);
+  color:var(--amber-lt);
+}
+.devotion-title {
+  font-family:var(--font-d);
+  font-size:clamp(32px,3.5vw,52px);
+  letter-spacing:0.06em;
+  color:var(--cream);
+  text-transform:uppercase;
+}
+.devotion-scripture {
+  font-size:clamp(20px,2vw,30px);
+  font-style:italic;
+  color:var(--amber-glow);
+  font-family:var(--font-b);
+}
+.devotion-points {
+  display:flex; flex-direction:column; gap:14px;
+  text-align:left; width:100%;
+}
+.devotion-point {
+  font-size:clamp(20px,2vw,28px);
+  color:var(--cream-dim);
+  display:flex; align-items:flex-start; gap:16px;
+  line-height:1.5;
+}
+.devotion-point::before {
+  content:'›';
+  color:var(--amber);
+  font-size:1.1em;
+  flex-shrink:0;
+  margin-top:2px;
+}
+
+/* ── SERMON ── */
+.sermon-wrap {
+  max-width:960px; width:100%;
+  text-align:left;
+}
+.sermon-meta {
+  display:flex; gap:24px; align-items:center; margin-bottom:28px;
+  flex-wrap:wrap; justify-content:center;
+}
+.sermon-meta-item {
+  font-family:var(--font-d);
+  font-size:13px;
+  letter-spacing:0.12em;
+  color:var(--cream-dim);
+  text-transform:uppercase;
+}
+.sermon-meta-item span {
+  color:var(--amber-glow);
+}
+.sermon-title {
+  font-family:var(--font-d);
+  font-size:clamp(28px,3vw,46px);
+  letter-spacing:0.06em;
+  color:var(--cream);
+  text-align:center;
+  margin-bottom:32px;
+  text-transform:uppercase;
+}
+.sermon-outline {
+  display:flex; flex-direction:column; gap:16px;
+}
+.outline-point {
+  font-size:clamp(20px,2vw,28px);
+  color:var(--cream-dim);
+  display:flex; align-items:flex-start; gap:16px;
+  line-height:1.5;
+}
+.outline-num {
+  font-family:var(--font-d);
+  font-size:14px;
+  color:var(--amber);
+  min-width:28px;
+  text-align:right;
+  padding-top:4px;
+  flex-shrink:0;
+}
+
+/* ── CHORES ── */
+.chores-wrap {
+  max-width:1100px; width:100%;
+  display:flex; flex-direction:column; gap:24px;
+}
+.chores-title {
+  font-family:var(--font-d);
+  font-size:clamp(22px,2.5vw,36px);
+  letter-spacing:0.1em;
+  color:var(--amber-lt);
+  text-transform:uppercase;
+  text-align:center;
+  margin-bottom:8px;
+}
+.chores-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+}
+.chore-person-card {
+  background:rgba(26,32,53,0.6);
+  border:1px solid rgba(200,134,10,0.15);
+  border-radius:4px;
+  padding:16px 20px;
+}
+.chore-person-name {
+  font-family:var(--font-d);
+  font-size:15px;
+  letter-spacing:0.14em;
+  color:var(--amber-glow);
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+.chore-item {
+  font-size:20px;
+  color:var(--cream-dim);
+  line-height:1.6;
+  padding:2px 0;
+}
+.chore-item::before {
+  content:'· ';
+  color:var(--amber);
+  opacity:0.6;
+}
+
+/* ── TASKS SLIDE ── */
+.tasks-wrap {
+  max-width:1000px; width:100%;
+  display:flex; flex-direction:column; gap:28px;
+}
+.session-section {
+  border-left:3px solid var(--teal);
+  padding-left:20px;
+}
+.session-section.preparation { border-left-color:var(--amber); }
+.session-section.planning { border-left-color:var(--purple); }
+.session-label {
+  font-family:var(--font-d);
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:var(--teal);
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+.session-section.preparation .session-label { color:var(--amber-lt); }
+.session-section.planning .session-label { color:#AFA9EC; }
+.task-item {
+  font-size:24px;
+  color:var(--cream);
+  line-height:1.6;
+  display:flex; align-items:flex-start; gap:14px;
+}
+.task-item::before { content:'›'; color:var(--cream-dim); opacity:0.5; }
+.task-who {
+  font-size:14px;
+  font-family:var(--font-d);
+  color:var(--amber);
+  letter-spacing:0.1em;
+  margin-left:8px;
+  flex-shrink:0;
+}
+
+/* ── DECORATIVE ELEMENTS ── */
+.slide-ornament {
+  width:64px; height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);
+  margin:20px auto;
+}
+
+/* ── BACKGROUND AMBIENT ── */
+.slide-bg {
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+}
+.slide-bg-radial {
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:0.06;
+}
+
+/* ── EMPTY STATE ── */
+.empty-kiosk {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  height:100vh; gap:20px;
+  font-family:var(--font-d);
+  text-align:center;
+}
+.empty-kiosk h1 {
+  font-size:32px; letter-spacing:0.16em; color:var(--amber-lt); text-transform:uppercase;
+}
+.empty-kiosk p {
+  font-size:20px; color:var(--cream-dim); font-family:var(--font-b); max-width:500px; line-height:1.6;
+}
+
+</style>
+</head>
+<body>
+
+<div id="kiosk-wrap">
+  <div id="slides-container"><div class="slide" id="slide-0">
+    <div class="slide-header">
+      <div class="slide-badge">Daily Overview</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div>
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:600px;height:600px;background:var(--amber);top:-100px;right:-100px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="datetime-super">10:15 PM</div>
+      <div class="datetime-date">Thursday, May 14</div>
+      <div class="weather-row">
+      
+        <div class="weather-block">
+          <div class="weather-icon">🌨️</div>
+          <div class="weather-temp">58° / 53°</div>
+          <div class="weather-label">Today</div>
+          <div style="font-size:15px;color:var(--cream-dim);margin-top:4px">Rain</div>
+          <div style="font-size:14px;color:#7FB8E8;margin-top:2px">💧 88%</div>
+        </div>
+        <div class="weather-block">
+          <div class="weather-icon">☁️</div>
+          <div class="weather-temp">64° / 50°</div>
+          <div class="weather-label">Tomorrow</div>
+          <div style="font-size:15px;color:var(--cream-dim);margin-top:4px">Overcast</div>
+          
+        </div>
+        <div class="weather-block">
+          <div class="weather-icon">☁️</div>
+          <div class="weather-temp">69° / 47°</div>
+          <div class="weather-label">Sat</div>
+          <div style="font-size:15px;color:var(--cream-dim);margin-top:4px">Overcast</div>
+          
+        </div>
+    </div>
+      
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot active" id="dot-1"></div><div class="dot" id="dot-2"></div><div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div><div class="dot" id="dot-5"></div><div class="dot" id="dot-6"></div><div class="dot" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar" style="transition: width 8000ms linear; width: 100%;"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">1 / 8</div>
+    </div></div><div class="slide active" id="slide-1">
+    <div class="slide-header">
+      <div class="slide-badge">Memory Verse</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div>
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:500px;height:500px;background:var(--teal);bottom:-80px;left:-80px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Memory Verse of the Week</div>
+      <div class="slide-ornament"></div>
+      <div class="slide-big-text">"No memory verse set for this week."</div>
+      
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot active" id="dot-1"></div><div class="dot" id="dot-2"></div><div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div><div class="dot" id="dot-5"></div><div class="dot" id="dot-6"></div><div class="dot" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">2 / 8</div>
+    </div></div><div class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-badge">Reading</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div>
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:400px;height:400px;background:var(--purple);top:-60px;right:-60px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Today's Reading Assignment</div>
+      <div class="slide-ornament"></div>
+      <div class="slide-body-text">No reading assignment set.</div>
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot" id="dot-1"></div><div class="dot active" id="dot-2"></div><div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div><div class="dot" id="dot-5"></div><div class="dot" id="dot-6"></div><div class="dot" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">3 / 8</div>
+    </div></div><div class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-badge">Morning Devotion</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div>
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:500px;height:500px;background:var(--teal);bottom:-100px;right:-100px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="devotion-wrap">
+        <div class="devotion-session-badge ambition">☀ Ambition — Morning Devotion</div>
+        <div class="devotion-title">Morning Devotion</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot" id="dot-1"></div><div class="dot" id="dot-2"></div><div class="dot active" id="dot-3"></div><div class="dot" id="dot-4"></div><div class="dot" id="dot-5"></div><div class="dot" id="dot-6"></div><div class="dot" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">4 / 8</div>
+    </div></div><div class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-badge">Evening Devotion</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div>
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:500px;height:500px;background:var(--amber);bottom:-100px;right:-100px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="devotion-wrap">
+        <div class="devotion-session-badge preparation">🌙 Preparation — Evening Devotion</div>
+        <div class="devotion-title">Evening Devotion</div>
+        
+        
+        
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot" id="dot-1"></div><div class="dot" id="dot-2"></div><div class="dot" id="dot-3"></div><div class="dot active" id="dot-4"></div><div class="dot" id="dot-5"></div><div class="dot" id="dot-6"></div><div class="dot" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">5 / 8</div>
+    </div></div><div class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-badge">Sermon Review</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div>
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:500px;height:500px;background:var(--red-flag);top:-60px;left:-60px;opacity:0.08"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Last Sunday's Sermon</div>
+      <div class="sermon-wrap">
+        <div class="sermon-meta">
+          
+          
+          
+        </div>
+        <div class="sermon-title">Sunday Sermon Review</div>
+        <div style="color:var(--smoke);font-style:italic;font-size:20px;text-align:center">No outline added yet</div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot" id="dot-1"></div><div class="dot" id="dot-2"></div><div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div><div class="dot active" id="dot-5"></div><div class="dot" id="dot-6"></div><div class="dot" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">6 / 8</div>
+    </div></div><div class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-badge">Chore Rotation</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div>
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:400px;height:400px;background:var(--amber);bottom:-60px;left:-60px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Today's Chore Rotation</div>
+      <div class="chores-wrap">
+        <div class="chores-grid">
+          <div class="chore-person-card">
+            <div class="chore-person-name">🍽 Kitchen Setup</div>
+            <div class="chore-item">Samuel — set table</div><div class="chore-item">Isaiah — set table</div>
+          </div>
+          <div class="chore-person-card">
+            <div class="chore-person-name">🧹 Kitchen Patrol</div>
+            <div class="chore-item">Elijah — full cleanup</div>
+          </div>
+          <div class="chore-person-card">
+            <div class="chore-person-name">🌿 Grounds</div>
+            <div class="chore-item">Samuel — mow</div>
+            <div class="chore-item">Isaiah — trim</div>
+            <div class="chore-item">Elijah — pickup</div>
+          </div>
+          <div class="chore-person-card">
+            <div class="chore-person-name">🍳 Meal Prep</div>
+            <div class="chore-item">Samuel — breakfast</div>
+            <div class="chore-item">Isaiah — lunch</div>
+          </div>
+        </div>
+        <div class="chores-grid" style="margin-top:8px">
+          
+            <div class="chore-person-card" style="padding:10px 16px">
+              <div class="chore-person-name">Samuel</div>
+              <div class="chore-item">Make own bed</div>
+            </div>
+            <div class="chore-person-card" style="padding:10px 16px">
+              <div class="chore-person-name">Isaiah</div>
+              <div class="chore-item">Make own bed</div>
+            </div>
+            <div class="chore-person-card" style="padding:10px 16px">
+              <div class="chore-person-name">Elijah</div>
+              <div class="chore-item">Make own bed</div>
+            </div>
+            <div class="chore-person-card" style="padding:10px 16px">
+              <div class="chore-person-name">Nathan</div>
+              <div class="chore-item">Make own bed</div>
+            </div>
+            <div class="chore-person-card" style="padding:10px 16px">
+              <div class="chore-person-name">Benjamin</div>
+              <div class="chore-item">Make own bed</div>
+            </div>
+            <div class="chore-person-card" style="padding:10px 16px">
+              <div class="chore-person-name">Thomas</div>
+              <div class="chore-item">Make own bed (with help)</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot" id="dot-1"></div><div class="dot" id="dot-2"></div><div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div><div class="dot" id="dot-5"></div><div class="dot active" id="dot-6"></div><div class="dot" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">7 / 8</div>
+    </div></div><div class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-badge">Today's Tasks</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>10:15 PM</div><div>Thursday, May 14</div></div>
+    </div><div class="slide-body">
+      <div class="slide-eyebrow">Today's Tasks</div>
+      <div style="font-size:28px;color:var(--smoke);font-style:italic">No tasks scheduled for today</div>
+    </div>
+    <div class="slide-footer">
+      <div class="progress-dots"><div class="dot" id="dot-0"></div><div class="dot" id="dot-1"></div><div class="dot" id="dot-2"></div><div class="dot" id="dot-3"></div><div class="dot" id="dot-4"></div><div class="dot" id="dot-5"></div><div class="dot" id="dot-6"></div><div class="dot active" id="dot-7"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">8 / 8</div>
+    </div></div></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONFIG — reads from localStorage (set by index.html kiosk admin)
+// ══════════════════════════════════════════════
+
+const SLIDE_DURATION_MS = 8000; // 8 seconds per slide
+const TRANSITION_MS = 700;
+
+let slides = [];
+let currentSlide = 0;
+let progressTimer = null;
+let advanceTimer = null;
+
+// ── LOAD KIOSK DATA ──
+function loadKioskData() {
+  const raw = localStorage.getItem('asp_kiosk');
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch { return null; }
+}
+
+// ── LOAD SUPABASE ITEMS FOR TODAY ──
+function loadSupabaseItems() {
+  const url = localStorage.getItem('asp_sb_url') || '';
+  const key = localStorage.getItem('asp_sb_key') || '';
+  const rawItems = localStorage.getItem('asp_items') || '[]';
+  try { return JSON.parse(rawItems); } catch { return []; }
+}
+
+// ── WEATHER FETCH (Open-Meteo, no key needed) ──
+async function fetchWeather() {
+  try {
+    // Norwich CT: lat 41.5242, lon -72.0759
+    const geoUrl = 'https://geocoding-api.open-meteo.com/v1/search?name=Norwich&country_code=us&count=5';
+    const r = await fetch(geoUrl);
+    const geoData = await r.json();
+    const result = geoData.results?.find(r => r.admin1?.includes('Connecticut')) || geoData.results?.[0];
+    const lat = result?.latitude || 41.5242;
+    const lon = result?.longitude || -72.0759;
+
+    const wUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&forecast_days=3`;
+    const wr = await fetch(wUrl);
+    const wd = await wr.json();
+    return wd;
+  } catch(e) {
+    console.log('Weather fetch failed', e);
+    return null;
+  }
+}
+
+function wmoIcon(code) {
+  if (code === 0) return '☀️';
+  if (code <= 2) return '⛅';
+  if (code <= 3) return '☁️';
+  if (code <= 49) return '🌫️';
+  if (code <= 59) return '🌧️';
+  if (code <= 69) return '🌨️';
+  if (code <= 79) return '🌩️';
+  if (code <= 84) return '🌦️';
+  if (code <= 99) return '⛈️';
+  return '🌡️';
+}
+function wmoDesc(code) {
+  if (code === 0) return 'Clear Sky';
+  if (code <= 2) return 'Partly Cloudy';
+  if (code <= 3) return 'Overcast';
+  if (code <= 49) return 'Foggy';
+  if (code <= 59) return 'Drizzle';
+  if (code <= 69) return 'Rain';
+  if (code <= 79) return 'Snow';
+  if (code <= 84) return 'Rain Showers';
+  if (code <= 99) return 'Thunderstorm';
+  return 'Unknown';
+}
+function dayLabel(offset) {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return offset === 0 ? 'Today' : offset === 1 ? 'Tomorrow' : days[d.getDay()];
+}
+
+// ── CLOCK ──
+function formatClock() {
+  const now = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const h = now.getHours(); const m = String(now.getMinutes()).padStart(2,'0');
+  const ampm = h >= 12 ? 'PM' : 'AM'; const hr = h % 12 || 12;
+  return {
+    time: `${hr}:${m} ${ampm}`,
+    date: `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`
+  };
+}
+
+function slideHeader(badge) {
+  const c = formatClock();
+  return `
+    <div class="slide-header">
+      <div class="slide-badge">${badge}</div>
+      <div class="slide-app-name">The American Shepherd</div>
+      <div class="slide-clock"><div>${c.time}</div><div>${c.date}</div></div>
+    </div>`;
+}
+
+function slideFooter(index, total) {
+  let dots = '';
+  for (let i = 0; i < total; i++) {
+    dots += `<div class="dot${i === index ? ' active' : ''}" id="dot-${i}"></div>`;
+  }
+  return `
+    <div class="slide-footer">
+      <div class="progress-dots">${dots}</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">${index+1} / ${total}</div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+// SLIDE BUILDERS
+// ══════════════════════════════════════════════
+
+function buildDateWeatherSlide(data, weather) {
+  const c = formatClock();
+  let weatherHtml = '<div class="weather-desc" style="color:var(--smoke);font-style:italic">Weather unavailable</div>';
+
+  if (weather?.daily) {
+    const d = weather.daily;
+    const days = [0,1,2].map(i => ({
+      label: dayLabel(i),
+      icon: wmoIcon(d.weathercode[i]),
+      high: Math.round(d.temperature_2m_max[i]),
+      low: Math.round(d.temperature_2m_min[i]),
+      desc: wmoDesc(d.weathercode[i]),
+      precip: d.precipitation_probability_max[i]
+    }));
+
+    weatherHtml = `<div class="weather-row">
+      ${days.map(day => `
+        <div class="weather-block">
+          <div class="weather-icon">${day.icon}</div>
+          <div class="weather-temp">${day.high}° / ${day.low}°</div>
+          <div class="weather-label">${day.label}</div>
+          <div style="font-size:15px;color:var(--cream-dim);margin-top:4px">${day.desc}</div>
+          ${day.precip > 20 ? `<div style="font-size:14px;color:#7FB8E8;margin-top:2px">💧 ${day.precip}%</div>` : ''}
+        </div>`).join('')}
+    </div>`;
+  }
+
+  const news = data?.specialNews?.trim();
+  const newsHtml = news ? `
+    <div class="special-news">
+      <div class="special-news-label">⚑ Special Notice</div>
+      <div class="special-news-text">${news}</div>
+    </div>` : '';
+
+  return `
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:600px;height:600px;background:var(--amber);top:-100px;right:-100px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="datetime-super">${c.time}</div>
+      <div class="datetime-date">${c.date}</div>
+      ${weatherHtml}
+      ${newsHtml}
+    </div>`;
+}
+
+function buildVerseSlide(data) {
+  const verse = data?.memoryVerse || 'No memory verse set for this week.';
+  const ref = data?.memoryVerseRef || '';
+  return `
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:500px;height:500px;background:var(--teal);bottom:-80px;left:-80px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Memory Verse of the Week</div>
+      <div class="slide-ornament"></div>
+      <div class="slide-big-text">"${verse}"</div>
+      ${ref ? `<div class="verse-ref">— ${ref}</div>` : ''}
+    </div>`;
+}
+
+function buildReadingSlide(data) {
+  const reading = data?.readingAssignment || 'No reading assignment set.';
+  return `
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:400px;height:400px;background:var(--purple);top:-60px;right:-60px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Today's Reading Assignment</div>
+      <div class="slide-ornament"></div>
+      <div class="slide-body-text">${reading}</div>
+    </div>`;
+}
+
+function buildDevotionSlide(data, session) {
+  const isAM = session === 'ambition';
+  const d = isAM ? data?.ambition : data?.preparation;
+  const title = d?.title || (isAM ? 'Morning Devotion' : 'Evening Devotion');
+  const scripture = d?.scripture || '';
+  const points = d?.points || [];
+  const leader = d?.leader || '';
+
+  return `
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:500px;height:500px;background:${isAM ? 'var(--teal)' : 'var(--amber)'};bottom:-100px;right:-100px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="devotion-wrap">
+        <div class="devotion-session-badge ${session}">${isAM ? '☀ Ambition — Morning Devotion' : '🌙 Preparation — Evening Devotion'}</div>
+        <div class="devotion-title">${title}</div>
+        ${scripture ? `<div class="devotion-scripture">${scripture}</div>` : ''}
+        ${leader ? `<div style="font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;color:var(--cream-dim)">Led by ${leader}</div>` : ''}
+        ${points.length ? `<div class="devotion-points">${points.map(p=>`<div class="devotion-point">${p}</div>`).join('')}</div>` : ''}
+      </div>
+    </div>`;
+}
+
+function buildSermonSlide(data) {
+  const s = data?.sermon || {};
+  const title = s.title || 'Sunday Sermon Review';
+  const speaker = s.speaker || '';
+  const scripture = s.scripture || '';
+  const outline = s.outline || [];
+  const date = s.date || '';
+
+  return `
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:500px;height:500px;background:var(--red-flag);top:-60px;left:-60px;opacity:0.08"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Last Sunday's Sermon</div>
+      <div class="sermon-wrap">
+        <div class="sermon-meta">
+          ${date ? `<div class="sermon-meta-item">Date: <span>${date}</span></div>` : ''}
+          ${speaker ? `<div class="sermon-meta-item">Speaker: <span>${speaker}</span></div>` : ''}
+          ${scripture ? `<div class="sermon-meta-item">Text: <span>${scripture}</span></div>` : ''}
+        </div>
+        <div class="sermon-title">${title}</div>
+        ${outline.length ? `<div class="sermon-outline">${outline.map((pt,i)=>`
+          <div class="outline-point">
+            <span class="outline-num">${i+1}.</span>
+            <span>${pt}</span>
+          </div>`).join('')}</div>` : '<div style="color:var(--smoke);font-style:italic;font-size:20px;text-align:center">No outline added yet</div>'}
+      </div>
+    </div>`;
+}
+
+function buildChoresSlide(data) {
+  const weekNum = getWeekNumber();
+  const ALL_CHILDREN = ['Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas'];
+  const OLDER_BOYS = ['Samuel','Isaiah','Elijah','Nathan','Benjamin'];
+  const THOMAS_MODS = {
+    'Make own bed':'Make own bed (with help)',
+    'Clean own bathroom sink & toilet':'Wipe sink (with help)',
+    'Vacuum living room':'Pick up before vacuum',
+    'Wash and dry dishes / load dishwasher':'Dry dishes (plastic only)',
+    'Roll trash cans to curb':'Help adult with trash'
+  };
+  function rotateArr(arr,n){return arr.slice(n%arr.length).concat(arr.slice(0,n%arr.length));}
+
+  // Kitchen setup pair
+  const idx = (new Date().getDay() + weekNum) % ALL_CHILDREN.length;
+  const setupPair = [ALL_CHILDREN[idx % ALL_CHILDREN.length], ALL_CHILDREN[(idx+1) % ALL_CHILDREN.length]];
+
+  // Patrol
+  const patrol = ALL_CHILDREN[weekNum % ALL_CHILDREN.length];
+
+  // Grounds
+  const older = rotateArr(OLDER_BOYS, weekNum);
+  const grounds = {mow:older[0], trim:older[1%OLDER_BOYS.length], pickup:older[2%OLDER_BOYS.length]};
+
+  // Meal prep
+  const mealprep = {breakfast:OLDER_BOYS[weekNum%OLDER_BOYS.length], lunch:OLDER_BOYS[(weekNum+1)%OLDER_BOYS.length]};
+
+  // Personal chores (rotate per person)
+  const personalChores = ['Make own bed','Clean own bedroom','Put away own clothes','Clean own bathroom sink & toilet'];
+  const personalMap = {};
+  ALL_CHILDREN.forEach((p,i) => {
+    let chore = personalChores[weekNum % personalChores.length];
+    if(p === 'Thomas' && THOMAS_MODS[chore]) chore = THOMAS_MODS[chore];
+    personalMap[p] = chore;
+  });
+
+  return `
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:400px;height:400px;background:var(--amber);bottom:-60px;left:-60px;"></div>
+    </div>
+    <div class="slide-body">
+      <div class="slide-eyebrow">Today's Chore Rotation</div>
+      <div class="chores-wrap">
+        <div class="chores-grid">
+          <div class="chore-person-card">
+            <div class="chore-person-name">🍽 Kitchen Setup</div>
+            ${setupPair.map(p=>`<div class="chore-item">${p} — set table</div>`).join('')}
+          </div>
+          <div class="chore-person-card">
+            <div class="chore-person-name">🧹 Kitchen Patrol</div>
+            <div class="chore-item">${patrol} — full cleanup</div>
+          </div>
+          <div class="chore-person-card">
+            <div class="chore-person-name">🌿 Grounds</div>
+            <div class="chore-item">${grounds.mow} — mow</div>
+            <div class="chore-item">${grounds.trim} — trim</div>
+            <div class="chore-item">${grounds.pickup} — pickup</div>
+          </div>
+          <div class="chore-person-card">
+            <div class="chore-person-name">🍳 Meal Prep</div>
+            <div class="chore-item">${mealprep.breakfast} — breakfast</div>
+            <div class="chore-item">${mealprep.lunch} — lunch</div>
+          </div>
+        </div>
+        <div class="chores-grid" style="margin-top:8px">
+          ${ALL_CHILDREN.map(p=>`
+            <div class="chore-person-card" style="padding:10px 16px">
+              <div class="chore-person-name">${p}</div>
+              <div class="chore-item">${personalMap[p]}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildTasksSlide(items) {
+  const today = new Date().toISOString().slice(0,10);
+  const todayItems = items.filter(i => !i.done && (
+    i.start_date === today ||
+    (i.start_date <= today && i.end_date >= today) ||
+    i.repeat !== 'none'
+  ));
+
+  const bySession = {ambition:[], preparation:[], planning:[], none:[]};
+  todayItems.forEach(i => {
+    const key = ['ambition','preparation','planning'].includes(i.phase) ? i.phase : 'none';
+    bySession[key].push(i);
+  });
+
+  if (!todayItems.length) {
+    return `<div class="slide-body">
+      <div class="slide-eyebrow">Today's Tasks</div>
+      <div style="font-size:28px;color:var(--smoke);font-style:italic">No tasks scheduled for today</div>
+    </div>`;
+  }
+
+  const sessions = [
+    {key:'ambition', label:'AMBITION — Morning'},
+    {key:'preparation', label:'PREPARATION — Evening'},
+    {key:'planning', label:'PLANNING — Saturday'},
+    {key:'none', label:'General'}
+  ];
+
+  return `
+    <div class="slide-bg">
+      <div class="slide-bg-radial" style="width:400px;height:400px;background:var(--teal);top:-60px;right:-60px;"></div>
+    </div>
+    <div class="slide-body" style="align-items:flex-start;text-align:left">
+      <div class="slide-eyebrow" style="align-self:center">Today's Tasks &amp; Events</div>
+      <div class="tasks-wrap">
+        ${sessions.filter(s=>bySession[s.key].length>0).map(s=>`
+          <div class="session-section ${s.key}">
+            <div class="session-label">${s.label}</div>
+            ${bySession[s.key].slice(0,4).map(i=>`
+              <div class="task-item">${i.text}<span class="task-who">${i.who}</span></div>`).join('')}
+            ${bySession[s.key].length > 4 ? `<div style="font-size:18px;color:var(--smoke);font-style:italic;padding-left:22px">+${bySession[s.key].length-4} more</div>` : ''}
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function getWeekNumber() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(),0,1);
+  const offset = parseInt(localStorage.getItem('asp_rot_offset')||'0');
+  return Math.floor((now-start)/(7*24*3600*1000)) + 1 + offset;
+}
+
+// ══════════════════════════════════════════════
+// SLIDE ASSEMBLY
+// ══════════════════════════════════════════════
+
+function assembleSlides(data, weather, items) {
+  const defs = [
+    {id:'datetime', badge:'Daily Overview', content: buildDateWeatherSlide(data, weather)},
+    {id:'verse',    badge:'Memory Verse',   content: buildVerseSlide(data)},
+    {id:'reading',  badge:'Reading',        content: buildReadingSlide(data)},
+    {id:'ambition', badge:'Morning Devotion', content: buildDevotionSlide(data,'ambition')},
+    {id:'preparation', badge:'Evening Devotion', content: buildDevotionSlide(data,'preparation')},
+    {id:'sermon',   badge:'Sermon Review',  content: buildSermonSlide(data)},
+    {id:'chores',   badge:'Chore Rotation', content: buildChoresSlide(data)},
+    {id:'tasks',    badge:'Today\'s Tasks', content: buildTasksSlide(items)},
+  ];
+
+  return defs;
+}
+
+// ══════════════════════════════════════════════
+// RENDER & ANIMATION
+// ══════════════════════════════════════════════
+
+function renderSlides(defs) {
+  const container = document.getElementById('slides-container');
+  container.innerHTML = '';
+  const total = defs.length;
+
+  defs.forEach((def, idx) => {
+    const el = document.createElement('div');
+    el.className = 'slide' + (idx === 0 ? ' active' : '');
+    el.id = `slide-${idx}`;
+    el.innerHTML = slideHeader(def.badge) + def.content + slideFooter(idx, total);
+    container.appendChild(el);
+  });
+
+  slides = defs;
+  currentSlide = 0;
+  startProgress();
+}
+
+function startProgress() {
+  clearInterval(progressTimer);
+  clearTimeout(advanceTimer);
+
+  const pbar = document.getElementById('pbar');
+  if (pbar) { pbar.style.transition = 'none'; pbar.style.width = '0%'; }
+
+  setTimeout(() => {
+    if (pbar) {
+      pbar.style.transition = `width ${SLIDE_DURATION_MS}ms linear`;
+      pbar.style.width = '100%';
+    }
+  }, 50);
+
+  advanceTimer = setTimeout(nextSlide, SLIDE_DURATION_MS);
+}
+
+function nextSlide() {
+  const total = slides.length;
+  if (!total) return;
+
+  const oldEl = document.getElementById(`slide-${currentSlide}`);
+  currentSlide = (currentSlide + 1) % total;
+  const newEl = document.getElementById(`slide-${currentSlide}`);
+
+  if (oldEl) oldEl.classList.add('exit');
+  if (newEl) newEl.classList.add('active');
+
+  setTimeout(() => {
+    if (oldEl) { oldEl.classList.remove('active','exit'); }
+    // Update dots on new slide
+    updateDots();
+    startProgress();
+    // Also update the clock on the new slide
+    updateClocks();
+  }, TRANSITION_MS);
+}
+
+function updateDots() {
+  const total = slides.length;
+  for (let i = 0; i < total; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (dot) dot.classList.toggle('active', i === currentSlide);
+  }
+}
+
+function updateClocks() {
+  const c = formatClock();
+  document.querySelectorAll('.slide-clock').forEach(el => {
+    el.innerHTML = `<div>${c.time}</div><div>${c.date}</div>`;
+  });
+}
+
+// Touch/click to advance
+document.addEventListener('click', nextSlide);
+document.addEventListener('keydown', e => { if(e.key === ' ' || e.key === 'ArrowRight') nextSlide(); });
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+
+async function init() {
+  const data = loadKioskData() || {};
+  const items = loadSupabaseItems();
+  let weather = null;
+  try { weather = await fetchWeather(); } catch {}
+
+  const defs = assembleSlides(data, weather, items);
+
+  if (!defs.length) {
+    document.getElementById('kiosk-wrap').innerHTML = `
+      <div class="empty-kiosk">
+        <h1>Kiosk Display</h1>
+        <p>No slides configured. Open The American Shepherd planner, go to Settings → Kiosk Admin, and fill in the week's content.</p>
+      </div>`;
+    return;
+  }
+
+  renderSlides(defs);
+
+  // Refresh clock every minute
+  setInterval(updateClocks, 60000);
+
+  // Reload page at midnight to get fresh data
+  const now = new Date();
+  const midnight = new Date(now); midnight.setHours(24,0,5,0);
+  setTimeout(() => location.reload(), midnight - now);
+}
+
+init();
+</script>
+
+
+</body></html>
 </body></html>
