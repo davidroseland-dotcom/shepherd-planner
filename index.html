@@ -11,7 +11,7 @@
 <title>The American Shepherd</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="The%20American%20Shepherd%201_files/css2.css" rel="stylesheet">
+<link href="The%20American%20Shepherd_files/css2.css" rel="stylesheet">
 <style>
 :root{
   --navy:#0e1118;--navy-mid:#161c2a;--navy-soft:#1e2640;--navy-card:#1a2035;--navy-card2:#151c30;
@@ -44,8 +44,8 @@ body{color:var(--cream);font-family:var(--font-b);font-size:24px;line-height:1.5
 .hero-img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,24,0.1) 0%,rgba(14,17,24,0.5) 55%,rgba(14,17,24,0.93) 100%)}
 .hero-content{position:absolute;bottom:0;left:0;right:0;padding:12px 18px 12px;display:flex;align-items:flex-end;justify-content:space-between}
-.app-name{font-family:var(--font-d);font-size:18px;letter-spacing:0.2em;color:var(--amber-lt);text-transform:uppercase;line-height:1.3}
-.app-tagline{font-size:15px;letter-spacing:0.08em;color:var(--cream-dim);font-style:italic}
+.app-name{font-family:var(--font-d);font-size:11px;letter-spacing:0.18em;color:var(--cream-dim);text-transform:uppercase;line-height:1.4;font-style:italic}
+.app-tagline{font-family:var(--font-d);font-size:20px;letter-spacing:0.22em;color:var(--amber-lt);text-transform:uppercase;line-height:1.3;font-style:normal}
 .hdr-date{text-align:right;font-family:var(--font-d);font-size:14px;letter-spacing:0.05em;color:var(--cream-dim);line-height:1.5}
 .hdr-date-day{color:var(--amber-lt);font-size:16px}
 
@@ -331,88 +331,70 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 .psrow-input{flex:1;padding:6px 10px;background:var(--navy-card2);border:1px solid var(--border);border-radius:3px;color:var(--cream);font-family:var(--font-b);font-size:22px;outline:none;width:80px;text-align:center;-moz-appearance:textfield}
 .psrow-input::-webkit-inner-spin-button,.psrow-input::-webkit-outer-spin-button{-webkit-appearance:none}
 
-/* ══ KIOSK OVERLAY ══ */
-#kiosk-overlay{position:fixed;inset:0;background:var(--navy);z-index:600;display:none;flex-direction:column}
-#kiosk-overlay.active{display:flex}
-#kiosk-slides-container{position:relative;flex:1;overflow:hidden}
-.kslide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;transform:translateX(60px);transition:opacity 0.7s ease,transform 0.7s ease;pointer-events:none;overflow:hidden}
-.kslide.active{opacity:1;transform:translateX(0);pointer-events:auto}
-.kslide.exit{opacity:0;transform:translateX(-60px)}
-.kslide-header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:18px 40px 14px;border-bottom:1px solid rgba(200,134,10,0.2);background:rgba(14,17,24,0.7)}
-.kslide-badge{font-family:var(--font-d);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);padding:5px 14px;border:1px solid rgba(200,134,10,0.4);border-radius:2px}
-.kslide-appname{font-family:var(--font-d);font-size:14px;letter-spacing:0.18em;color:var(--amber-lt);text-transform:uppercase}
-.kslide-clock{font-family:var(--font-d);font-size:13px;letter-spacing:0.08em;color:var(--cream-dim);text-align:right;line-height:1.5}
-.kslide-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 72px;text-align:center;position:relative}
-.kslide-footer{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:10px 40px;border-top:1px solid rgba(200,134,10,0.1)}
-.kprogress-dots{display:flex;gap:7px;align-items:center}
-.kdot{width:7px;height:7px;border-radius:50%;background:var(--smoke);transition:background 0.3s,transform 0.3s}
-.kdot.active{background:var(--amber-lt);transform:scale(1.4)}
-.kpbar-wrap{flex:1;margin:0 20px;height:2px;background:rgba(200,134,10,0.15);border-radius:2px;overflow:hidden}
-.kpbar-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber-lt));width:0%;border-radius:2px}
-.kslide-bg{position:absolute;inset:0;pointer-events:none;z-index:-1}
-.kslide-bg-r{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.06}
-/* kiosk content types */
-.k-datetime-super{font-family:var(--font-d);font-size:clamp(52px,6vw,80px);letter-spacing:0.04em;color:var(--amber-lt);line-height:1;margin-bottom:8px}
-.k-datetime-date{font-family:var(--font-d);font-size:clamp(20px,2.5vw,30px);letter-spacing:0.14em;color:var(--cream-dim);text-transform:uppercase;margin-bottom:36px}
-.k-weather-row{display:flex;gap:48px;align-items:flex-start;margin-bottom:28px}
-.k-weather-block{text-align:center;min-width:100px}
-.k-weather-icon{font-size:44px;line-height:1;margin-bottom:6px}
-.k-weather-temp{font-family:var(--font-d);font-size:28px;letter-spacing:0.05em;color:var(--cream)}
-.k-weather-label{font-size:14px;color:var(--cream-dim);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px}
-.k-special-news{margin-top:24px;max-width:680px;padding:18px 28px;border:1px solid rgba(200,134,10,0.3);border-radius:4px;background:rgba(200,134,10,0.06)}
-.k-special-news-label{font-family:var(--font-d);font-size:11px;letter-spacing:0.2em;color:var(--amber);margin-bottom:8px;text-transform:uppercase}
-.k-special-news-text{font-size:clamp(20px,2vw,28px);color:var(--cream);line-height:1.5}
-.k-eyebrow{font-family:var(--font-d);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:20px}
-.k-ornament{width:64px;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent);margin:16px auto}
-.k-big-text{font-family:var(--font-b);font-size:clamp(26px,2.8vw,44px);font-weight:300;line-height:1.65;color:var(--cream);max-width:880px;font-style:italic}
-.k-body-text{font-size:clamp(20px,2.2vw,34px);line-height:1.65;color:var(--cream);max-width:880px}
-.k-verse-ref{font-family:var(--font-d);font-size:17px;letter-spacing:0.14em;color:var(--amber-glow);margin-top:20px;text-transform:uppercase}
-.k-devotion-wrap{display:flex;flex-direction:column;align-items:center;gap:28px;max-width:940px;width:100%}
-.k-devotion-badge{font-family:var(--font-d);font-size:13px;letter-spacing:0.2em;padding:7px 22px;border-radius:2px;text-transform:uppercase}
-.k-devotion-badge.ambition{background:rgba(29,158,117,0.12);border:1px solid var(--teal);color:var(--teal)}
-.k-devotion-badge.preparation{background:rgba(200,134,10,0.12);border:1px solid var(--amber);color:var(--amber-lt)}
-.k-devotion-title{font-family:var(--font-d);font-size:clamp(28px,3.2vw,50px);letter-spacing:0.06em;color:var(--cream);text-transform:uppercase}
-.k-devotion-scripture{font-size:clamp(18px,1.9vw,28px);font-style:italic;color:var(--amber-glow)}
-.k-devotion-points{display:flex;flex-direction:column;gap:12px;text-align:left;width:100%}
-.k-devotion-point{font-size:clamp(18px,1.9vw,26px);color:var(--cream-dim);display:flex;align-items:flex-start;gap:14px;line-height:1.5}
-.k-devotion-point::before{content:'›';color:var(--amber);font-size:1.1em;flex-shrink:0;margin-top:2px}
-.k-sermon-wrap{max-width:940px;width:100%;text-align:left}
-.k-sermon-meta{display:flex;gap:20px;align-items:center;margin-bottom:24px;flex-wrap:wrap;justify-content:center}
-.k-sermon-meta-item{font-family:var(--font-d);font-size:12px;letter-spacing:0.12em;color:var(--cream-dim);text-transform:uppercase}
+/* ══ KIOSK STYLES ══ */
+.k-slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;transform:translateX(60px);transition:opacity 0.7s ease,transform 0.7s ease;pointer-events:none;overflow:hidden}
+.k-slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.k-slide.exit{opacity:0;transform:translateX(-60px)}
+.k-header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:20px 48px 16px;border-bottom:1px solid rgba(200,134,10,0.2);background:rgba(14,17,24,0.6)}
+.k-badge{font-family:var(--font-d);font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);padding:5px 14px;border:1px solid rgba(200,134,10,0.4);border-radius:2px}
+.k-app-name{font-family:var(--font-d);font-size:14px;letter-spacing:0.18em;color:var(--amber-lt);text-transform:uppercase}
+.k-clock{font-family:var(--font-d);font-size:13px;letter-spacing:0.08em;color:var(--cream-dim);text-align:right;line-height:1.5}
+.k-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 80px;text-align:center;position:relative;overflow:hidden}
+.k-footer{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:12px 48px;border-top:1px solid rgba(200,134,10,0.1)}
+.k-dots{display:flex;gap:8px;align-items:center}
+.k-dot{width:8px;height:8px;border-radius:50%;background:var(--smoke);transition:background 0.3s,transform 0.3s}
+.k-dot.active{background:var(--amber-lt);transform:scale(1.4)}
+.k-pbar-wrap{flex:1;margin:0 24px;height:2px;background:rgba(200,134,10,0.15);border-radius:2px;overflow:hidden}
+.k-pbar{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber-lt));width:0%;border-radius:2px}
+.k-radial{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.06;pointer-events:none;z-index:-1}
+.k-eyebrow{font-family:var(--font-d);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--amber);margin-bottom:24px}
+.k-ornament{width:64px;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent);margin:20px auto}
+.k-big-text{font-family:var(--font-b);font-size:clamp(28px,3vw,44px);font-weight:300;line-height:1.65;color:var(--cream);max-width:900px;font-style:italic}
+.k-body-text{font-size:clamp(22px,2.2vw,34px);line-height:1.65;color:var(--cream);max-width:900px}
+.k-verse-ref{font-family:var(--font-d);font-size:18px;letter-spacing:0.14em;color:var(--amber-glow);margin-top:24px;text-transform:uppercase}
+.k-dt-super{font-family:var(--font-d);font-size:clamp(48px,6vw,72px);letter-spacing:0.04em;color:var(--amber-lt);line-height:1;margin-bottom:8px}
+.k-dt-date{font-family:var(--font-d);font-size:clamp(18px,2vw,28px);letter-spacing:0.14em;color:var(--cream-dim);text-transform:uppercase;margin-bottom:40px}
+.k-weather-row{display:flex;gap:48px;align-items:flex-start;margin-bottom:36px}
+.k-weather-block{text-align:center;min-width:120px}
+.k-weather-icon{font-size:48px;line-height:1;margin-bottom:8px}
+.k-weather-temp{font-family:var(--font-d);font-size:32px;letter-spacing:0.05em;color:var(--cream)}
+.k-weather-label{font-size:16px;color:var(--cream-dim);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px}
+.k-special-news{margin-top:28px;max-width:700px;padding:20px 32px;border:1px solid rgba(200,134,10,0.3);border-radius:4px;background:rgba(200,134,10,0.06)}
+.k-sn-label{font-family:var(--font-d);font-size:11px;letter-spacing:0.2em;color:var(--amber);margin-bottom:10px;text-transform:uppercase}
+.k-sn-text{font-size:26px;color:var(--cream);line-height:1.5}
+.k-dev-wrap{display:flex;flex-direction:column;align-items:center;gap:32px;max-width:960px;width:100%}
+.k-dev-badge{font-family:var(--font-d);font-size:13px;letter-spacing:0.2em;padding:8px 24px;border-radius:2px;text-transform:uppercase}
+.k-dev-badge.ambition{background:rgba(29,158,117,0.12);border:1px solid var(--teal);color:var(--teal)}
+.k-dev-badge.preparation{background:rgba(200,134,10,0.12);border:1px solid var(--amber);color:var(--amber-lt)}
+.k-dev-title{font-family:var(--font-d);font-size:clamp(32px,3.5vw,52px);letter-spacing:0.06em;color:var(--cream);text-transform:uppercase}
+.k-dev-scripture{font-size:clamp(20px,2vw,30px);font-style:italic;color:var(--amber-glow);font-family:var(--font-b)}
+.k-dev-points{display:flex;flex-direction:column;gap:14px;text-align:left;width:100%}
+.k-dev-point{font-size:clamp(20px,2vw,28px);color:var(--cream-dim);display:flex;align-items:flex-start;gap:16px;line-height:1.5}
+.k-dev-point::before{content:"›";color:var(--amber);font-size:1.1em;flex-shrink:0;margin-top:2px}
+.k-sermon-wrap{max-width:960px;width:100%;text-align:left}
+.k-sermon-meta{display:flex;gap:24px;align-items:center;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
+.k-sermon-meta-item{font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;color:var(--cream-dim);text-transform:uppercase}
 .k-sermon-meta-item span{color:var(--amber-glow)}
-.k-sermon-title{font-family:var(--font-d);font-size:clamp(24px,2.8vw,44px);letter-spacing:0.06em;color:var(--cream);text-align:center;margin-bottom:28px;text-transform:uppercase}
-.k-sermon-outline{display:flex;flex-direction:column;gap:14px}
-.k-outline-point{font-size:clamp(18px,1.9vw,26px);color:var(--cream-dim);display:flex;align-items:flex-start;gap:14px;line-height:1.5}
-.k-outline-num{font-family:var(--font-d);font-size:13px;color:var(--amber);min-width:26px;text-align:right;padding-top:4px;flex-shrink:0}
-.k-chores-wrap{max-width:1080px;width:100%;display:flex;flex-direction:column;gap:20px}
-.k-chores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.k-chore-card{background:rgba(26,32,53,0.6);border:1px solid rgba(200,134,10,0.15);border-radius:4px;padding:14px 18px}
-.k-chore-card-name{font-family:var(--font-d);font-size:14px;letter-spacing:0.14em;color:var(--amber-glow);margin-bottom:6px;text-transform:uppercase}
-.k-chore-item{font-size:18px;color:var(--cream-dim);line-height:1.6;padding:1px 0}
-.k-chore-item::before{content:'· ';color:var(--amber);opacity:0.6}
-.k-tasks-wrap{max-width:980px;width:100%;display:flex;flex-direction:column;gap:24px}
-.k-session-section{border-left:3px solid var(--teal);padding-left:18px}
-.k-session-section.preparation{border-left-color:var(--amber)}
-.k-session-section.planning{border-left-color:var(--purple)}
-.k-session-section.none{border-left-color:var(--smoke)}
-.k-session-label{font-family:var(--font-d);font-size:11px;letter-spacing:0.2em;color:var(--teal);margin-bottom:8px;text-transform:uppercase}
-.k-session-section.preparation .k-session-label{color:var(--amber-lt)}
-.k-session-section.planning .k-session-label{color:#AFA9EC}
-.k-session-section.none .k-session-label{color:var(--smoke)}
-.k-task-item{font-size:clamp(18px,2vw,26px);color:var(--cream);line-height:1.6;display:flex;align-items:flex-start;gap:12px}
-.k-task-item::before{content:'›';color:var(--cream-dim);opacity:0.5}
-.k-task-who{font-size:13px;font-family:var(--font-d);color:var(--amber);letter-spacing:0.1em;margin-left:6px;flex-shrink:0}
-/* kiosk close button */
-#kiosk-close{position:fixed;top:14px;right:14px;z-index:700;background:rgba(14,17,24,0.85);border:1px solid rgba(200,134,10,0.3);color:var(--cream-dim);font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;padding:7px 14px;border-radius:2px;cursor:pointer;transition:all 0.2s;display:none}
-#kiosk-close:hover{border-color:var(--amber);color:var(--amber)}
-#kiosk-overlay.active~#kiosk-close,#kiosk-close.visible{display:block}
-/* kiosk admin form */
-.kiosk-date-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.kiosk-date-tab{padding:6px 14px;border-radius:2px;border:1px solid var(--border-lt);background:var(--navy-card);color:var(--cream-dim);font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;cursor:pointer;transition:all 0.2s}
-.kiosk-date-tab.active{border-color:var(--amber);color:var(--amber-lt);background:rgba(200,134,10,0.1)}
-.kiosk-field-group{background:var(--navy-card);border:1px solid var(--border-lt);border-radius:3px;padding:12px 14px;margin-bottom:8px}
-.kiosk-field-label{font-family:var(--font-d);font-size:11px;letter-spacing:0.14em;color:var(--amber);text-transform:uppercase;margin-bottom:6px;display:block}
-.kiosk-field-sub{font-size:14px;color:var(--smoke);margin-bottom:8px;font-style:italic}
+.k-sermon-title{font-family:var(--font-d);font-size:clamp(28px,3vw,46px);letter-spacing:0.06em;color:var(--cream);text-align:center;margin-bottom:32px;text-transform:uppercase}
+.k-sermon-outline{display:flex;flex-direction:column;gap:16px}
+.k-outline-point{font-size:clamp(20px,2vw,28px);color:var(--cream-dim);display:flex;align-items:flex-start;gap:16px;line-height:1.5}
+.k-outline-num{font-family:var(--font-d);font-size:14px;color:var(--amber);min-width:28px;text-align:right;padding-top:4px;flex-shrink:0}
+.k-chores-wrap{max-width:1100px;width:100%;display:flex;flex-direction:column;gap:24px}
+.k-chores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.k-chore-card{background:rgba(26,32,53,0.6);border:1px solid rgba(200,134,10,0.15);border-radius:4px;padding:16px 20px}
+.k-chore-card-name{font-family:var(--font-d);font-size:15px;letter-spacing:0.14em;color:var(--amber-glow);margin-bottom:8px;text-transform:uppercase}
+.k-chore-item{font-size:20px;color:var(--cream-dim);line-height:1.6;padding:2px 0}
+.k-chore-item::before{content:"· ";color:var(--amber);opacity:0.6}
+.k-tasks-wrap{max-width:1000px;width:100%;display:flex;flex-direction:column;gap:28px}
+.k-sess-section{border-left:3px solid var(--teal);padding-left:20px}
+.k-sess-section.preparation{border-left-color:var(--amber)}
+.k-sess-section.planning{border-left-color:var(--purple)}
+.k-sess-label{font-family:var(--font-d);font-size:11px;letter-spacing:0.2em;color:var(--teal);margin-bottom:10px;text-transform:uppercase}
+.k-sess-section.preparation .k-sess-label{color:var(--amber-lt)}
+.k-sess-section.planning .k-sess-label{color:#AFA9EC}
+.k-task-item{font-size:24px;color:var(--cream);line-height:1.6;display:flex;align-items:flex-start;gap:14px}
+.k-task-item::before{content:"›";color:var(--cream-dim);opacity:0.5}
+.k-task-who{font-size:14px;font-family:var(--font-d);color:var(--amber);letter-spacing:0.1em;margin-left:8px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -490,6 +472,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
   <button class="ntab" onclick="showView('calendar')">Calendar</button>
   <button class="ntab" onclick="showView('family')">Family</button>
   <button class="ntab" onclick="showView('settings')">Settings</button>
+  <button class="ntab" onclick="openKiosk()" style="color:var(--purple)">Kiosk</button>
   <button class="ntab" onclick="openChores()" style="color:var(--amber)">Chores</button>
 </nav>
 
@@ -617,65 +600,46 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
     <button class="btn btn-sm" onclick="savePins()">Save PINs</button>
   </div>
   <div class="divider"></div>
-  <div class="sh">Kiosk Display <span style="font-size:11px;color:var(--smoke)">(TV / Screen)</span></div>
-  <button class="btn" onclick="openKiosk()" style="margin-bottom:12px">▶ Show Kiosk</button>
-  <div style="font-size:20px;color:var(--cream-dim);margin-bottom:14px;font-style:italic">Pre-load content for any day below. Kiosk reads today's content automatically and refreshes every 30 seconds when open.</div>
-  <!-- Date tabs -->
-  <div class="kiosk-date-tabs" id="kiosk-date-tabs"></div>
-  <div style="font-family:var(--font-d);font-size:12px;letter-spacing:0.14em;color:var(--amber);margin-bottom:10px" id="kiosk-admin-date-label"></div>
-  <!-- Special Notice -->
-  <div class="kiosk-field-group">
-    <span class="kiosk-field-label">⚑ Special Notice / Announcement</span>
-    <textarea id="k-special-news" rows="2" style="width:100%;background:var(--navy);border:1px solid var(--border);border-radius:3px;padding:10px;color:var(--cream);font-family:var(--font-b);font-size:20px;resize:vertical" placeholder="Appears on the opening slide…"></textarea>
-  </div>
-  <!-- Memory Verse -->
-  <div class="kiosk-field-group">
-    <span class="kiosk-field-label">✦ Memory Verse</span>
-    <input type="text" id="k-memory-verse" placeholder="Verse text…" style="margin-bottom:6px">
-    <input type="text" id="k-memory-verse-ref" placeholder="Reference (e.g. Proverbs 3:5–6)">
-  </div>
-  <!-- Reading -->
-  <div class="kiosk-field-group">
-    <span class="kiosk-field-label">📖 Reading Assignment</span>
-    <textarea id="k-reading" rows="2" style="width:100%;background:var(--navy);border:1px solid var(--border);border-radius:3px;padding:10px;color:var(--cream);font-family:var(--font-b);font-size:20px;resize:vertical" placeholder="Chapters, book, or passage…"></textarea>
-  </div>
-  <!-- AM Devotion -->
-  <div class="kiosk-field-group">
-    <span class="kiosk-field-label">☀ Ambition — Morning Devotion</span>
-    <input type="text" id="k-am-title" placeholder="Title" style="margin-bottom:6px">
-    <input type="text" id="k-am-scripture" placeholder="Scripture passage" style="margin-bottom:6px">
-    <input type="text" id="k-am-leader" placeholder="Led by…" style="margin-bottom:6px">
-    <span class="kiosk-field-sub">Discussion points (one per line):</span>
-    <textarea id="k-am-points" rows="3" style="width:100%;background:var(--navy);border:1px solid var(--border);border-radius:3px;padding:10px;color:var(--cream);font-family:var(--font-b);font-size:20px;resize:vertical" placeholder="Point 1
+  <div class="sh">Kiosk Display <span style="font-size:11px;color:var(--smoke)">(TV / Full Screen)</span></div>
+  <button class="btn" onclick="openKiosk()" style="margin-bottom:14px">▶ Show Kiosk</button>
+  <div id="kiosk-admin-locked" style="font-size:20px;color:var(--smoke);font-style:italic;margin-bottom:10px">Sign in as David to manage kiosk content.</div>
+  <div id="kiosk-admin-panel" style="display:none">
+    <div style="font-size:20px;color:var(--cream-dim);margin-bottom:14px">Pre-load content for any date. Leave date blank for standing default (used when no date-specific entry exists).</div>
+    <div class="frow" style="margin-bottom:10px">
+      <div class="fg"><label class="form-label">Content Date <span style="font-size:13px;color:var(--smoke)">(blank = default)</span></label><input type="date" id="ka-date"></div>
+      <div class="fg" style="max-width:200px;display:flex;align-items:flex-end"><button class="btn btn-sm" onclick="kaLoad()" style="width:100%">Load / New</button></div>
+    </div>
+    <div id="ka-form" style="display:none">
+      <div class="frow"><div class="fg full"><label class="form-label">Special Notice / Announcement</label><input type="text" id="ka-news" placeholder="e.g. No school today"></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Memory Verse</label><input type="text" id="ka-verse" placeholder="Verse text..."></div><div class="fg" style="max-width:240px"><label class="form-label">Reference</label><input type="text" id="ka-verse-ref" placeholder="e.g. Psalm 23:1"></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Reading Assignment</label><input type="text" id="ka-reading" placeholder="e.g. Genesis 1-3 + Pilgrim's Progress ch.4"></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.16em;color:var(--amber);text-transform:uppercase;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-lt)">☀ Morning Devotion (Ambition)</div>
+      <div class="frow"><div class="fg"><label class="form-label">Title</label><input type="text" id="ka-am-title" placeholder="Title..."></div><div class="fg"><label class="form-label">Scripture</label><input type="text" id="ka-am-scripture" placeholder="e.g. John 15:1-11"></div></div>
+      <div class="frow"><div class="fg"><label class="form-label">Led by</label><input type="text" id="ka-am-leader" placeholder="e.g. David"></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Discussion Points (one per line)</label><textarea id="ka-am-points" rows="3" style="font-size:20px;resize:vertical" placeholder="Point 1
 Point 2
-Point 3"></textarea>
-  </div>
-  <!-- PM Devotion -->
-  <div class="kiosk-field-group">
-    <span class="kiosk-field-label">🌙 Preparation — Evening Devotion</span>
-    <input type="text" id="k-pm-title" placeholder="Title" style="margin-bottom:6px">
-    <input type="text" id="k-pm-scripture" placeholder="Scripture passage" style="margin-bottom:6px">
-    <input type="text" id="k-pm-leader" placeholder="Led by…" style="margin-bottom:6px">
-    <span class="kiosk-field-sub">Discussion points (one per line):</span>
-    <textarea id="k-pm-points" rows="3" style="width:100%;background:var(--navy);border:1px solid var(--border);border-radius:3px;padding:10px;color:var(--cream);font-family:var(--font-b);font-size:20px;resize:vertical" placeholder="Point 1
+Point 3"></textarea></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.16em;color:var(--amber);text-transform:uppercase;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-lt)">🌙 Evening Devotion (Preparation)</div>
+      <div class="frow"><div class="fg"><label class="form-label">Title</label><input type="text" id="ka-pm-title" placeholder="Title..."></div><div class="fg"><label class="form-label">Scripture</label><input type="text" id="ka-pm-scripture" placeholder="e.g. Proverbs 3:5-6"></div></div>
+      <div class="frow"><div class="fg"><label class="form-label">Led by</label><input type="text" id="ka-pm-leader" placeholder="e.g. Krista"></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Discussion Points (one per line)</label><textarea id="ka-pm-points" rows="3" style="font-size:20px;resize:vertical" placeholder="Point 1
 Point 2
-Point 3"></textarea>
-  </div>
-  <!-- Sermon -->
-  <div class="kiosk-field-group">
-    <span class="kiosk-field-label">⛪ Sermon Review</span>
-    <input type="text" id="k-sermon-date" placeholder="Date (e.g. May 11)" style="margin-bottom:6px">
-    <input type="text" id="k-sermon-speaker" placeholder="Speaker" style="margin-bottom:6px">
-    <input type="text" id="k-sermon-scripture" placeholder="Scripture text" style="margin-bottom:6px">
-    <input type="text" id="k-sermon-title" placeholder="Sermon title" style="margin-bottom:6px">
-    <span class="kiosk-field-sub">Outline points (one per line):</span>
-    <textarea id="k-sermon-outline" rows="4" style="width:100%;background:var(--navy);border:1px solid var(--border);border-radius:3px;padding:10px;color:var(--cream);font-family:var(--font-b);font-size:20px;resize:vertical" placeholder="Main point 1
-Main point 2
-Main point 3"></textarea>
-  </div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-    <button class="btn" onclick="kioskSaveAndPreview()">▶ Save &amp; Preview Kiosk</button>
-    <button class="btn-ghost" onclick="kioskSaveOnly()">✓ Save for this date</button>
+Point 3"></textarea></div></div>
+      <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.16em;color:var(--amber);text-transform:uppercase;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-lt)">⛪ Sunday Sermon</div>
+      <div class="frow"><div class="fg"><label class="form-label">Sermon Title</label><input type="text" id="ka-ser-title" placeholder="Title..."></div><div class="fg"><label class="form-label">Speaker</label><input type="text" id="ka-ser-speaker" placeholder="e.g. Pastor Smith"></div></div>
+      <div class="frow"><div class="fg"><label class="form-label">Scripture Text</label><input type="text" id="ka-ser-scripture" placeholder="e.g. Romans 8:28"></div><div class="fg"><label class="form-label">Sermon Date</label><input type="date" id="ka-ser-date"></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Outline Points (one per line)</label><textarea id="ka-ser-outline" rows="4" style="font-size:20px;resize:vertical" placeholder="Point 1
+Point 2
+Point 3"></textarea></div></div>
+      <div class="frow">
+        <button class="btn" onclick="kaSave()">Save Content</button>
+        <button class="btn-ghost" onclick="kaDelete()" style="margin-left:8px">Delete Entry</button>
+        <button class="btn-ghost" onclick="kaPushLive()" style="margin-left:8px">▶ Push Live Now</button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="sh" style="font-size:11px">Saved Kiosk Entries</div>
+    <div id="ka-list" style="font-size:20px;color:var(--cream-dim)"></div>
   </div>
 </div>
 </main>
@@ -1576,7 +1540,7 @@ async function testConn(){
 async function pushItems(){try{await sbDeleteAll();if(items.length)await sbInsert(items);toast('Pushed');}catch(e){toast('Push failed: '+e.message);}}
 async function pullItems(){try{const r=await sbFetch('asp_items?order=id.asc');if(!r.ok)throw new Error(r.status);items=await r.json();save_local();render();toast('Pulled');}catch(e){toast('Pull failed: '+e.message);}}
 function copySQL(){navigator.clipboard.writeText(SQL_CREATE).then(()=>toast('SQL copied'));}
-function initSettings(){const cfg=getCfg();document.getElementById('sb-url').value=cfg.url;document.getElementById('sb-key').value=cfg.key;document.getElementById('sql-block').textContent=SQL_CREATE;updateUserUI();initPinSettings();initKioskAdmin();}
+function initSettings(){const cfg=getCfg();document.getElementById('sb-url').value=cfg.url;document.getElementById('sb-key').value=cfg.key;document.getElementById('sql-block').textContent=SQL_CREATE;updateUserUI();initPinSettings();updateKioskAdminUI();}
 
 function initDate(){
   const d=new Date();
@@ -1872,6 +1836,461 @@ function todayStr(){return new Date().toISOString().slice(0,10);}
 function fmtDate(ds){return new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
 function fmtTime(ts){if(!ts)return'';const[h,m]=ts.split(':');const hr=parseInt(h);return`${hr===0?12:hr>12?hr-12:hr}:${m}${hr<12?'am':'pm'}`;}
 
+
+// ══════════════════════════════════════════════
+// KIOSK SYSTEM
+// ══════════════════════════════════════════════
+
+const KIOSK_SLIDE_MS = 8000;
+const KIOSK_TRANS_MS = 700;
+const KIOSK_REFRESH_MS = 30000; // pull fresh data from Supabase every 30s
+
+let kioskSlides = [];
+let kioskCurrent = 0;
+let kioskAdvTimer = null;
+let kioskRefreshTimer = null;
+
+// ── Kiosk Admin: key management ──
+function kaKey(date) { return 'asp_kiosk_' + (date || 'default'); }
+
+function kaListAll() {
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('asp_kiosk_')) keys.push(k);
+  }
+  return keys.sort();
+}
+
+function kaLoad() {
+  const date = document.getElementById('ka-date').value;
+  const key = kaKey(date);
+  const raw = localStorage.getItem(key);
+  const data = raw ? JSON.parse(raw) : {};
+  document.getElementById('ka-news').value = data.specialNews || '';
+  document.getElementById('ka-verse').value = data.memoryVerse || '';
+  document.getElementById('ka-verse-ref').value = data.memoryVerseRef || '';
+  document.getElementById('ka-reading').value = data.readingAssignment || '';
+  document.getElementById('ka-am-title').value = data.ambition?.title || '';
+  document.getElementById('ka-am-scripture').value = data.ambition?.scripture || '';
+  document.getElementById('ka-am-leader').value = data.ambition?.leader || '';
+  document.getElementById('ka-am-points').value = (data.ambition?.points || []).join('\n');
+  document.getElementById('ka-pm-title').value = data.preparation?.title || '';
+  document.getElementById('ka-pm-scripture').value = data.preparation?.scripture || '';
+  document.getElementById('ka-pm-leader').value = data.preparation?.leader || '';
+  document.getElementById('ka-pm-points').value = (data.preparation?.points || []).join('\n');
+  document.getElementById('ka-ser-title').value = data.sermon?.title || '';
+  document.getElementById('ka-ser-speaker').value = data.sermon?.speaker || '';
+  document.getElementById('ka-ser-scripture').value = data.sermon?.scripture || '';
+  document.getElementById('ka-ser-date').value = data.sermon?.date || '';
+  document.getElementById('ka-ser-outline').value = (data.sermon?.outline || []).join('\n');
+  document.getElementById('ka-form').style.display = 'block';
+  renderKaList();
+  toast('Loaded: ' + (date || 'Default'));
+}
+
+function kaCollect() {
+  const parseLines = id => document.getElementById(id).value.split('\n').map(s=>s.trim()).filter(Boolean);
+  return {
+    specialNews: document.getElementById('ka-news').value.trim(),
+    memoryVerse: document.getElementById('ka-verse').value.trim(),
+    memoryVerseRef: document.getElementById('ka-verse-ref').value.trim(),
+    readingAssignment: document.getElementById('ka-reading').value.trim(),
+    ambition: {
+      title: document.getElementById('ka-am-title').value.trim(),
+      scripture: document.getElementById('ka-am-scripture').value.trim(),
+      leader: document.getElementById('ka-am-leader').value.trim(),
+      points: parseLines('ka-am-points'),
+    },
+    preparation: {
+      title: document.getElementById('ka-pm-title').value.trim(),
+      scripture: document.getElementById('ka-pm-scripture').value.trim(),
+      leader: document.getElementById('ka-pm-leader').value.trim(),
+      points: parseLines('ka-pm-points'),
+    },
+    sermon: {
+      title: document.getElementById('ka-ser-title').value.trim(),
+      speaker: document.getElementById('ka-ser-speaker').value.trim(),
+      scripture: document.getElementById('ka-ser-scripture').value.trim(),
+      date: document.getElementById('ka-ser-date').value,
+      outline: parseLines('ka-ser-outline'),
+    }
+  };
+}
+
+function kaSave() {
+  const date = document.getElementById('ka-date').value;
+  const data = kaCollect();
+  localStorage.setItem(kaKey(date), JSON.stringify(data));
+  renderKaList();
+  toast('Saved: ' + (date || 'Default'));
+}
+
+function kaDelete() {
+  const date = document.getElementById('ka-date').value;
+  if (!confirm('Delete kiosk entry for ' + (date || 'Default') + '?')) return;
+  localStorage.removeItem(kaKey(date));
+  document.getElementById('ka-form').style.display = 'none';
+  renderKaList();
+  toast('Deleted');
+}
+
+function kaPushLive() {
+  kaSave();
+  // The kiosk reads the right date automatically on open/refresh
+  // If kiosk is open, trigger a refresh
+  if (document.getElementById('kiosk-overlay').style.display !== 'none') {
+    kioskInit();
+    toast('Pushed live!');
+  } else {
+    toast('Saved — open kiosk to see changes');
+  }
+}
+
+function renderKaList() {
+  const el = document.getElementById('ka-list');
+  if (!el) return;
+  const keys = kaListAll();
+  if (!keys.length) { el.innerHTML = '<div style="color:var(--smoke);font-style:italic">No entries saved yet.</div>'; return; }
+  el.innerHTML = keys.map(k => {
+    const label = k === 'asp_kiosk_default' ? 'Default (all days)' : k.replace('asp_kiosk_','');
+    return `<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border-lt)">
+      <span style="flex:1;font-family:var(--font-d);font-size:13px;letter-spacing:0.08em;color:var(--amber-glow)">${label}</span>
+      <button class="btn-ghost" style="font-size:12px;padding:5px 10px" onclick="kaQuickLoad('${k}')">Edit</button>
+    </div>`;
+  }).join('');
+}
+
+function kaQuickLoad(key) {
+  const date = key === 'asp_kiosk_default' ? '' : key.replace('asp_kiosk_','');
+  document.getElementById('ka-date').value = date;
+  kaLoad();
+  document.getElementById('view-settings').scrollTop = 0;
+}
+
+// ── Kiosk data resolver: picks date-specific or falls back to default ──
+function kioskGetData() {
+  const today = new Date().toISOString().slice(0,10);
+  const specific = localStorage.getItem(kaKey(today));
+  if (specific) { try { return JSON.parse(specific); } catch {} }
+  const fallback = localStorage.getItem(kaKey(''));
+  if (fallback) { try { return JSON.parse(fallback); } catch {} }
+  return {};
+}
+
+// ── Weather ──
+async function kioskFetchWeather() {
+  try {
+    const wUrl = 'https://api.open-meteo.com/v1/forecast?latitude=41.8400&longitude=-72.7376&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=3';
+    const r = await fetch(wUrl);
+    return await r.json();
+  } catch { return null; }
+}
+
+function wmoIcon(c){if(c===0)return'☀️';if(c<=2)return'⛅';if(c<=3)return'☁️';if(c<=49)return'🌫️';if(c<=59)return'🌧️';if(c<=69)return'🌨️';if(c<=79)return'🌩️';if(c<=84)return'🌦️';if(c<=99)return'⛈️';return'🌡️';}
+function wmoDesc(c){if(c===0)return'Clear Sky';if(c<=2)return'Partly Cloudy';if(c<=3)return'Overcast';if(c<=49)return'Foggy';if(c<=59)return'Drizzle';if(c<=69)return'Rain';if(c<=79)return'Snow';if(c<=84)return'Rain Showers';if(c<=99)return'Thunderstorm';return'Unknown';}
+function kioskDayLabel(n){const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];const d=new Date();d.setDate(d.getDate()+n);return n===0?'Today':n===1?'Tomorrow':days[d.getDay()];}
+
+// ── Clock ──
+function kioskFormatClock(){
+  const now=new Date();
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const h=now.getHours();const m=String(now.getMinutes()).padStart(2,'0');
+  const ampm=h>=12?'PM':'AM';const hr=h%12||12;
+  return{time:`${hr}:${m} ${ampm}`,date:`${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`};
+}
+
+function kioskHeader(badge){
+  const c=kioskFormatClock();
+  return `<div class="k-header"><div class="k-badge">${badge}</div><div class="k-app-name">The American Shepherd</div><div class="k-clock"><div>${c.time}</div><div>${c.date}</div></div></div>`;
+}
+
+function kioskFooter(idx,total){
+  let dots='';
+  for(let i=0;i<total;i++) dots+=`<div class="k-dot${i===idx?' active':''}"></div>`;
+  return `<div class="k-footer"><div class="k-dots">${dots}</div><div class="k-pbar-wrap"><div class="k-pbar" id="kpbar"></div></div><div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">${idx+1} / ${total}</div></div>`;
+}
+
+// ── Slide builders ──
+function kBuildDateTime(data, weather) {
+  const c = kioskFormatClock();
+  let weatherHtml = '';
+  if (weather?.daily) {
+    const d = weather.daily;
+    weatherHtml = `<div class="k-weather-row">${[0,1,2].map(i=>`
+      <div class="k-weather-block">
+        <div class="k-weather-icon">${wmoIcon(d.weathercode[i])}</div>
+        <div class="k-weather-temp">${Math.round(d.temperature_2m_max[i])}° / ${Math.round(d.temperature_2m_min[i])}°</div>
+        <div class="k-weather-label">${kioskDayLabel(i)}</div>
+        <div style="font-size:15px;color:var(--cream-dim);margin-top:4px">${wmoDesc(d.weathercode[i])}</div>
+        ${d.precipitation_probability_max[i]>20?`<div style="font-size:14px;color:#7FB8E8;margin-top:2px">💧 ${d.precipitation_probability_max[i]}%</div>`:''}
+      </div>`).join('')}</div>`;
+  }
+  const news = data?.specialNews?.trim();
+  const newsHtml = news ? `<div class="k-special-news"><div class="k-sn-label">⚑ Special Notice</div><div class="k-sn-text">${escK(news)}</div></div>` : '';
+  return `<div class="k-radial" style="width:600px;height:600px;background:var(--amber);top:-100px;right:-100px"></div>
+    <div class="k-body"><div class="k-dt-super">${c.time}</div><div class="k-dt-date">${c.date}</div>${weatherHtml}${newsHtml}</div>`;
+}
+
+function kBuildVerse(data) {
+  const v = escK(data?.memoryVerse || 'No memory verse set for this week.');
+  const r = data?.memoryVerseRef ? `<div class="k-verse-ref">— ${escK(data.memoryVerseRef)}</div>` : '';
+  return `<div class="k-radial" style="width:500px;height:500px;background:var(--teal);bottom:-80px;left:-80px"></div>
+    <div class="k-body"><div class="k-eyebrow">Memory Verse of the Week</div><div class="k-ornament"></div><div class="k-big-text">"${v}"</div>${r}</div>`;
+}
+
+function kBuildReading(data) {
+  const r = escK(data?.readingAssignment || 'No reading assignment set.');
+  return `<div class="k-radial" style="width:400px;height:400px;background:var(--purple);top:-60px;right:-60px"></div>
+    <div class="k-body"><div class="k-eyebrow">Today's Reading Assignment</div><div class="k-ornament"></div><div class="k-body-text">${r}</div></div>`;
+}
+
+function kBuildDevotion(data, session) {
+  const isAM = session === 'ambition';
+  const d = isAM ? data?.ambition : data?.preparation;
+  const title = escK(d?.title || (isAM ? 'Morning Devotion' : 'Evening Devotion'));
+  const scripture = d?.scripture ? `<div class="k-dev-scripture">${escK(d.scripture)}</div>` : '';
+  const leader = d?.leader ? `<div style="font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;color:var(--cream-dim)">Led by ${escK(d.leader)}</div>` : '';
+  const points = (d?.points||[]).filter(Boolean);
+  const pointsHtml = points.length ? `<div class="k-dev-points">${points.map(p=>`<div class="k-dev-point">${escK(p)}</div>`).join('')}</div>` : '';
+  const bg = isAM ? 'var(--teal)' : 'var(--amber)';
+  const badge = isAM ? '☀ Ambition — Morning Devotion' : '🌙 Preparation — Evening Devotion';
+  return `<div class="k-radial" style="width:500px;height:500px;background:${bg};bottom:-100px;right:-100px"></div>
+    <div class="k-body"><div class="k-dev-wrap">
+      <div class="k-dev-badge ${session}">${badge}</div>
+      <div class="k-dev-title">${title}</div>
+      ${scripture}${leader}${pointsHtml}
+    </div></div>`;
+}
+
+function kBuildSermon(data) {
+  const s = data?.sermon || {};
+  const title = escK(s.title || 'Sunday Sermon Review');
+  const meta = [s.date?`<div class="k-sermon-meta-item">Date: <span>${escK(s.date)}</span></div>`:'', s.speaker?`<div class="k-sermon-meta-item">Speaker: <span>${escK(s.speaker)}</span></div>`:'', s.scripture?`<div class="k-sermon-meta-item">Text: <span>${escK(s.scripture)}</span></div>`:''].filter(Boolean).join('');
+  const outline = (s.outline||[]).filter(Boolean);
+  const outlineHtml = outline.length ? `<div class="k-sermon-outline">${outline.map((pt,i)=>`<div class="k-outline-point"><span class="k-outline-num">${i+1}.</span><span>${escK(pt)}</span></div>`).join('')}</div>` : '<div style="color:var(--smoke);font-style:italic;font-size:20px;text-align:center">No outline added yet</div>';
+  return `<div class="k-radial" style="width:500px;height:500px;background:var(--red-flag);top:-60px;left:-60px;opacity:0.08"></div>
+    <div class="k-body"><div class="k-eyebrow">Last Sunday's Sermon</div><div class="k-sermon-wrap">
+      <div class="k-sermon-meta">${meta}</div>
+      <div class="k-sermon-title">${title}</div>
+      ${outlineHtml}
+    </div></div>`;
+}
+
+function kBuildChores() {
+  const weekNum = getWeekNumber();
+  const ALL_C = ['Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas'];
+  const OLDER = ['Samuel','Isaiah','Elijah','Nathan','Benjamin'];
+  const TMODS = {'Make own bed':'Make own bed (with help)','Clean own bathroom sink & toilet':'Wipe sink (with help)','Vacuum living room':'Pick up before vacuum','Wash and dry dishes / load dishwasher':'Dry dishes (plastic only)','Roll trash cans to curb':'Help adult with trash'};
+  const rotate = (arr,n) => arr.slice(n%arr.length).concat(arr.slice(0,n%arr.length));
+  const idx = (new Date().getDay() + weekNum) % ALL_C.length;
+  const setupPair = [ALL_C[idx%ALL_C.length], ALL_C[(idx+1)%ALL_C.length]];
+  const patrol = ALL_C[weekNum%ALL_C.length];
+  const older = rotate(OLDER, weekNum);
+  const grounds = {mow:older[0],trim:older[1%OLDER.length],pickup:older[2%OLDER.length]};
+  const mealprep = {breakfast:OLDER[weekNum%OLDER.length],lunch:OLDER[(weekNum+1)%OLDER.length]};
+  const personalChores = ['Make own bed','Clean own bedroom','Put away own clothes','Clean own bathroom sink & toilet'];
+  const personalMap = {};
+  ALL_C.forEach(p => { let ch = personalChores[weekNum%personalChores.length]; if(p==='Thomas'&&TMODS[ch])ch=TMODS[ch]; personalMap[p]=ch; });
+  return `<div class="k-radial" style="width:400px;height:400px;background:var(--amber);bottom:-60px;left:-60px"></div>
+    <div class="k-body"><div class="k-eyebrow">Today's Chore Rotation</div>
+    <div class="k-chores-wrap">
+      <div class="k-chores-grid">
+        <div class="k-chore-card"><div class="k-chore-card-name">🍽 Kitchen Setup</div>${setupPair.map(p=>`<div class="k-chore-item">${p} — set table</div>`).join('')}</div>
+        <div class="k-chore-card"><div class="k-chore-card-name">🧹 Kitchen Patrol</div><div class="k-chore-item">${patrol} — full cleanup</div></div>
+        <div class="k-chore-card"><div class="k-chore-card-name">🌿 Grounds</div><div class="k-chore-item">${grounds.mow} — mow</div><div class="k-chore-item">${grounds.trim} — trim</div><div class="k-chore-item">${grounds.pickup} — pickup</div></div>
+        <div class="k-chore-card"><div class="k-chore-card-name">🍳 Meal Prep</div><div class="k-chore-item">${mealprep.breakfast} — breakfast</div><div class="k-chore-item">${mealprep.lunch} — lunch</div></div>
+      </div>
+      <div class="k-chores-grid" style="margin-top:8px">${ALL_C.map(p=>`<div class="k-chore-card" style="padding:10px 16px"><div class="k-chore-card-name">${p}</div><div class="k-chore-item">${personalMap[p]}</div></div>`).join('')}</div>
+    </div></div>`;
+}
+
+function kBuildTasks() {
+  const today = new Date().toISOString().slice(0,10);
+  const todayItems = items.filter(i => !i.done && (
+    i.start_date === today ||
+    (i.start_date && i.end_date && today >= i.start_date && today <= i.end_date) ||
+    (i.repeat === 'daily' && i.start_date && today > i.start_date) ||
+    (i.repeat === 'weekly' && i.start_date && today > i.start_date && new Date(i.start_date+'T12:00:00').getDay() === new Date(today+'T12:00:00').getDay())
+  ));
+  if (!todayItems.length) {
+    return `<div class="k-body"><div class="k-eyebrow">Today's Tasks &amp; Events</div><div style="font-size:28px;color:var(--smoke);font-style:italic">No tasks scheduled for today</div></div>`;
+  }
+  const bySession = {ambition:[],preparation:[],planning:[],none:[]};
+  todayItems.forEach(i => { const k = ['ambition','preparation','planning'].includes(i.phase)?i.phase:'none'; bySession[k].push(i); });
+  const sessions = [{key:'ambition',label:'AMBITION — Morning'},{key:'preparation',label:'PREPARATION — Evening'},{key:'planning',label:'PLANNING — Saturday'},{key:'none',label:'General'}];
+  return `<div class="k-radial" style="width:400px;height:400px;background:var(--teal);top:-60px;right:-60px"></div>
+    <div class="k-body" style="align-items:flex-start;text-align:left">
+    <div class="k-eyebrow" style="align-self:center">Today's Tasks &amp; Events</div>
+    <div class="k-tasks-wrap">${sessions.filter(s=>bySession[s.key].length).map(s=>`
+      <div class="k-sess-section ${s.key}"><div class="k-sess-label">${s.label}</div>
+        ${bySession[s.key].slice(0,4).map(i=>`<div class="k-task-item">${escK(i.text)}<span class="k-task-who">${escK(i.who)}</span></div>`).join('')}
+        ${bySession[s.key].length>4?`<div style="font-size:18px;color:var(--smoke);font-style:italic;padding-left:22px">+${bySession[s.key].length-4} more</div>`:''}
+      </div>`).join('')}
+    </div></div>`;
+}
+
+function escK(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Assemble all slides ──
+function kioskAssemble(data, weather) {
+  return [
+    {badge:'Daily Overview', content: kBuildDateTime(data, weather)},
+    {badge:'Memory Verse',   content: kBuildVerse(data)},
+    {badge:'Reading',        content: kBuildReading(data)},
+    {badge:'Morning Devotion', content: kBuildDevotion(data,'ambition')},
+    {badge:'Evening Devotion', content: kBuildDevotion(data,'preparation')},
+    {badge:'Sermon Review',  content: kBuildSermon(data)},
+    {badge:'Chore Rotation', content: kBuildChores()},
+    {badge:"Today's Tasks",  content: kBuildTasks()},
+  ];
+}
+
+function kioskRender(defs) {
+  const container = document.getElementById('kiosk-slides-container');
+  container.innerHTML = '';
+  const total = defs.length;
+  defs.forEach((def, idx) => {
+    const el = document.createElement('div');
+    el.className = 'k-slide' + (idx === 0 ? ' active' : '');
+    el.id = `kslide-${idx}`;
+    el.innerHTML = kioskHeader(def.badge) + def.content + kioskFooter(idx, total);
+    container.appendChild(el);
+  });
+  kioskSlides = defs;
+  kioskCurrent = 0;
+  kioskStartProgress();
+}
+
+function kioskStartProgress() {
+  clearTimeout(kioskAdvTimer);
+  const pbar = document.getElementById('kpbar');
+  if (pbar) { pbar.style.transition='none'; pbar.style.width='0%'; }
+  setTimeout(() => { if(pbar){ pbar.style.transition=`width ${KIOSK_SLIDE_MS}ms linear`; pbar.style.width='100%'; } }, 50);
+  kioskAdvTimer = setTimeout(kioskNext, KIOSK_SLIDE_MS);
+}
+
+function kioskNext() {
+  const total = kioskSlides.length; if(!total) return;
+  const oldEl = document.getElementById(`kslide-${kioskCurrent}`);
+  kioskCurrent = (kioskCurrent + 1) % total;
+  const newEl = document.getElementById(`kslide-${kioskCurrent}`);
+  if(oldEl) oldEl.classList.add('exit');
+  if(newEl) newEl.classList.add('active');
+  setTimeout(() => {
+    if(oldEl){ oldEl.classList.remove('active','exit'); }
+    kioskUpdateDots(); kioskUpdateClocks(); kioskStartProgress();
+  }, KIOSK_TRANS_MS);
+}
+
+function kioskUpdateDots() {
+  document.querySelectorAll('#kiosk-overlay .k-dot').forEach((dot,i) => {
+    const slideIdx = Math.floor(i / kioskSlides.length) === 0 ? i % kioskSlides.length : i;
+  });
+  // Re-render dots on current slide
+  const activeSlide = document.getElementById(`kslide-${kioskCurrent}`);
+  if (!activeSlide) return;
+  activeSlide.querySelectorAll('.k-dot').forEach((dot,i) => {
+    dot.classList.toggle('active', i === kioskCurrent);
+  });
+}
+
+function kioskUpdateClocks() {
+  const c = kioskFormatClock();
+  document.querySelectorAll('#kiosk-overlay .k-clock').forEach(el => {
+    el.innerHTML = `<div>${c.time}</div><div>${c.date}</div>`;
+  });
+  // Also update datetime slide's big clock if visible
+  const activeSlide = document.getElementById(`kslide-${kioskCurrent}`);
+  if (activeSlide) {
+    const dtSuper = activeSlide.querySelector('.k-dt-super');
+    if (dtSuper) dtSuper.textContent = c.time;
+  }
+}
+
+async function kioskInit() {
+  const data = kioskGetData();
+  let weather = null;
+  try { weather = await kioskFetchWeather(); } catch {}
+  const defs = kioskAssemble(data, weather);
+  kioskRender(defs);
+}
+
+async function openKiosk() {
+  const overlay = document.getElementById('kiosk-overlay');
+  overlay.style.display = 'block';
+  await kioskInit();
+  // Clock tick
+  setInterval(kioskUpdateClocks, 60000);
+  // Live refresh from Supabase every 30s
+  clearInterval(kioskRefreshTimer);
+  kioskRefreshTimer = setInterval(async () => {
+    // Re-pull items from Supabase into global items array
+    const cfg = getCfg();
+    if (cfg.url && cfg.key) {
+      try {
+        const r = await fetch(cfg.url+'/rest/v1/asp_items?order=id.asc', {headers:{'apikey':cfg.key,'Authorization':'Bearer '+cfg.key}});
+        if (r.ok) { const remote = await r.json(); if(remote.length) { items = remote; save_local(); } }
+      } catch {}
+    }
+    // Rebuild slides with fresh data (weather cached from memory)
+    const data = kioskGetData();
+    const defs = kioskAssemble(data, null); // skip weather re-fetch on refresh
+    const saved = kioskCurrent;
+    kioskRender(defs);
+    // Jump to same slide
+    if (saved > 0 && saved < defs.length) {
+      document.querySelectorAll('.k-slide').forEach(s => s.classList.remove('active'));
+      const el = document.getElementById(`kslide-${saved}`);
+      if (el) { el.classList.add('active'); kioskCurrent = saved; }
+    }
+  }, KIOSK_REFRESH_MS);
+  // Keyboard: Space/Arrow advance, Escape close
+  document.addEventListener('keydown', kioskKeyHandler);
+}
+
+function kioskKeyHandler(e) {
+  if (document.getElementById('kiosk-overlay').style.display === 'none') return;
+  if (e.key === 'Escape') { closeKiosk(); return; }
+  if (e.key === ' ' || e.key === 'ArrowRight') { kioskNext(); }
+  if (e.key === 'ArrowLeft') { kioskPrev(); }
+}
+
+function kioskPrev() {
+  const total = kioskSlides.length; if(!total) return;
+  const oldEl = document.getElementById(`kslide-${kioskCurrent}`);
+  kioskCurrent = (kioskCurrent - 1 + total) % total;
+  const newEl = document.getElementById(`kslide-${kioskCurrent}`);
+  if(oldEl){ oldEl.classList.remove('active'); }
+  if(newEl){ newEl.classList.add('active'); }
+  kioskUpdateDots(); kioskUpdateClocks(); kioskStartProgress();
+}
+
+function closeKiosk() {
+  document.getElementById('kiosk-overlay').style.display = 'none';
+  clearTimeout(kioskAdvTimer);
+  clearInterval(kioskRefreshTimer);
+  document.removeEventListener('keydown', kioskKeyHandler);
+}
+
+// Tap to advance inside kiosk (delegated — overlay div may be after script in DOM)
+document.addEventListener('click', function(e){
+  const overlay = document.getElementById('kiosk-overlay');
+  if (!overlay || overlay.style.display === 'none') return;
+  if (e.target.id === 'kiosk-close-btn' || e.target.closest('#kiosk-close-btn')) return;
+  if (overlay.contains(e.target)) kioskNext();
+});
+
+// ── Update Settings UI for Kiosk Admin panel (David-only) ──
+function updateKioskAdminUI() {
+  const isAdmin = currentUser === ADMIN_USER;
+  const locked = document.getElementById('kiosk-admin-locked');
+  const panel = document.getElementById('kiosk-admin-panel');
+  if (locked) locked.style.display = isAdmin ? 'none' : 'block';
+  if (panel) { panel.style.display = isAdmin ? 'block' : 'none'; if(isAdmin) renderKaList(); }
+}
+
 // ── INIT ──
 initDate();
 initChoresDate();
@@ -1879,358 +2298,14 @@ render();
 autoSyncOnOpen();
 initLogin();
 restrictWhoDropdown();
-
-// ══════════════════════════════════════════════════════════════
-// KIOSK SYSTEM
-// ══════════════════════════════════════════════════════════════
-
-const KIOSK_SLIDE_MS = 8000;
-const KIOSK_TRANS_MS = 700;
-let kioskSlides = [], kioskCurrent = 0, kioskAdvTimer = null, kioskClockTimer = null, kioskReloadTimer = null, kioskRefreshTimer = null;
-
-// ── DATA HELPERS ──
-function getKioskData(dateStr) {
-  const all = JSON.parse(localStorage.getItem('asp_kiosk_dates') || '{}');
-  return all[dateStr] || {};
-}
-function saveKioskData(dateStr, data) {
-  const all = JSON.parse(localStorage.getItem('asp_kiosk_dates') || '{}');
-  all[dateStr] = data;
-  localStorage.setItem('asp_kiosk_dates', JSON.stringify(all));
-}
-function getKioskDates() {
-  return Object.keys(JSON.parse(localStorage.getItem('asp_kiosk_dates') || '{}')).sort();
-}
-
-// ── WEATHER ──
-async function kioskFetchWeather() {
-  try {
-    const wUrl = 'https://api.open-meteo.com/v1/forecast?latitude=41.9762&longitude=-72.7274&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=3';
-    const r = await fetch(wUrl);
-    return await r.json();
-  } catch(e) { return null; }
-}
-function kwmoIcon(c){if(c===0)return'☀️';if(c<=2)return'⛅';if(c<=3)return'☁️';if(c<=49)return'🌫️';if(c<=59)return'🌧️';if(c<=69)return'🌨️';if(c<=79)return'🌩️';if(c<=84)return'🌦️';if(c<=99)return'⛈️';return'🌡️';}
-function kwmoDesc(c){if(c===0)return'Clear';if(c<=2)return'Partly Cloudy';if(c<=3)return'Overcast';if(c<=49)return'Foggy';if(c<=59)return'Drizzle';if(c<=69)return'Rain';if(c<=79)return'Snow';if(c<=84)return'Rain Showers';if(c<=99)return'Thunderstorm';return'';}
-function kdayLabel(n){const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];const d=new Date();d.setDate(d.getDate()+n);return n===0?'Today':n===1?'Tomorrow':days[d.getDay()];}
-
-// ── CLOCK ──
-function kFormatClock(){const now=new Date();const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const h=now.getHours();const m=String(now.getMinutes()).padStart(2,'0');const ap=h>=12?'PM':'AM';const hr=h%12||12;return{time:`${hr}:${m} ${ap}`,date:`${days[now.getDay()]}, ${mo[now.getMonth()]} ${now.getDate()}`};}
-
-function kSlideHeader(badge) {
-  const c = kFormatClock();
-  return `<div class="kslide-header"><div class="kslide-badge">${badge}</div><div class="kslide-appname">The American Shepherd</div><div class="kslide-clock"><div>${c.time}</div><div>${c.date}</div></div></div>`;
-}
-function kSlideFooter(idx, total) {
-  let dots = '';
-  for (let i = 0; i < total; i++) dots += `<div class="kdot${i===idx?' active':''}" id="kdot-${i}"></div>`;
-  return `<div class="kslide-footer"><div class="kprogress-dots">${dots}</div><div class="kpbar-wrap"><div class="kpbar-fill" id="kpbar"></div></div><div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">${idx+1} / ${total}</div></div>`;
-}
-
-// ── SLIDE BUILDERS ──
-function kBuildDateWeather(data, weather) {
-  const c = kFormatClock();
-  let wHtml = '<div style="font-size:20px;color:var(--smoke);font-style:italic">Weather unavailable</div>';
-  if (weather?.daily) {
-    const d = weather.daily;
-    wHtml = `<div class="k-weather-row">${[0,1,2].map(i=>`<div class="k-weather-block"><div class="k-weather-icon">${kwmoIcon(d.weathercode[i])}</div><div class="k-weather-temp">${Math.round(d.temperature_2m_max[i])}° / ${Math.round(d.temperature_2m_min[i])}°</div><div class="k-weather-label">${kdayLabel(i)}</div><div style="font-size:14px;color:var(--cream-dim);margin-top:3px">${kwmoDesc(d.weathercode[i])}</div>${d.precipitation_probability_max[i]>20?`<div style="font-size:13px;color:#7FB8E8;margin-top:2px">💧 ${d.precipitation_probability_max[i]}%</div>`:''}</div>`).join('')}</div>`;
-  }
-  const news = (data.specialNews||'').trim();
-  const newsHtml = news ? `<div class="k-special-news"><div class="k-special-news-label">⚑ Special Notice</div><div class="k-special-news-text">${news}</div></div>` : '';
-  return `<div class="kslide-bg"><div class="kslide-bg-r" style="width:600px;height:600px;background:var(--amber);top:-100px;right:-100px;"></div></div><div class="kslide-body"><div class="k-datetime-super">${c.time}</div><div class="k-datetime-date">${c.date}</div>${wHtml}${newsHtml}</div>`;
-}
-
-function kBuildVerse(data) {
-  const verse = (data.memoryVerse||'').trim() || 'No memory verse set for this week.';
-  const ref = (data.memoryVerseRef||'').trim();
-  return `<div class="kslide-bg"><div class="kslide-bg-r" style="width:500px;height:500px;background:var(--teal);bottom:-80px;left:-80px;"></div></div><div class="kslide-body"><div class="k-eyebrow">Memory Verse of the Week</div><div class="k-ornament"></div><div class="k-big-text">"${verse}"</div>${ref?`<div class="k-verse-ref">— ${ref}</div>`:''}</div>`;
-}
-
-function kBuildReading(data) {
-  const reading = (data.readingAssignment||'').trim() || 'No reading assignment set.';
-  return `<div class="kslide-bg"><div class="kslide-bg-r" style="width:400px;height:400px;background:var(--purple);top:-60px;right:-60px;"></div></div><div class="kslide-body"><div class="k-eyebrow">Today's Reading Assignment</div><div class="k-ornament"></div><div class="k-body-text">${reading}</div></div>`;
-}
-
-function kBuildDevotion(data, session) {
-  const isAM = session === 'ambition';
-  const d = isAM ? (data.ambition||{}) : (data.preparation||{});
-  const title = (d.title||'').trim() || (isAM ? 'Morning Devotion' : 'Evening Devotion');
-  const scripture = (d.scripture||'').trim();
-  const leader = (d.leader||'').trim();
-  const points = (d.points||[]).filter(p=>p.trim());
-  return `<div class="kslide-bg"><div class="kslide-bg-r" style="width:500px;height:500px;background:${isAM?'var(--teal)':'var(--amber)'};bottom:-100px;right:-100px;"></div></div><div class="kslide-body"><div class="k-devotion-wrap"><div class="k-devotion-badge ${session}">${isAM?'☀ Ambition — Morning Devotion':'🌙 Preparation — Evening Devotion'}</div><div class="k-devotion-title">${title}</div>${scripture?`<div class="k-devotion-scripture">${scripture}</div>`:''} ${leader?`<div style="font-family:var(--font-d);font-size:12px;letter-spacing:0.12em;color:var(--cream-dim)">Led by ${leader}</div>`:''} ${points.length?`<div class="k-devotion-points">${points.map(p=>`<div class="k-devotion-point">${p}</div>`).join('')}</div>`:''}</div></div>`;
-}
-
-function kBuildSermon(data) {
-  const s = data.sermon || {};
-  const title = (s.title||'').trim() || 'Sunday Sermon Review';
-  const speaker = (s.speaker||'').trim();
-  const scripture = (s.scripture||'').trim();
-  const date = (s.date||'').trim();
-  const outline = (s.outline||[]).filter(p=>p.trim());
-  return `<div class="kslide-bg"><div class="kslide-bg-r" style="width:500px;height:500px;background:var(--red-flag);top:-60px;left:-60px;opacity:0.08"></div></div><div class="kslide-body"><div class="k-eyebrow">Last Sunday's Sermon</div><div class="k-sermon-wrap"><div class="k-sermon-meta">${date?`<div class="k-sermon-meta-item">Date: <span>${date}</span></div>`:''} ${speaker?`<div class="k-sermon-meta-item">Speaker: <span>${speaker}</span></div>`:''} ${scripture?`<div class="k-sermon-meta-item">Text: <span>${scripture}</span></div>`:''}</div><div class="k-sermon-title">${title}</div>${outline.length?`<div class="k-sermon-outline">${outline.map((pt,i)=>`<div class="k-outline-point"><span class="k-outline-num">${i+1}.</span><span>${pt}</span></div>`).join('')}</div>`:'<div style="color:var(--smoke);font-style:italic;font-size:20px;text-align:center">No outline added yet</div>'}</div></div>`;
-}
-
-function kBuildChores() {
-  const wn = getWeekNumber();
-  const ALL_CH = ['Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas'];
-  const OLDER = ['Samuel','Isaiah','Elijah','Nathan','Benjamin'];
-  const TH_MODS = {'Make own bed':'Make own bed (with help)','Clean own bathroom sink & toilet':'Wipe sink (with help)','Vacuum living room':'Pick up before vacuum','Wash and dry dishes / load dishwasher':'Dry dishes (plastic only)','Roll trash cans to curb':'Help adult with trash'};
-  const rot = (arr,n)=>arr.slice(n%arr.length).concat(arr.slice(0,n%arr.length));
-  const dayIdx = (new Date().getDay() + wn) % ALL_CH.length;
-  const setupPair = [ALL_CH[dayIdx%ALL_CH.length], ALL_CH[(dayIdx+1)%ALL_CH.length]];
-  const patrol = ALL_CH[wn%ALL_CH.length];
-  const older = rot(OLDER,wn);
-  const grounds = {mow:older[0],trim:older[1%OLDER.length],pickup:older[2%OLDER.length]};
-  const mp = {breakfast:OLDER[wn%OLDER.length],lunch:OLDER[(wn+1)%OLDER.length]};
-  const pChores = ['Make own bed','Clean own bedroom','Put away own clothes','Clean own bathroom sink & toilet'];
-  const personalMap = {};
-  ALL_CH.forEach(p=>{let ch=pChores[wn%pChores.length];if(p==='Thomas'&&TH_MODS[ch])ch=TH_MODS[ch];personalMap[p]=ch;});
-  return `<div class="kslide-bg"><div class="kslide-bg-r" style="width:400px;height:400px;background:var(--amber);bottom:-60px;left:-60px;"></div></div><div class="kslide-body"><div class="k-eyebrow">Today's Chore Rotation</div><div class="k-chores-wrap"><div class="k-chores-grid"><div class="k-chore-card"><div class="k-chore-card-name">🍽 Kitchen Setup</div>${setupPair.map(p=>`<div class="k-chore-item">${p} — set table</div>`).join('')}</div><div class="k-chore-card"><div class="k-chore-card-name">🧹 Kitchen Patrol</div><div class="k-chore-item">${patrol} — full cleanup</div></div><div class="k-chore-card"><div class="k-chore-card-name">🌿 Grounds</div><div class="k-chore-item">${grounds.mow} — mow</div><div class="k-chore-item">${grounds.trim} — trim</div><div class="k-chore-item">${grounds.pickup} — pickup</div></div><div class="k-chore-card"><div class="k-chore-card-name">🍳 Meal Prep</div><div class="k-chore-item">${mp.breakfast} — breakfast</div><div class="k-chore-item">${mp.lunch} — lunch</div></div></div><div class="k-chores-grid">${ALL_CH.map(p=>`<div class="k-chore-card" style="padding:10px 14px"><div class="k-chore-card-name">${p}</div><div class="k-chore-item">${personalMap[p]}</div></div>`).join('')}</div></div></div>`;
-}
-
-function kBuildTasks() {
-  const today = todayStr();
-  const todayItems = items.filter(i => !i.done && (
-    i.start_date === today ||
-    (i.start_date && i.end_date && i.start_date <= today && i.end_date >= today) ||
-    (i.repeat === 'daily' && i.start_date && i.start_date <= today) ||
-    (i.repeat === 'weekly' && i.start_date && i.start_date <= today && (()=>{const o=new Date(i.start_date+'T12:00:00'),t=new Date(today+'T12:00:00');return o.getDay()===t.getDay();})()) ||
-    (i.repeat === 'monthly' && i.start_date && i.start_date.slice(8) === today.slice(8))
-  ));
-  if (!todayItems.length) return `<div class="kslide-body"><div class="k-eyebrow">Today's Tasks &amp; Events</div><div style="font-size:26px;color:var(--smoke);font-style:italic">No tasks scheduled for today</div></div>`;
-  const byS = {ambition:[],preparation:[],planning:[],none:[]};
-  todayItems.forEach(i=>{const k=['ambition','preparation','planning'].includes(i.phase)?i.phase:'none';byS[k].push(i);});
-  const sess = [{k:'ambition',l:'AMBITION — Morning'},{k:'preparation',l:'PREPARATION — Evening'},{k:'planning',l:'PLANNING — Saturday'},{k:'none',l:'General'}];
-  return `<div class="kslide-bg"><div class="kslide-bg-r" style="width:400px;height:400px;background:var(--teal);top:-60px;right:-60px;"></div></div><div class="kslide-body" style="align-items:flex-start;text-align:left"><div class="k-eyebrow" style="align-self:center">Today's Tasks &amp; Events</div><div class="k-tasks-wrap">${sess.filter(s=>byS[s.k].length>0).map(s=>`<div class="k-session-section ${s.k}"><div class="k-session-label">${s.l}</div>${byS[s.k].slice(0,5).map(i=>`<div class="k-task-item">${i.text}<span class="k-task-who">${i.who}</span></div>`).join('')}${byS[s.k].length>5?`<div style="font-size:16px;color:var(--smoke);font-style:italic;padding-left:20px">+${byS[s.k].length-5} more</div>`:''}</div>`).join('')}</div></div>`;
-}
-
-// ── ASSEMBLY ──
-function kAssembleSlides(data, weather) {
-  const defs = [
-    {badge:'Daily Overview', content: kBuildDateWeather(data, weather)},
-  ];
-  // Conditionally include slides only if content exists
-  if ((data.memoryVerse||'').trim() || (data.memoryVerseRef||'').trim()) defs.push({badge:'Memory Verse', content: kBuildVerse(data)});
-  if ((data.readingAssignment||'').trim()) defs.push({badge:'Reading', content: kBuildReading(data)});
-  const am = data.ambition||{};
-  if ((am.title||am.scripture||am.points?.length)) defs.push({badge:'Morning Devotion', content: kBuildDevotion(data,'ambition')});
-  const pm = data.preparation||{};
-  if ((pm.title||pm.scripture||pm.points?.length)) defs.push({badge:'Evening Devotion', content: kBuildDevotion(data,'preparation')});
-  const s = data.sermon||{};
-  if ((s.title||s.outline?.length)) defs.push({badge:'Sermon Review', content: kBuildSermon(data)});
-  defs.push({badge:'Chore Rotation', content: kBuildChores()});
-  defs.push({badge:"Today's Tasks", content: kBuildTasks()});
-  return defs;
-}
-
-// ── RENDER ──
-function kRenderSlides(defs) {
-  const container = document.getElementById('kiosk-slides-container');
-  container.innerHTML = '';
-  const total = defs.length;
-  defs.forEach((def, idx) => {
-    const el = document.createElement('div');
-    el.className = 'kslide' + (idx===0?' active':'');
-    el.id = `kslide-${idx}`;
-    el.innerHTML = kSlideHeader(def.badge) + def.content + kSlideFooter(idx, total);
-    container.appendChild(el);
-  });
-  kioskSlides = defs;
-  kioskCurrent = 0;
-  kStartProgress();
-}
-
-function kStartProgress() {
-  clearTimeout(kioskAdvTimer);
-  const pbar = document.getElementById('kpbar');
-  if (pbar) { pbar.style.transition='none'; pbar.style.width='0%'; }
-  setTimeout(()=>{ const p=document.getElementById('kpbar'); if(p){p.style.transition=`width ${KIOSK_SLIDE_MS}ms linear`;p.style.width='100%';} },50);
-  kioskAdvTimer = setTimeout(kNextSlide, KIOSK_SLIDE_MS);
-}
-
-function kNextSlide() {
-  const total = kioskSlides.length;
-  if (!total) return;
-  const oldEl = document.getElementById(`kslide-${kioskCurrent}`);
-  kioskCurrent = (kioskCurrent + 1) % total;
-  const newEl = document.getElementById(`kslide-${kioskCurrent}`);
-  if (oldEl) oldEl.classList.add('exit');
-  if (newEl) newEl.classList.add('active');
-  setTimeout(()=>{
-    if (oldEl) oldEl.classList.remove('active','exit');
-    kUpdateDots();
-    kStartProgress();
-    kUpdateClocks();
-  }, KIOSK_TRANS_MS);
-}
-
-function kUpdateDots() {
-  const total = kioskSlides.length;
-  for (let i=0;i<total;i++) { const d=document.getElementById(`kdot-${i}`); if(d) d.classList.toggle('active',i===kioskCurrent); }
-}
-
-function kUpdateClocks() {
-  const c = kFormatClock();
-  document.querySelectorAll('.kslide-clock').forEach(el=>{ el.innerHTML=`<div>${c.time}</div><div>${c.date}</div>`; });
-  // Also update the big clock on datetime slide
-  const ds = document.querySelector('.k-datetime-super');
-  if (ds) ds.textContent = c.time;
-}
-
-// ── OPEN / CLOSE ──
-async function openKiosk() {
-  const overlay = document.getElementById('kiosk-overlay');
-  const closeBtn = document.getElementById('kiosk-close');
-  overlay.classList.add('active');
-  if (closeBtn) { closeBtn.classList.add('visible'); }
-
-  const dateStr = todayStr();
-  const data = getKioskData(dateStr);
-  let weather = null;
-  try { weather = await kioskFetchWeather(); } catch {}
-  const defs = kAssembleSlides(data, weather);
-  kRenderSlides(defs);
-
-  clearInterval(kioskClockTimer);
-  kioskClockTimer = setInterval(kUpdateClocks, 60000);
-
-  // Auto-reload at midnight
-  clearTimeout(kioskReloadTimer);
-  const now = new Date(); const midnight = new Date(now); midnight.setHours(24,0,5,0);
-  kioskReloadTimer = setTimeout(()=>{ closeKiosk(); setTimeout(openKiosk,1000); }, midnight - now);
-
-  // Refresh content from localStorage every 30s (picks up admin changes immediately)
-  clearInterval(kioskRefreshTimer);
-  kioskRefreshTimer = setInterval(async()=>{
-    const d2 = getKioskData(todayStr());
-    let w2 = null; try { w2 = await kioskFetchWeather(); } catch {}
-    const defs2 = kAssembleSlides(d2, w2);
-    kRenderSlides(defs2);
-  }, 30000);
-}
-
-function closeKiosk() {
-  document.getElementById('kiosk-overlay').classList.remove('active');
-  const closeBtn = document.getElementById('kiosk-close');
-  if (closeBtn) closeBtn.classList.remove('visible');
-  clearTimeout(kioskAdvTimer);
-  clearInterval(kioskClockTimer);
-  clearInterval(kioskRefreshTimer);
-  clearTimeout(kioskReloadTimer);
-}
-
-// Kiosk click-to-advance (set up after DOM ready)
-document.addEventListener('DOMContentLoaded', function() {
-  const ov = document.getElementById('kiosk-overlay');
-  if (ov) ov.addEventListener('click', function(e){
-    if (e.target.id === 'kiosk-close' || e.target.closest('#kiosk-close')) return;
-    kNextSlide();
-  });
-});
-document.addEventListener('keydown', e=>{
-  const ov = document.getElementById('kiosk-overlay');
-  if (!ov?.classList.contains('active')) return;
-  if (e.key === 'Escape') closeKiosk();
-  if (e.key === ' ' || e.key === 'ArrowRight') kNextSlide();
-});
-
-// ── KIOSK ADMIN UI ──
-let kioskAdminDate = todayStr();
-
-function initKioskAdmin() {
-  renderKioskDateTabs();
-  loadKioskAdminForm(kioskAdminDate);
-}
-
-function renderKioskDateTabs() {
-  const container = document.getElementById('kiosk-date-tabs');
-  if (!container) return;
-  const dates = getKioskDates();
-  const today = todayStr();
-  // Always show today + next 6 days as tabs
-  const upcoming = [];
-  for (let i=0;i<7;i++) { const d=new Date(); d.setDate(d.getDate()+i); upcoming.push(d.toISOString().slice(0,10)); }
-  // Also add any saved dates not in upcoming
-  dates.forEach(d=>{ if(!upcoming.includes(d)) upcoming.push(d); });
-  upcoming.sort();
-
-  container.innerHTML = upcoming.map(d=>{
-    const label = d===today?'Today':fmtDate(d).replace(/\d{4}/,'').trim();
-    const hasData = !!getKioskDates().includes(d) && Object.values(getKioskData(d)||{}).some(v=>v&&(typeof v==='string'?v.trim():Object.values(v||{}).some(x=>x)));
-    return `<div class="kiosk-date-tab${d===kioskAdminDate?' active':''}" onclick="kioskSwitchDate('${d}')">${label}${hasData?' ●':''}</div>`;
-  }).join('');
-}
-
-function kioskSwitchDate(dateStr) {
-  kioskSaveAdminForm();
-  kioskAdminDate = dateStr;
-  renderKioskDateTabs();
-  loadKioskAdminForm(dateStr);
-}
-
-function loadKioskAdminForm(dateStr) {
-  const data = getKioskData(dateStr);
-  const am = data.ambition || {};
-  const pm = data.preparation || {};
-  const s = data.sermon || {};
-
-  const setVal = (id, val) => { const el=document.getElementById(id); if(el) el.value=val||''; };
-  setVal('k-special-news', data.specialNews);
-  setVal('k-memory-verse', data.memoryVerse);
-  setVal('k-memory-verse-ref', data.memoryVerseRef);
-  setVal('k-reading', data.readingAssignment);
-  setVal('k-am-title', am.title);
-  setVal('k-am-scripture', am.scripture);
-  setVal('k-am-leader', am.leader);
-  setVal('k-am-points', (am.points||[]).join('\n'));
-  setVal('k-pm-title', pm.title);
-  setVal('k-pm-scripture', pm.scripture);
-  setVal('k-pm-leader', pm.leader);
-  setVal('k-pm-points', (pm.points||[]).join('\n'));
-  setVal('k-sermon-date', s.date);
-  setVal('k-sermon-speaker', s.speaker);
-  setVal('k-sermon-scripture', s.scripture);
-  setVal('k-sermon-title', s.title);
-  setVal('k-sermon-outline', (s.outline||[]).join('\n'));
-
-  const lbl = document.getElementById('kiosk-admin-date-label');
-  if (lbl) lbl.textContent = dateStr===todayStr() ? 'Today ('+fmtDate(dateStr)+')' : fmtDate(dateStr);
-}
-
-function kioskSaveAdminForm() {
-  const getVal = id => { const el=document.getElementById(id); return el?el.value.trim():''; };
-  const getLines = id => { const el=document.getElementById(id); return el?el.value.split('\n').map(l=>l.trim()).filter(Boolean):[]; };
-  const data = {
-    specialNews: getVal('k-special-news'),
-    memoryVerse: getVal('k-memory-verse'),
-    memoryVerseRef: getVal('k-memory-verse-ref'),
-    readingAssignment: getVal('k-reading'),
-    ambition: { title:getVal('k-am-title'), scripture:getVal('k-am-scripture'), leader:getVal('k-am-leader'), points:getLines('k-am-points') },
-    preparation: { title:getVal('k-pm-title'), scripture:getVal('k-pm-scripture'), leader:getVal('k-pm-leader'), points:getLines('k-pm-points') },
-    sermon: { date:getVal('k-sermon-date'), speaker:getVal('k-sermon-speaker'), scripture:getVal('k-sermon-scripture'), title:getVal('k-sermon-title'), outline:getLines('k-sermon-outline') },
-  };
-  saveKioskData(kioskAdminDate, data);
-  renderKioskDateTabs();
-}
-
-function kioskSaveAndPreview() {
-  kioskSaveAdminForm();
-  toast('Kiosk content saved');
-  openKiosk();
-}
-
-function kioskSaveOnly() {
-  kioskSaveAdminForm();
-  toast('Saved for ' + (kioskAdminDate===todayStr()?'today':fmtDate(kioskAdminDate)));
-}
 </script>
 
-<!-- ══ KIOSK OVERLAY ══ -->
-<div id="kiosk-overlay">
+<!-- ═══════════════ KIOSK OVERLAY ═══════════════ -->
+<div id="kiosk-overlay" style="display:none;position:fixed;inset:0;z-index:900;background:#0e1118;overflow:hidden">
   <div id="kiosk-slides-container"></div>
+  <!-- Close button (hover to reveal) -->
+  <button onclick="closeKiosk()" style="position:fixed;top:14px;right:14px;z-index:999;background:rgba(14,17,24,0.7);border:1px solid rgba(200,134,10,0.3);color:var(--cream-dim);font-family:var(--font-d);font-size:11px;letter-spacing:0.12em;padding:8px 16px;border-radius:2px;cursor:pointer;opacity:0;transition:opacity 0.3s" id="kiosk-close-btn" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">✕ EXIT</button>
 </div>
-<button id="kiosk-close" onclick="closeKiosk()">✕ Close Kiosk</button>
 
 
 </body></html>
