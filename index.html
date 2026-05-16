@@ -11,7 +11,7 @@
 <title>The American Shepherd</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="The%20American%20Shepherd_files/css2.css" rel="stylesheet">
+<link href="01%20The%20American%20Shepherd_files/css2.css" rel="stylesheet">
 <style>
 :root{
   --navy:#0e1118;--navy-mid:#161c2a;--navy-soft:#1e2640;--navy-card:#1a2035;--navy-card2:#151c30;
@@ -453,7 +453,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
   <div class="hero-content">
     <div><div class="app-name">The American Shepherd</div><div class="app-tagline">Family Command Center</div></div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-      <div class="hdr-date" id="hdr-date"><div class="hdr-date-day">Friday</div>May 15, 2026</div>
+      <div class="hdr-date" id="hdr-date"><div class="hdr-date-day">Saturday</div>May 16, 2026</div>
       <div class="user-pill" onclick="switchUser()" title="Switch user"><span class="user-pill-name" id="current-user-label">—</span><span class="user-pill-icon">⇄</span></div>
     </div>
   </div>
@@ -570,7 +570,11 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
       <button class="btn btn-sm" onclick="testConn()">Test</button>
       <button class="btn-ghost" onclick="pushItems()">↑ Push</button>
-      <button class="btn-ghost" onclick="pullItems()">↓ Pull</button>
+      <button class="btn-ghost" onclick="pullItems()">↓ Pull Tasks</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn-ghost" onclick="pushKiosk()">↑ Push Kiosk</button>
+      <button class="btn-ghost" onclick="pullKiosk()">↓ Pull Kiosk</button>
     </div>
     <div id="conn-status" class="conn-none">Not configured</div>
   </div>
@@ -650,7 +654,7 @@ Point 3"></textarea></div></div>
   <div class="chores-back" onclick="closeChores()">‹ Back to Planner <span style="font-size:12px;color:var(--smoke);margin-left:8px">(or swipe right)</span></div>
   <div class="chores-hero">
     <div class="chores-title">Household Chores</div>
-    <div class="chores-date" id="chores-date">Friday, May 15</div>
+    <div class="chores-date" id="chores-date">Saturday, May 16</div>
   </div>
   <div class="chores-tabs">
     <button class="ctab active" onclick="showCView('today')">Today</button>
@@ -792,7 +796,7 @@ Point 3"></textarea></div></div>
 </div>
 
 </div><!-- end swipe-wrap -->
-<div id="toast"></div>
+<div id="toast" class="">Supabase not configured</div>
 <script>
 // ── PEOPLE & ROLES ──
 const PEOPLE = ['David','Krista','John','Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas','Melody','Family'];
@@ -1493,7 +1497,18 @@ alter table asp_items enable row level security;
 drop policy if exists "allow_anon" on asp_items;
 create policy "allow_anon" on asp_items as permissive for all to anon using (true) with check (true);
 grant usage on schema public to anon;
-grant all on asp_items to anon;`;
+grant all on asp_items to anon;
+
+create table if not exists asp_kiosk (
+  key text primary key,
+  data jsonb not null,
+  updated_at timestamptz default now()
+);
+alter table asp_kiosk enable row level security;
+drop policy if exists "allow_anon" on asp_kiosk;
+create policy "allow_anon" on asp_kiosk as permissive for all to anon using (true) with check (true);
+grant usage on schema public to anon;
+grant all on asp_kiosk to anon;`;
 
 function scheduleAutoSync(){ const cfg=getCfg(); if(!cfg.url||!cfg.key)return; clearTimeout(syncTimeout); syncTimeout=setTimeout(()=>autoSync(),1200); }
 async function autoSync(){
@@ -1539,6 +1554,34 @@ async function testConn(){
 }
 async function pushItems(){try{await sbDeleteAll();if(items.length)await sbInsert(items);toast('Pushed');}catch(e){toast('Push failed: '+e.message);}}
 async function pullItems(){try{const r=await sbFetch('asp_items?order=id.asc');if(!r.ok)throw new Error(r.status);items=await r.json();save_local();render();toast('Pulled');}catch(e){toast('Pull failed: '+e.message);}}
+
+async function pushKiosk(){
+  const cfg=getCfg(); if(!cfg.url||!cfg.key){toast('Supabase not configured');return;}
+  const keys=Object.keys(localStorage).filter(k=>k.startsWith('asp_kiosk_'));
+  if(!keys.length){toast('No kiosk data to push');return;}
+  showSyncInd('syncing','Pushing kiosk...');
+  try{
+    for(const k of keys){
+      const entry={key:k,data:JSON.parse(localStorage.getItem(k)),updated_at:new Date().toISOString()};
+      await fetch(cfg.url+'/rest/v1/asp_kiosk',{method:'POST',headers:{'apikey':cfg.key,'Authorization':'Bearer '+cfg.key,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(entry)});
+    }
+    showSyncInd('ok','Kiosk synced \u2713'); setTimeout(()=>hideSyncInd(),2000);
+    toast('Kiosk pushed ('+keys.length+' entries)');
+  }catch(e){showSyncInd('err','Kiosk push failed');setTimeout(()=>hideSyncInd(),3000);toast('Kiosk push failed: '+e.message);}
+}
+
+async function pullKiosk(){
+  const cfg=getCfg(); if(!cfg.url||!cfg.key){toast('Supabase not configured');return;}
+  showSyncInd('syncing','Pulling kiosk...');
+  try{
+    const r=await fetch(cfg.url+'/rest/v1/asp_kiosk?select=key,data',{headers:{'apikey':cfg.key,'Authorization':'Bearer '+cfg.key}});
+    if(!r.ok)throw new Error(r.status);
+    const rows=await r.json();
+    rows.forEach(row=>localStorage.setItem(row.key,JSON.stringify(row.data)));
+    showSyncInd('ok','Kiosk ready \u2713'); setTimeout(()=>hideSyncInd(),2000);
+    toast('Kiosk pulled ('+rows.length+' entries)');
+  }catch(e){showSyncInd('err','Kiosk pull failed');setTimeout(()=>hideSyncInd(),3000);toast('Kiosk pull failed: '+e.message);}
+}
 function copySQL(){navigator.clipboard.writeText(SQL_CREATE).then(()=>toast('SQL copied'));}
 function initSettings(){const cfg=getCfg();document.getElementById('sb-url').value=cfg.url;document.getElementById('sb-key').value=cfg.key;document.getElementById('sql-block').textContent=SQL_CREATE;updateUserUI();initPinSettings();updateKioskAdminUI();}
 
@@ -1924,6 +1967,7 @@ function kaSave() {
   localStorage.setItem(kaKey(date), JSON.stringify(data));
   renderKaList();
   toast('Saved: ' + (date || 'Default'));
+  pushKiosk();
 }
 
 function kaDelete() {
@@ -2296,6 +2340,7 @@ initDate();
 initChoresDate();
 render();
 autoSyncOnOpen();
+pullKiosk();
 initLogin();
 restrictWhoDropdown();
 </script>
