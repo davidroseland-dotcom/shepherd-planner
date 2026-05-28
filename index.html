@@ -11,7 +11,7 @@
 <title>The American Shepherd</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="03The%20American%20Shepherd_files/css2.css" rel="stylesheet">
+<link href="04The%20American%20Shepherd_files/css2.css" rel="stylesheet">
 <style>
 :root{
   --navy:#0e1118;--navy-mid:#161c2a;--navy-soft:#1e2640;--navy-card:#1a2035;--navy-card2:#151c30;
@@ -385,6 +385,12 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 .k-chore-card-name{font-family:var(--font-d);font-size:15px;letter-spacing:0.14em;color:var(--amber-glow);margin-bottom:8px;text-transform:uppercase}
 .k-chore-item{font-size:20px;color:var(--cream-dim);line-height:1.6;padding:2px 0}
 .k-chore-item::before{content:"· ";color:var(--amber);opacity:0.6}
+.k-personal-table{width:100%;border-collapse:collapse;max-width:1100px}
+.k-personal-table th{font-family:var(--font-d);font-size:11px;letter-spacing:0.12em;color:var(--amber-glow);text-transform:uppercase;padding:8px 10px;border-bottom:1px solid rgba(200,134,10,0.25);text-align:center}
+.k-personal-table td{font-size:16px;color:var(--cream-dim);padding:10px 10px;border-bottom:1px solid rgba(255,255,255,0.05);text-align:center}
+.k-personal-table td:first-child{font-family:var(--font-d);font-size:13px;letter-spacing:0.1em;color:var(--cream);text-align:left}
+.k-personal-table tr:last-child td{border-bottom:none}
+.k-personal-check{display:inline-block;width:18px;height:18px;border:2px solid rgba(200,134,10,0.4);border-radius:3px;vertical-align:middle}
 .k-tasks-wrap{max-width:1000px;width:100%;display:flex;flex-direction:column;gap:28px}
 .k-sess-section{border-left:3px solid var(--teal);padding-left:20px}
 .k-sess-section.preparation{border-left-color:var(--amber)}
@@ -398,10 +404,10 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 </style>
 </head>
 <body>
-<div class="sync-indicator ok" id="sync-ind">Ready ✓</div>
+<div class="sync-indicator ok" id="sync-ind">Kiosk ready ✓</div>
 <div id="login-overlay">
   <div class="login-hero">
-    <img src="03The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="">
+    <img src="04The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="">
     <div class="login-hero-overlay"></div>
     <div class="login-hero-text">
       <div class="login-title">The American Shepherd</div>
@@ -448,7 +454,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 
 <header>
 <div class="hero">
-  <img class="hero-img" src="03The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="The American Shepherd">
+  <img class="hero-img" src="04The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="The American Shepherd">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div><div class="app-name">The American Shepherd</div><div class="app-tagline">Family Command Center</div></div>
@@ -675,7 +681,6 @@ Point 3"></textarea></div></div>
   <div class="chores-tabs">
     <button class="ctab active" onclick="showCView('today')">Today</button>
     <button class="ctab" onclick="showCView('rotation')">Rotation</button>
-    <button class="ctab" onclick="showCView('adults')">Adults</button>
     <button class="ctab" onclick="showCView('melody')">Melody</button>
     <button class="ctab" onclick="showCView('manage')">Manage</button>
   </div>
@@ -694,7 +699,7 @@ Point 3"></textarea></div></div>
       <div class="sh">This Week's Rotation</div>
       <div class="rotation-board">
         <div class="rotation-head">
-          <div class="rotation-title">Kitchen Setup (Dinner)</div>
+          <div class="rotation-title">Dinner Setup</div>
           <div class="rotation-week" id="rot-week-label"></div>
         </div>
         <div id="rot-setup" style="padding:12px 14px"></div>
@@ -708,7 +713,7 @@ Point 3"></textarea></div></div>
         <div id="rot-personal" style="padding:12px 14px"></div>
       </div>
       <div class="rotation-board">
-        <div class="rotation-head"><div class="rotation-title">Common Areas</div></div>
+        <div class="rotation-head"><div class="rotation-title">Common Areas (Daily)</div></div>
         <div id="rot-common" style="padding:12px 14px"></div>
       </div>
       <div class="rotation-board">
@@ -716,15 +721,13 @@ Point 3"></textarea></div></div>
         <div id="rot-grounds" style="padding:12px 14px"></div>
       </div>
       <div class="rotation-board">
+        <div class="rotation-head"><div class="rotation-title">Weekly Common Areas</div></div>
+        <div id="rot-weekly-common" style="padding:12px 14px"></div>
+      </div>
+      <div class="rotation-board">
         <div class="rotation-head"><div class="rotation-title">Meal Prep (Older Boys)</div></div>
         <div id="rot-mealprep" style="padding:12px 14px"></div>
       </div>
-    </div>
-
-    <!-- ADULTS VIEW -->
-    <div class="cview" id="cview-adults">
-      <div class="sh">Adult Responsibilities</div>
-      <div id="adults-content"></div>
     </div>
 
     <!-- MELODY VIEW -->
@@ -760,10 +763,11 @@ Point 3"></textarea></div></div>
             <select id="chore-cat-sel">
               <option value="personal" selected="selected">Personal Areas</option>
               <option value="common">Common Areas</option>
-              <option value="kitchen-setup">Kitchen Setup</option>
+              <option value="kitchen-setup">Dinner Setup</option>
               <option value="kitchen-patrol">Kitchen Patrol</option>
               <option value="cooking">Cooking / Meal Prep</option>
               <option value="outside">Outside / Grounds</option>
+              <option value="weekly-common">Weekly Common Areas</option>
               <option value="shopping">Shopping</option>
               <option value="inspection">Inspection</option>
             </select>
@@ -829,10 +833,17 @@ const DEFAULT_CHORES = {
     {id:'p4',name:'Clean own bathroom sink & toilet',freq:'weekly',who:'rotating-all'},
   ],
   common:[
-    {id:'c1',name:'Vacuum living room',freq:'weekly',who:'rotating-all'},
-    {id:'c2',name:'Sweep entry & hallways',freq:'weekly',who:'rotating-all'},
-    {id:'c3',name:'Wipe common bathroom',freq:'weekly',who:'rotating-all'},
-    {id:'c4',name:'Take out indoor trash',freq:'weekly',who:'rotating-all'},
+    {id:'c1', name:'Dinner Setup',            freq:'daily',who:'rotating-all'},
+    {id:'c2', name:'Kitchen Patrol',          freq:'daily',who:'rotating-all'},
+    {id:'c3', name:'Downstairs Bathroom',     freq:'daily',who:'rotating-all'},
+    {id:'c4', name:'Upstairs Hallway Bathroom',freq:'daily',who:'rotating-all'},
+    {id:'c5', name:'Master Bathroom',         freq:'daily',who:'rotating-all'},
+    {id:'c6', name:'TV Area',                 freq:'daily',who:'rotating-all'},
+    {id:'c7', name:'Living Room',             freq:'daily',who:'rotating-all'},
+    {id:'c8', name:'Mudroom',                 freq:'daily',who:'rotating-all'},
+    {id:'c9', name:'Staircase',               freq:'daily',who:'rotating-all'},
+    {id:'c10',name:'Deck',                    freq:'daily',who:'rotating-all'},
+    {id:'c11',name:'Backyard Pickup',         freq:'daily',who:'rotating-all'},
   ],
   'kitchen-setup':[
     {id:'ks1',name:'Set table for dinner (plates, utensils, cups)',freq:'daily',who:'rotating-all',note:'2 children per night'},
@@ -856,6 +867,17 @@ const DEFAULT_CHORES = {
     {id:'o3',name:'Roll trash cans to curb',freq:'weekly',who:'rotating-all'},
     {id:'o4',name:'Retrieve trash cans from curb',freq:'weekly',who:'rotating-all'},
     {id:'o5',name:'Basic yard pickup (toys, debris)',freq:'weekly',who:'rotating-all'},
+  ],
+  'weekly-common':[
+    {id:'wc1', name:'Mow House Area',          freq:'weekly',who:'rotating-older'},
+    {id:'wc2', name:'Trimming',                freq:'weekly',who:'rotating-older'},
+    {id:'wc3', name:'Mirrors',                 freq:'weekly',who:'rotating-all'},
+    {id:'wc4', name:'Bathtub — Master Bath',   freq:'weekly',who:'rotating-older'},
+    {id:'wc5', name:'Bathtub — Hallway Bath',  freq:'weekly',who:'rotating-all'},
+    {id:'wc6', name:'North East Field',        freq:'weekly',who:'rotating-older'},
+    {id:'wc7', name:'South East Field',        freq:'weekly',who:'rotating-older'},
+    {id:'wc8', name:'West Field 1',            freq:'weekly',who:'rotating-older'},
+    {id:'wc9', name:'West Field 2',            freq:'weekly',who:'rotating-older'},
   ],
   shopping:[
     {id:'sh1',name:'Grocery shopping',freq:'weekly',who:'adults'},
@@ -910,29 +932,51 @@ function rotateArr(arr, weekNum){ return arr.slice(weekNum % arr.length).concat(
 function advanceRotation(dir){ rotationOffset+=dir; localStorage.setItem('asp_rot_offset',rotationOffset); renderRotation(); renderToday(); renderManage(); }
 function resetRotation(){ rotationOffset=0; localStorage.setItem('asp_rot_offset',0); renderRotation(); renderToday(); renderManage(); }
 
+const YOUNGER_CHILDREN = ['Thomas']; // under 13
+
 function getKitchenSetupPair(weekNum){
-  const rotated = rotateArr(ALL_CHILDREN, weekNum);
-  const idx = (new Date().getDay() + weekNum) % ALL_CHILDREN.length;
-  const a = ALL_CHILDREN[idx % ALL_CHILDREN.length];
-  const b = ALL_CHILDREN[(idx+1) % ALL_CHILDREN.length];
-  return [a,b];
+  const dayIdx = new Date().getDay();
+  const older = OLDER_BOYS[(weekNum + dayIdx) % OLDER_BOYS.length];
+  const younger = YOUNGER_CHILDREN[(weekNum + dayIdx) % YOUNGER_CHILDREN.length];
+  return [older, younger];
 }
 function getKitchenPatrol(weekNum){
-  return ALL_CHILDREN[weekNum % ALL_CHILDREN.length];
+  const dayIdx = new Date().getDay();
+  const older = OLDER_BOYS[(weekNum + dayIdx + 2) % OLDER_BOYS.length]; // offset so different from setup
+  const younger = YOUNGER_CHILDREN[(weekNum + dayIdx) % YOUNGER_CHILDREN.length];
+  return [older, younger]; // returns array now
 }
 function getPersonalAssignment(person, weekNum){
   const chores = DEFAULT_CHORES.personal;
   return chores[weekNum % chores.length];
 }
 function getCommonAssignment(weekNum){
-  const rotated = rotateArr(ALL_CHILDREN, weekNum);
+  // Rotate daily: use day-of-year so each day children get different chores
+  const now = new Date();
+  const start = new Date(now.getFullYear(),0,1);
+  const dayOfYear = Math.floor((now - start) / 86400000);
+  const chores = DEFAULT_CHORES.common;
   const map = {};
-  DEFAULT_CHORES.common.forEach((c,i)=>{ map[rotated[i%ALL_CHILDREN.length]] = c.name; });
+  ALL_CHILDREN.forEach((child,i)=>{
+    const choreIdx = (dayOfYear + i) % chores.length;
+    map[child] = chores[choreIdx].name;
+  });
   return map;
 }
 function getGroundsAssignment(weekNum){
   const older = rotateArr(OLDER_BOYS, weekNum);
   return {mow:older[0], trim:older[1%OLDER_BOYS.length], pickup:older[2%OLDER_BOYS.length]};
+}
+function getWeeklyCommonAssignment(weekNum){
+  // Assign each weekly-common chore to a person for the week
+  const wc = DEFAULT_CHORES['weekly-common'];
+  const map = []; // array of {chore, person}
+  wc.forEach((c,i)=>{
+    const pool = c.who==='rotating-older' ? OLDER_BOYS : ALL_CHILDREN;
+    const person = pool[(weekNum + i) % pool.length];
+    map.push({chore:c, person});
+  });
+  return map;
 }
 function getMealPrepAssignment(weekNum){
   return {breakfast:OLDER_BOYS[weekNum%OLDER_BOYS.length], lunch:OLDER_BOYS[(weekNum+1)%OLDER_BOYS.length]};
@@ -952,7 +996,7 @@ document.addEventListener('touchend',e=>{
 function openChores(){
   document.getElementById('swipe-wrap').classList.add('show-chores');
   document.getElementById('swipe-tab').classList.add('hidden');
-  renderToday(); renderRotation(); renderAdults(); renderManage();
+  renderToday(); renderRotation(); renderManage();
 }
 function closeChores(){
   document.getElementById('swipe-wrap').classList.remove('show-chores');
@@ -967,7 +1011,7 @@ function showCView(name){
   [...document.querySelectorAll('.ctab')].find(t=>t.textContent.toLowerCase()===name.toLowerCase())?.classList.add('active');
   if(name==='today') renderToday();
   if(name==='rotation') renderRotation();
-  if(name==='adults') renderAdults();
+  
   if(name==='manage') renderManage();
 }
 
@@ -1017,11 +1061,11 @@ function renderToday(){
 
   let html = '';
 
-  // Kitchen Setup
+  // Dinner Setup
   html += `<div class="cat-block">
     <div class="cat-head" onclick="toggleCat(this)">
       <div class="cat-icon">🍽</div>
-      <div class="cat-name">Kitchen Setup — Dinner</div>
+      <div class="cat-name">Dinner Setup</div>
       <div class="cat-toggle">▾</div>
     </div>
     <div class="cat-body">`;
@@ -1045,16 +1089,18 @@ function renderToday(){
       <div class="cat-toggle">▾</div>
     </div>
     <div class="cat-body">`;
-  DEFAULT_CHORES['kitchen-patrol'].forEach(c=>{
-    const key = choreKey(today, c.id);
-    const name = patrolPerson==='Thomas'?(THOMAS_MODS[c.name]||c.name):c.name;
-    html += `<div class="chore-row">
-      <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','${c.id}')"/>
-      <div class="chore-body">
-        <div class="chore-name${choreChecks[key]?' done':''}">${name}</div>
-        <div class="chore-meta">${assigneeChip(patrolPerson)} ${freqBadge('daily')}</div>
-      </div>
-    </div>`;
+  patrolPerson.forEach(person=>{
+    DEFAULT_CHORES['kitchen-patrol'].forEach(c=>{
+      const key = choreKey(today, c.id+'-'+person);
+      const name = person==='Thomas'?(THOMAS_MODS[c.name]||c.name):c.name;
+      html += `<div class="chore-row">
+        <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','${c.id}-${person}')"/>
+        <div class="chore-body">
+          <div class="chore-name${choreChecks[key]?' done':''}">${name}</div>
+          <div class="chore-meta">${assigneeChip(person)} ${freqBadge('daily')}</div>
+        </div>
+      </div>`;
+    });
   });
   html += `</div></div>`;
 
@@ -1081,30 +1127,27 @@ function renderToday(){
   });
   html += `</div></div>`;
 
-  // Weekly chores (only show on relevant day)
-  const isWeekday = dow>=1 && dow<=6;
-  if(isWeekday){
-    html += `<div class="cat-block">
-      <div class="cat-head" onclick="toggleCat(this)">
-        <div class="cat-icon">🏠</div>
-        <div class="cat-name">Common Areas (Weekly)</div>
-        <div class="cat-toggle">▾</div>
+  // Common Areas — daily rotation
+  html += `<div class="cat-block">
+    <div class="cat-head" onclick="toggleCat(this)">
+      <div class="cat-icon">🏠</div>
+      <div class="cat-name">Common Areas</div>
+      <div class="cat-toggle">▾</div>
+    </div>
+    <div class="cat-body">`;
+  Object.entries(commonMap).forEach(([person, choreName])=>{
+    const key = choreKey(today,'common-'+person);
+    const name = person==='Thomas'?(THOMAS_MODS[choreName]||choreName):choreName;
+    html += `<div class="chore-row">
+      <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','common-${person}')"/>
+      <div class="chore-body">
+        <div class="chore-name${choreChecks[key]?' done':''}">${name}</div>
+        <div class="chore-meta">${assigneeChip(person)} ${freqBadge('daily')}</div>
       </div>
-      <div class="cat-body">`;
-    Object.entries(commonMap).forEach(([person, choreName])=>{
-      const key = choreKey(today,'common-'+person);
-      const name = person==='Thomas'?(THOMAS_MODS[choreName]||choreName):choreName;
-      html += `<div class="chore-row">
-        <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','common-${person}')"/>
-        <div class="chore-body">
-          <div class="chore-name${choreChecks[key]?' done':''}">${name}</div>
-          <div class="chore-meta">${assigneeChip(person)} ${freqBadge('weekly')}</div>
-        </div>
-      </div>`;
-    });
-    html += `</div></div>`;
-
-    // Grounds (weekly, older boys)
+    </div>`;
+  });
+  html += `</div></div>`;
+  // Grounds (weekly, older boys)
     html += `<div class="cat-block">
       <div class="cat-head" onclick="toggleCat(this)">
         <div class="cat-icon">🌿</div>
@@ -1124,6 +1167,27 @@ function renderToday(){
         }).join('')}
       </div>
     </div>`;
+
+    // Weekly Common Areas
+    const weeklyCommon = getWeeklyCommonAssignment(weekNum);
+    html += `<div class="cat-block">
+      <div class="cat-head" onclick="toggleCat(this)">
+        <div class="cat-icon">🏡</div>
+        <div class="cat-name">Weekly Common Areas</div>
+        <div class="cat-toggle">▾</div>
+      </div>
+      <div class="cat-body">`;
+    weeklyCommon.forEach(({chore:c, person})=>{
+      const key = choreKey(today, c.id);
+      html += `<div class="chore-row">
+        <input type="checkbox" class="chore-check" ${choreChecks[key]?'checked':''} onchange="toggleChoreCheck(this,'${today}','${c.id}')"/>
+        <div class="chore-body">
+          <div class="chore-name${choreChecks[key]?' done':''}">${c.name}</div>
+          <div class="chore-meta">${assigneeChip(person)} ${freqBadge('weekly')}</div>
+        </div>
+      </div>`;
+    });
+    html += `</div></div>`;
 
     // Meal Prep (older boys)
     html += `<div class="cat-block">
@@ -1145,7 +1209,6 @@ function renderToday(){
         }).join('')}
       </div>
     </div>`;
-  }
 
   // Custom chores today
   if(customChores.length){
@@ -1188,7 +1251,7 @@ function renderRotation(){
 
   const patrol = getKitchenPatrol(weekNum);
   document.getElementById('rot-patrol').innerHTML = `<div style="font-size:20px;color:var(--cream)">
-    <span class="assignee-chip" style="margin-right:6px">${patrol}</span>
+    ${patrol.map(p=>`<span class="assignee-chip" style="margin-right:6px">${p}</span>`).join('')}
     <span style="color:var(--cream-dim);font-size:18px">— Full kitchen patrol after meals</span>
   </div>`;
 
@@ -1221,6 +1284,15 @@ function renderRotation(){
       <div class="rotation-cell"><div class="rc-person">${grounds.trim}</div><div class="rc-chore">Trim edges</div></div>
       <div class="rotation-cell"><div class="rc-person">${grounds.pickup}</div><div class="rc-chore">Yard pickup</div></div>
     </div>`;
+
+  // Weekly Common Areas
+  const wcAssign = getWeeklyCommonAssignment(weekNum);
+  let wcHtml = '<div class="rotation-grid">';
+  wcAssign.forEach(({chore:c, person})=>{
+    wcHtml += `<div class="rotation-cell"><div class="rc-person">${person}</div><div class="rc-chore">${c.name}</div></div>`;
+  });
+  wcHtml += '</div>';
+  document.getElementById('rot-weekly-common').innerHTML = wcHtml;
 
   // Meal Prep
   const mp = getMealPrepAssignment(weekNum);
@@ -1912,6 +1984,7 @@ const KS_SLIDE_DEFS = [
   {id:'preparation', label:'Evening Devotion (Preparation)'},
   {id:'sermon',      label:'Sermon Review'},
   {id:'chores',      label:'Chore Rotation'},
+    {id:'personal',    label:'Personal Areas'},
   {id:'tasks',       label:"Today's Tasks"},
 ];
 
@@ -2200,7 +2273,7 @@ function kioskFormatClock(){
 
 function kioskHeader(badge){
   const c=kioskFormatClock();
-  return `<div class="k-header"><div class="k-badge">${badge}</div><div class="k-app-name">The American Shepherd</div><div class="k-clock"><div>${c.time}</div><div>${c.date}</div></div></div>`;
+  return `<div class="k-header"><div class="k-badge">${badge}</div><div class="k-app-name">The Roseland Household</div><div class="k-clock"><div>${c.time}</div><div>${c.date}</div></div></div>`;
 }
 
 function kioskFooter(idx,total){
@@ -2243,7 +2316,9 @@ function kBuildReading(data) {
     <div class="k-body"><div class="k-eyebrow">Today's Reading Assignment</div><div class="k-ornament"></div><div class="k-body-text">${r}</div></div>`;
 }
 
-// Returns array of HTML strings (one per page) for a devotion session
+// Returns array of HTML strings (one per page) for a devotion session.
+// Page splitting is done by DOM measurement after render — see kioskSplitOverflows().
+// This function always returns a single page; splitting happens post-render.
 function kBuildDevotionPages(data, session) {
   const isAM = session === 'ambition';
   const d = isAM ? data?.ambition : data?.preparation;
@@ -2253,87 +2328,133 @@ function kBuildDevotionPages(data, session) {
   const bg = isAM ? 'var(--teal)' : 'var(--amber)';
   const badge = isAM ? '☀ Ambition — Morning Devotion' : '🌙 Preparation — Evening Devotion';
   const radial = `<div class="k-radial" style="width:500px;height:500px;background:${bg};bottom:-100px;right:-100px"></div>`;
-
-  const allPoints = (d?.points||[]).filter(Boolean);
-
-  // Estimate overflow: if total char count of points > ~600, split across pages
-  const CHAR_LIMIT = 600;
-  const pages = [];
-
-  if (allPoints.length === 0) {
-    // Single page, no points
-    pages.push(`${radial}<div class="k-body"><div class="k-dev-wrap">
+  const points = (d?.points||[]).filter(Boolean);
+  // Store raw points on a data attribute so splitter can access them
+  const pointsHtml = points.length
+    ? `<div class="k-dev-points" data-session="${session}">${points.map((p,i)=>`<div class="k-dev-point" data-pt="${i}">${escK(p)}</div>`).join('')}</div>`
+    : '';
+  return [`${radial}<div class="k-body"><div class="k-dev-wrap">
       <div class="k-dev-badge ${session}">${badge}</div>
       <div class="k-dev-title">${title}</div>
-      ${scripture}${leader}
-    </div></div>`);
-  } else {
-    // Greedily fill pages up to CHAR_LIMIT chars of points
-    let currentPoints = [];
-    let currentChars = 0;
-    let firstPage = true;
-
-    for (let i = 0; i < allPoints.length; i++) {
-      const pChars = allPoints[i].length;
-      if (!firstPage && currentChars + pChars > CHAR_LIMIT && currentPoints.length > 0) {
-        // flush current page
-        const pointsHtml = `<div class="k-dev-points">${currentPoints.map(p=>`<div class="k-dev-point">${escK(p)}</div>`).join('')}</div>`;
-        pages.push(`${radial}<div class="k-body"><div class="k-dev-wrap">
-          <div class="k-dev-badge ${session}">${badge}</div>
-          <div class="k-dev-title">${title}</div>
-          ${pointsHtml}
-        </div></div>`);
-        currentPoints = [];
-        currentChars = 0;
-      }
-      if (firstPage && currentChars + pChars > CHAR_LIMIT && currentPoints.length > 0) {
-        // flush first page (includes scripture/leader)
-        const pointsHtml = `<div class="k-dev-points">${currentPoints.map(p=>`<div class="k-dev-point">${escK(p)}</div>`).join('')}</div>`;
-        pages.push(`${radial}<div class="k-body"><div class="k-dev-wrap">
-          <div class="k-dev-badge ${session}">${badge}</div>
-          <div class="k-dev-title">${title}</div>
-          ${scripture}${leader}${pointsHtml}
-        </div></div>`);
-        currentPoints = [];
-        currentChars = 0;
-        firstPage = false;
-      }
-      currentPoints.push(allPoints[i]);
-      currentChars += pChars;
-    }
-
-    // flush remaining
-    if (currentPoints.length > 0) {
-      const pointsHtml = `<div class="k-dev-points">${currentPoints.map(p=>`<div class="k-dev-point">${escK(p)}</div>`).join('')}</div>`;
-      if (firstPage) {
-        pages.push(`${radial}<div class="k-body"><div class="k-dev-wrap">
-          <div class="k-dev-badge ${session}">${badge}</div>
-          <div class="k-dev-title">${title}</div>
-          ${scripture}${leader}${pointsHtml}
-        </div></div>`);
-      } else {
-        pages.push(`${radial}<div class="k-body"><div class="k-dev-wrap">
-          <div class="k-dev-badge ${session}">${badge}</div>
-          <div class="k-dev-title">${title}</div>
-          ${pointsHtml}
-        </div></div>`);
-      }
-    } else if (pages.length === 0) {
-      // fallback: first page only with scripture/leader
-      pages.push(`${radial}<div class="k-body"><div class="k-dev-wrap">
-        <div class="k-dev-badge ${session}">${badge}</div>
-        <div class="k-dev-title">${title}</div>
-        ${scripture}${leader}
-      </div></div>`);
-    }
-  }
-
-  return pages;
+      ${scripture}${leader}${pointsHtml}
+    </div></div>`];
 }
 
-// Legacy single-content wrapper (used where a single string is expected)
+// Legacy single-content wrapper
 function kBuildDevotion(data, session) {
   return kBuildDevotionPages(data, session)[0];
+}
+
+// After kioskRender, check devotion slides for overflow and split them into extra slides
+function kioskSplitOverflows(data) {
+  const overlay = document.getElementById('kiosk-overlay');
+  if (!overlay) return;
+  const bodyH = overlay.offsetHeight;
+  const headerH = overlay.querySelector('.k-header') ? overlay.querySelector('.k-header').offsetHeight : 0;
+  const footerH = overlay.querySelector('.k-footer') ? overlay.querySelector('.k-footer').offsetHeight : 0;
+  const availH = bodyH - headerH - footerH - 48; // 48px breathing room
+
+  let didSplit = false;
+  const sessions = ['ambition','preparation'];
+  sessions.forEach(session => {
+    // Find slides for this session
+    const allSlides = Array.from(document.querySelectorAll('.k-slide'));
+    allSlides.forEach(slideEl => {
+      const pointsWrap = slideEl.querySelector(`.k-dev-points[data-session="${session}"]`);
+      if (!pointsWrap) return;
+      const body = slideEl.querySelector('.k-body');
+      if (!body) return;
+      if (body.scrollHeight <= availH) return; // fits fine
+
+      // Overflow detected — collect all points
+      const allPtEls = Array.from(pointsWrap.querySelectorAll('.k-dev-point'));
+      if (allPtEls.length === 0) return;
+      const allPts = allPtEls.map(el => el.textContent.trim());
+
+      // Binary-search how many points fit on this slide
+      let lo = 1, hi = allPts.length - 1, fitCount = 1;
+      while (lo <= hi) {
+        const mid = Math.floor((lo + hi) / 2);
+        // Temporarily remove points beyond mid
+        allPtEls.forEach((el, i) => { el.style.display = i < mid ? '' : 'none'; });
+        if (body.scrollHeight <= availH) { fitCount = mid; lo = mid + 1; }
+        else { hi = mid - 1; }
+      }
+      // Restore all visible
+      allPtEls.forEach(el => el.style.display = '');
+
+      if (fitCount >= allPts.length) return; // somehow fits now, skip
+
+      // Rebuild this slide with only fitCount points
+      const isAM = session === 'ambition';
+      const d = isAM ? data?.ambition : data?.preparation;
+      const title = escK(d?.title || (isAM ? 'Morning Devotion' : 'Evening Devotion'));
+      const scripture = d?.scripture ? `<div class="k-dev-scripture">${escK(d.scripture)}</div>` : '';
+      const leader = d?.leader ? `<div style="font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;color:var(--cream-dim)">Led by ${escK(d.leader)}</div>` : '';
+      const bg = isAM ? 'var(--teal)' : 'var(--amber)';
+      const badge = isAM ? '☀ Ambition — Morning Devotion' : '🌙 Preparation — Evening Devotion';
+      const radial = `<div class="k-radial" style="width:500px;height:500px;background:${bg};bottom:-100px;right:-100px"></div>`;
+
+      // Collect overflow points — chunk into pages greedily
+      const overflowPts = allPts.slice(fitCount);
+      const overflowPages = [];
+      let chunk = [];
+      overflowPts.forEach(p => {
+        chunk.push(p);
+        // After adding, check if a test render would overflow: use 4 points as heuristic per page on small screens
+        const maxPerPage = Math.max(1, fitCount);
+        if (chunk.length >= maxPerPage) { overflowPages.push([...chunk]); chunk = []; }
+      });
+      if (chunk.length) overflowPages.push(chunk);
+
+      const totalPages = 1 + overflowPages.length;
+
+      // Update badge on existing slide
+      const badgeEl = slideEl.querySelector('.k-dev-badge');
+      if (badgeEl) badgeEl.textContent = `${isAM ? '☀ Ambition — Morning Devotion' : '🌙 Preparation — Evening Devotion'} (1/${totalPages})`;
+
+      // Trim this slide to fitCount points
+      allPtEls.forEach((el, i) => { if (i >= fitCount) el.remove(); });
+
+      // Insert overflow slides after this one
+      const container = slideEl.parentElement;
+      let insertAfter = slideEl;
+      overflowPages.forEach((pts, pi) => {
+        const newEl = document.createElement('div');
+        newEl.className = 'k-slide';
+        newEl.id = `kslide-overflow-${session}-${pi}`;
+        const ptsHtml = `<div class="k-dev-points">${pts.map(p=>`<div class="k-dev-point">${escK(p)}</div>`).join('')}</div>`;
+        newEl.innerHTML = kioskHeader(`${isAM ? '☀ Ambition — Morning Devotion' : '🌙 Preparation — Evening Devotion'} (${pi+2}/${totalPages})`)
+          + `${radial}<div class="k-body"><div class="k-dev-wrap">
+              <div class="k-dev-badge ${session}">${badge} (${pi+2}/${totalPages})</div>
+              <div class="k-dev-title">${title}</div>
+              ${ptsHtml}
+            </div></div>`
+          + kioskFooter(0, 1); // placeholder footer, updated below
+        insertAfter.after(newEl);
+        insertAfter = newEl;
+        didSplit = true;
+      });
+    });
+  });
+
+  if (didSplit) {
+    // Renumber all slides and rebuild kioskSlides array
+    const allSlides = Array.from(document.querySelectorAll('#kiosk-slides-container .k-slide'));
+    const total = allSlides.length;
+    allSlides.forEach((el, idx) => {
+      el.id = `kslide-${idx}`;
+      // Rebuild footer with correct position
+      const oldFooter = el.querySelector('.k-footer');
+      if (oldFooter) oldFooter.outerHTML = kioskFooter(idx, total);
+      // Rebuild dots
+      const footer = el.querySelector('.k-footer');
+      if (footer) footer.outerHTML = kioskFooter(idx, total);
+    });
+    // Rebuild kioskSlides from DOM (minimal, just need length for navigation)
+    kioskSlides = allSlides.map((el, i) => ({badge: '', content: '', id: 'overflow-'+i}));
+    kioskCurrent = 0;
+  }
 }
 
 function kBuildSermon(data) {
@@ -2352,30 +2473,53 @@ function kBuildSermon(data) {
 
 function kBuildChores() {
   const weekNum = getWeekNumber();
-  const ALL_C = ['Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas'];
-  const OLDER = ['Samuel','Isaiah','Elijah','Nathan','Benjamin'];
-  const TMODS = {'Make own bed':'Make own bed (with help)','Clean own bathroom sink & toilet':'Wipe sink (with help)','Vacuum living room':'Pick up before vacuum','Wash and dry dishes / load dishwasher':'Dry dishes (plastic only)','Roll trash cans to curb':'Help adult with trash'};
-  const rotate = (arr,n) => arr.slice(n%arr.length).concat(arr.slice(0,n%arr.length));
-  const idx = (new Date().getDay() + weekNum) % ALL_C.length;
-  const setupPair = [ALL_C[idx%ALL_C.length], ALL_C[(idx+1)%ALL_C.length]];
-  const patrol = ALL_C[weekNum%ALL_C.length];
-  const older = rotate(OLDER, weekNum);
-  const grounds = {mow:older[0],trim:older[1%OLDER.length],pickup:older[2%OLDER.length]};
-  const mealprep = {breakfast:OLDER[weekNum%OLDER.length],lunch:OLDER[(weekNum+1)%OLDER.length]};
-  const personalChores = ['Make own bed','Clean own bedroom','Put away own clothes','Clean own bathroom sink & toilet'];
-  const personalMap = {};
-  ALL_C.forEach(p => { let ch = personalChores[weekNum%personalChores.length]; if(p==='Thomas'&&TMODS[ch])ch=TMODS[ch]; personalMap[p]=ch; });
+  const setupPair = getKitchenSetupPair(weekNum);
+  const patrolPair = getKitchenPatrol(weekNum);
+  const grounds = getGroundsAssignment(weekNum);
+  const mealprep = getMealPrepAssignment(weekNum);
+  const commonMap = getCommonAssignment(weekNum);
+  const ALL_C = ALL_CHILDREN;
+  // Top 4 common area chores (skip Dinner Setup and Kitchen Patrol which have their own cards)
+  const commonEntries = Object.entries(commonMap).slice(0,6);
   return `<div class="k-radial" style="width:400px;height:400px;background:var(--amber);bottom:-60px;left:-60px"></div>
     <div class="k-body"><div class="k-eyebrow">Today's Chore Rotation</div>
     <div class="k-chores-wrap">
       <div class="k-chores-grid">
-        <div class="k-chore-card"><div class="k-chore-card-name">🍽 Kitchen Setup</div>${setupPair.map(p=>`<div class="k-chore-item">${p} — set table</div>`).join('')}</div>
-        <div class="k-chore-card"><div class="k-chore-card-name">🧹 Kitchen Patrol</div><div class="k-chore-item">${patrol} — full cleanup</div></div>
+        <div class="k-chore-card"><div class="k-chore-card-name">🍽 Dinner Setup</div>${setupPair.map(p=>`<div class="k-chore-item">${p}</div>`).join('')}</div>
+        <div class="k-chore-card"><div class="k-chore-card-name">🧹 Kitchen Patrol</div>${patrolPair.map(p=>`<div class="k-chore-item">${p}</div>`).join('')}</div>
         <div class="k-chore-card"><div class="k-chore-card-name">🌿 Grounds</div><div class="k-chore-item">${grounds.mow} — mow</div><div class="k-chore-item">${grounds.trim} — trim</div><div class="k-chore-item">${grounds.pickup} — pickup</div></div>
+        <div class="k-chore-card"><div class="k-chore-card-name">🏡 Weekly Common</div>${getWeeklyCommonAssignment(weekNum).slice(0,4).map(({chore:c,person})=>`<div class="k-chore-item">${person} — ${c.name}</div>`).join('')}</div>
         <div class="k-chore-card"><div class="k-chore-card-name">🍳 Meal Prep</div><div class="k-chore-item">${mealprep.breakfast} — breakfast</div><div class="k-chore-item">${mealprep.lunch} — lunch</div></div>
       </div>
-      <div class="k-chores-grid" style="margin-top:8px">${ALL_C.map(p=>`<div class="k-chore-card" style="padding:10px 16px"><div class="k-chore-card-name">${p}</div><div class="k-chore-item">${personalMap[p]}</div></div>`).join('')}</div>
+      <div class="k-chores-grid" style="margin-top:8px">${commonEntries.map(([person,chore])=>`<div class="k-chore-card" style="padding:10px 16px"><div class="k-chore-card-name">${person}</div><div class="k-chore-item">${chore}</div></div>`).join('')}</div>
     </div></div>`;
+}
+
+function kBuildPersonal() {
+  const ALL_C = ['Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas'];
+  const TMODS = {
+    'Make own bed':'Make own bed (with help)',
+    'Tidy own bedroom floor':'Tidy bedroom (with help)',
+    'Put away own clothes':'Put away clothes (with help)',
+    'Clean own bathroom sink & toilet':'Wipe sink (with help)'
+  };
+  const chores = DEFAULT_CHORES.personal;
+  const rows = ALL_C.map(person => {
+    const cells = chores.map(c => {
+      const name = person==='Thomas'?(TMODS[c.name]||c.name):c.name;
+      return `<td><span class="k-personal-check"></span><div style="font-size:13px;margin-top:4px;color:var(--smoke)">${name}</div></td>`;
+    }).join('');
+    return `<tr><td>${person}</td>${cells}</tr>`;
+  }).join('');
+  const headers = chores.map(c=>`<th>${escK(c.name)}</th>`).join('');
+  return `<div class="k-radial" style="width:400px;height:400px;background:var(--teal);top:-60px;left:-60px;opacity:0.4"></div>
+    <div class="k-body" style="padding:30px 40px;justify-content:flex-start">
+      <div class="k-eyebrow" style="margin-bottom:20px">Personal Areas — Daily Checklist</div>
+      <table class="k-personal-table">
+        <thead><tr><th style="text-align:left">Child</th>${headers}</tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 function kBuildTasks() {
@@ -2430,6 +2574,7 @@ function kioskAssemble(data, weather) {
     ...devSlides('preparation', 'Evening Devotion', 'preparation'),
     {id:'sermon',      badge:'Sermon Review',     content: kBuildSermon(data),              image: imgs['sermon']      || null},
     {id:'chores',      badge:'Chore Rotation',    content: kBuildChores(),                  image: imgs['chores']      || null},
+    {id:'personal',    badge:'Personal Areas',    content: kBuildPersonal(),                image: imgs['personal']    || null},
     {id:'tasks',       badge:"Today's Tasks",     content: kBuildTasks(),                   image: imgs['tasks']       || null},
   ];
 
@@ -2508,6 +2653,12 @@ async function kioskInit() {
   try { weather = await kioskFetchWeather(); } catch {}
   const defs = kioskAssemble(data, weather);
   kioskRender(defs);
+  // After DOM paints, measure actual overflow and split devotion slides if needed
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      kioskSplitOverflows(data);
+    });
+  });
 }
 
 async function openKiosk() {
@@ -2532,12 +2683,17 @@ async function openKiosk() {
     const defs = kioskAssemble(data, null); // skip weather re-fetch on refresh
     const saved = kioskCurrent;
     kioskRender(defs);
-    // Jump to same slide
-    if (saved > 0 && saved < defs.length) {
-      document.querySelectorAll('.k-slide').forEach(s => s.classList.remove('active'));
-      const el = document.getElementById(`kslide-${saved}`);
-      if (el) { el.classList.add('active'); kioskCurrent = saved; }
-    }
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        kioskSplitOverflows(data);
+        // Jump to same slide after split
+        if (saved > 0 && saved < kioskSlides.length) {
+          document.querySelectorAll('.k-slide').forEach(s => s.classList.remove('active'));
+          const el = document.getElementById(`kslide-${saved}`);
+          if (el) { el.classList.add('active'); kioskCurrent = saved; }
+        }
+      });
+    });
   }, KIOSK_REFRESH_MS);
   // Keyboard: Space/Arrow advance, Escape close
   document.addEventListener('keydown', kioskKeyHandler);
