@@ -11,7 +11,7 @@
 <title>The American Shepherd</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="04The%20American%20Shepherd_files/css2.css" rel="stylesheet">
+<link href="05The%20American%20Shepherd_files/css2.css" rel="stylesheet">
 <style>
 :root{
   --navy:#0e1118;--navy-mid:#161c2a;--navy-soft:#1e2640;--navy-card:#1a2035;--navy-card2:#151c30;
@@ -362,15 +362,16 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 .k-special-news{margin-top:28px;max-width:700px;padding:20px 32px;border:1px solid rgba(200,134,10,0.3);border-radius:4px;background:rgba(200,134,10,0.06)}
 .k-sn-label{font-family:var(--font-d);font-size:11px;letter-spacing:0.2em;color:var(--amber);margin-bottom:10px;text-transform:uppercase}
 .k-sn-text{font-size:26px;color:var(--cream);line-height:1.5}
-.k-dev-wrap{display:flex;flex-direction:column;align-items:center;gap:32px;max-width:960px;width:100%}
-.k-dev-badge{font-family:var(--font-d);font-size:13px;letter-spacing:0.2em;padding:8px 24px;border-radius:2px;text-transform:uppercase}
-.k-dev-badge.ambition{background:rgba(29,158,117,0.12);border:1px solid var(--teal);color:var(--teal)}
-.k-dev-badge.preparation{background:rgba(200,134,10,0.12);border:1px solid var(--amber);color:var(--amber-lt)}
-.k-dev-title{font-family:var(--font-d);font-size:clamp(32px,3.5vw,52px);letter-spacing:0.06em;color:var(--cream);text-transform:uppercase}
-.k-dev-scripture{font-size:clamp(20px,2vw,30px);font-style:italic;color:var(--amber-glow);font-family:var(--font-b)}
-.k-dev-points{display:flex;flex-direction:column;gap:14px;text-align:left;width:100%}
-.k-dev-point{font-size:clamp(20px,2vw,28px);color:var(--cream-dim);display:flex;align-items:flex-start;gap:16px;line-height:1.5}
-.k-dev-point::before{content:"›";color:var(--amber);font-size:1.1em;flex-shrink:0;margin-top:2px}
+.k-dev-banner{width:100%;padding:18px 40px;font-family:var(--font-d);font-size:clamp(16px,1.8vw,24px);letter-spacing:0.22em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.k-dev-banner.ambition{background:var(--teal);color:#0a1a15}
+.k-dev-banner.preparation{background:var(--amber);color:#1a1000}
+.k-dev-content{display:flex;flex-direction:column;gap:28px;padding:32px 48px;overflow-y:auto;flex:1;width:100%;max-width:1100px;margin:0 auto}
+.k-dev-section{display:flex;flex-direction:column;gap:10px}
+.k-dev-label{font-family:var(--font-d);font-size:clamp(11px,1.1vw,14px);letter-spacing:0.2em;text-transform:uppercase;color:var(--amber-glow);border-bottom:1px solid rgba(200,134,10,0.2);padding-bottom:6px}
+.k-dev-ref{font-family:var(--font-b);font-size:clamp(22px,2.2vw,34px);color:var(--cream);font-style:italic}
+.k-dev-passage{font-size:clamp(18px,1.7vw,26px);color:var(--cream-dim);line-height:1.7;font-family:var(--font-b);font-style:italic}
+.k-dev-body{font-size:clamp(18px,1.7vw,26px);color:var(--cream-dim);line-height:1.6}
+.k-dev-leader{font-family:var(--font-d);font-size:12px;letter-spacing:0.14em;color:var(--smoke);text-transform:uppercase;margin-left:auto}
 .k-sermon-wrap{max-width:960px;width:100%;text-align:left}
 .k-sermon-meta{display:flex;gap:24px;align-items:center;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
 .k-sermon-meta-item{font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;color:var(--cream-dim);text-transform:uppercase}
@@ -404,10 +405,10 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 </style>
 </head>
 <body>
-<div class="sync-indicator ok" id="sync-ind">Kiosk ready ✓</div>
+<div class="sync-indicator ok" id="sync-ind">Ready ✓</div>
 <div id="login-overlay">
   <div class="login-hero">
-    <img src="04The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="">
+    <img src="05The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="">
     <div class="login-hero-overlay"></div>
     <div class="login-hero-text">
       <div class="login-title">The American Shepherd</div>
@@ -454,12 +455,12 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 
 <header>
 <div class="hero">
-  <img class="hero-img" src="04The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="The American Shepherd">
+  <img class="hero-img" src="05The%20American%20Shepherd_files/Eagle%20Shepherd.png" alt="The American Shepherd">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div><div class="app-name">The American Shepherd</div><div class="app-tagline">Family Command Center</div></div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-      <div class="hdr-date" id="hdr-date"><div class="hdr-date-day">Thursday</div>May 28, 2026</div>
+      <div class="hdr-date" id="hdr-date"><div class="hdr-date-day">Friday</div>May 29, 2026</div>
       <div class="user-pill" onclick="switchUser()" title="Switch user"><span class="user-pill-name" id="current-user-label">—</span><span class="user-pill-icon">⇄</span></div>
     </div>
   </div>
@@ -635,17 +636,15 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
       <div class="frow"><div class="fg full"><label class="form-label">Memory Verse</label><input type="text" id="ka-verse" placeholder="Verse text..."></div><div class="fg" style="max-width:240px"><label class="form-label">Reference</label><input type="text" id="ka-verse-ref" placeholder="e.g. Psalm 23:1"></div></div>
       <div class="frow"><div class="fg full"><label class="form-label">Reading Assignment</label><input type="text" id="ka-reading" placeholder="e.g. Genesis 1-3 + Pilgrim's Progress ch.4"></div></div>
       <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.16em;color:var(--amber);text-transform:uppercase;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-lt)">☀ Morning Devotion (Ambition)</div>
-      <div class="frow"><div class="fg"><label class="form-label">Title</label><input type="text" id="ka-am-title" placeholder="Title..."></div><div class="fg"><label class="form-label">Scripture</label><input type="text" id="ka-am-scripture" placeholder="e.g. John 15:1-11"></div></div>
-      <div class="frow"><div class="fg"><label class="form-label">Led by</label><input type="text" id="ka-am-leader" placeholder="e.g. David"></div></div>
-      <div class="frow"><div class="fg full"><label class="form-label">Discussion Points (one per line)</label><textarea id="ka-am-points" rows="3" style="font-size:20px;resize:vertical" placeholder="Point 1
-Point 2
-Point 3"></textarea></div></div>
+      <div class="frow"><div class="fg"><label class="form-label">Passage Reference</label><input type="text" id="ka-am-scripture" placeholder="e.g. John 15:1-11"></div><div class="fg"><label class="form-label">Led by</label><input type="text" id="ka-am-leader" placeholder="e.g. David"></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Passage Text</label><textarea id="ka-am-passage" rows="3" style="font-size:18px;resize:vertical" placeholder="Type or paste the passage text..."></textarea></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Meaning</label><textarea id="ka-am-meaning" rows="2" style="font-size:18px;resize:vertical" placeholder="What does this passage mean?"></textarea></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Application</label><textarea id="ka-am-application" rows="2" style="font-size:18px;resize:vertical" placeholder="How do we apply this today?"></textarea></div></div>
       <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.16em;color:var(--amber);text-transform:uppercase;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-lt)">🌙 Evening Devotion (Preparation)</div>
-      <div class="frow"><div class="fg"><label class="form-label">Title</label><input type="text" id="ka-pm-title" placeholder="Title..."></div><div class="fg"><label class="form-label">Scripture</label><input type="text" id="ka-pm-scripture" placeholder="e.g. Proverbs 3:5-6"></div></div>
-      <div class="frow"><div class="fg"><label class="form-label">Led by</label><input type="text" id="ka-pm-leader" placeholder="e.g. Krista"></div></div>
-      <div class="frow"><div class="fg full"><label class="form-label">Discussion Points (one per line)</label><textarea id="ka-pm-points" rows="3" style="font-size:20px;resize:vertical" placeholder="Point 1
-Point 2
-Point 3"></textarea></div></div>
+      <div class="frow"><div class="fg"><label class="form-label">Passage Reference</label><input type="text" id="ka-pm-scripture" placeholder="e.g. Proverbs 3:5-6"></div><div class="fg"><label class="form-label">Led by</label><input type="text" id="ka-pm-leader" placeholder="e.g. Krista"></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Passage Text</label><textarea id="ka-pm-passage" rows="3" style="font-size:18px;resize:vertical" placeholder="Type or paste the passage text..."></textarea></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Meaning</label><textarea id="ka-pm-meaning" rows="2" style="font-size:18px;resize:vertical" placeholder="What does this passage mean?"></textarea></div></div>
+      <div class="frow"><div class="fg full"><label class="form-label">Application</label><textarea id="ka-pm-application" rows="2" style="font-size:18px;resize:vertical" placeholder="How do we apply this today?"></textarea></div></div>
       <div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.16em;color:var(--amber);text-transform:uppercase;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-lt)">⛪ Sunday Sermon</div>
       <div class="frow"><div class="fg"><label class="form-label">Sermon Title</label><input type="text" id="ka-ser-title" placeholder="Title..."></div><div class="fg"><label class="form-label">Speaker</label><input type="text" id="ka-ser-speaker" placeholder="e.g. Pastor Smith"></div></div>
       <div class="frow"><div class="fg"><label class="form-label">Scripture Text</label><input type="text" id="ka-ser-scripture" placeholder="e.g. Romans 8:28"></div><div class="fg"><label class="form-label">Sermon Date</label><input type="date" id="ka-ser-date"></div></div>
@@ -676,7 +675,7 @@ Point 3"></textarea></div></div>
   <div class="chores-back" onclick="closeChores()">‹ Back to Planner <span style="font-size:12px;color:var(--smoke);margin-left:8px">(or swipe right)</span></div>
   <div class="chores-hero">
     <div class="chores-title">Household Chores</div>
-    <div class="chores-date" id="chores-date">Thursday, May 28</div>
+    <div class="chores-date" id="chores-date">Friday, May 29</div>
   </div>
   <div class="chores-tabs">
     <button class="ctab active" onclick="showCView('today')">Today</button>
@@ -1980,11 +1979,11 @@ const KS_SLIDE_DEFS = [
   {id:'datetime',    label:'Daily Overview (Clock + Weather)'},
   {id:'verse',       label:'Memory Verse'},
   {id:'reading',     label:'Reading Assignment'},
-  {id:'ambition',    label:'Morning Devotion (Ambition)'},
-  {id:'preparation', label:'Evening Devotion (Preparation)'},
+  {id:'ambition',    label:'Morning Devotion (Ambition)',        defaultDuration:300},
+  {id:'preparation', label:'Evening Devotion (Preparation)',     defaultDuration:300},
   {id:'sermon',      label:'Sermon Review'},
   {id:'chores',      label:'Chore Rotation'},
-    {id:'personal',    label:'Personal Areas'},
+  {id:'personal',    label:'Personal Areas'},
   {id:'tasks',       label:"Today's Tasks"},
 ];
 
@@ -1997,15 +1996,19 @@ const IMAGE_MODES = [
 
 function ksLoad(){
   const raw = localStorage.getItem('asp_kiosk_settings');
-  return raw ? JSON.parse(raw) : {duration:8, slides:{}};
+  return raw ? JSON.parse(raw) : {duration:8, slides:{}, slideDurations:{}};
 }
 
 function ksSave(){
   const cfg = ksLoad();
   cfg.duration = parseInt(document.getElementById('ks-duration').value) || 8;
+  cfg.slideDurations = cfg.slideDurations || {};
   KS_SLIDE_DEFS.forEach(s => {
     const el = document.getElementById('kst-'+s.id);
     if(el) cfg.slides[s.id] = el.checked;
+    const durEl = document.getElementById('kst-dur-'+s.id);
+    if(durEl && durEl.value) cfg.slideDurations[s.id] = parseInt(durEl.value);
+    else if(durEl) delete cfg.slideDurations[s.id];
   });
   localStorage.setItem('asp_kiosk_settings', JSON.stringify(cfg));
   toast('Kiosk settings saved');
@@ -2031,11 +2034,22 @@ function ksInitUI(){
   if(dur){ dur.value = cfg.duration||8; ksUpdateDuration(dur.value); }
   const wrap = document.getElementById('ks-slide-toggles');
   if(!wrap) return;
+  const slideDurs = cfg.slideDurations || {};
   wrap.innerHTML = KS_SLIDE_DEFS.map(s => {
     const checked = (cfg.slides[s.id] !== false) ? "checked" : "";
-    return `<label style="display:flex;align-items:center;gap:12px;font-size:20px;color:var(--cream);cursor:pointer">`
+    const hasDur = s.defaultDuration != null;
+    const durVal = slideDurs[s.id] != null ? slideDurs[s.id] : (s.defaultDuration || '');
+    const durInput = hasDur
+      ? `<span style="margin-left:auto;display:flex;align-items:center;gap:6px;font-size:16px;color:var(--smoke)">
+          <span>Hold:</span>
+          <input type="number" id="kst-dur-${s.id}" value="${durVal}" min="4" max="600" step="1"
+            style="width:70px;padding:4px 8px;background:var(--navy-card);color:var(--cream);border:1px solid var(--border);border-radius:4px;font-size:16px;text-align:center">
+          <span>sec</span>
+        </span>`
+      : `<input type="hidden" id="kst-dur-${s.id}" value="">`;
+    return `<label style="display:flex;align-items:center;gap:12px;font-size:20px;color:var(--cream);cursor:pointer;width:100%">`
       + `<input type="checkbox" id="kst-${s.id}" ${checked} style="width:20px;height:20px;accent-color:var(--amber)">`
-      + `<span>${s.label}</span></label>`;
+      + `<span>${s.label}</span>${durInput}</label>`;
   }).join("");
 }
 
@@ -2132,14 +2146,16 @@ function kaLoad() {
   document.getElementById('ka-verse').value = data.memoryVerse || '';
   document.getElementById('ka-verse-ref').value = data.memoryVerseRef || '';
   document.getElementById('ka-reading').value = data.readingAssignment || '';
-  document.getElementById('ka-am-title').value = data.ambition?.title || '';
   document.getElementById('ka-am-scripture').value = data.ambition?.scripture || '';
   document.getElementById('ka-am-leader').value = data.ambition?.leader || '';
-  document.getElementById('ka-am-points').value = (data.ambition?.points || []).join('\n');
-  document.getElementById('ka-pm-title').value = data.preparation?.title || '';
+  document.getElementById('ka-am-passage').value = data.ambition?.passage || '';
+  document.getElementById('ka-am-meaning').value = data.ambition?.meaning || '';
+  document.getElementById('ka-am-application').value = data.ambition?.application || '';
   document.getElementById('ka-pm-scripture').value = data.preparation?.scripture || '';
   document.getElementById('ka-pm-leader').value = data.preparation?.leader || '';
-  document.getElementById('ka-pm-points').value = (data.preparation?.points || []).join('\n');
+  document.getElementById('ka-pm-passage').value = data.preparation?.passage || '';
+  document.getElementById('ka-pm-meaning').value = data.preparation?.meaning || '';
+  document.getElementById('ka-pm-application').value = data.preparation?.application || '';
   document.getElementById('ka-ser-title').value = data.sermon?.title || '';
   document.getElementById('ka-ser-speaker').value = data.sermon?.speaker || '';
   document.getElementById('ka-ser-scripture').value = data.sermon?.scripture || '';
@@ -2159,16 +2175,18 @@ function kaCollect() {
     memoryVerseRef: document.getElementById('ka-verse-ref').value.trim(),
     readingAssignment: document.getElementById('ka-reading').value.trim(),
     ambition: {
-      title: document.getElementById('ka-am-title').value.trim(),
       scripture: document.getElementById('ka-am-scripture').value.trim(),
       leader: document.getElementById('ka-am-leader').value.trim(),
-      points: parseLines('ka-am-points'),
+      passage: document.getElementById('ka-am-passage').value.trim(),
+      meaning: document.getElementById('ka-am-meaning').value.trim(),
+      application: document.getElementById('ka-am-application').value.trim(),
     },
     preparation: {
-      title: document.getElementById('ka-pm-title').value.trim(),
       scripture: document.getElementById('ka-pm-scripture').value.trim(),
       leader: document.getElementById('ka-pm-leader').value.trim(),
-      points: parseLines('ka-pm-points'),
+      passage: document.getElementById('ka-pm-passage').value.trim(),
+      meaning: document.getElementById('ka-pm-meaning').value.trim(),
+      application: document.getElementById('ka-pm-application').value.trim(),
     },
     sermon: {
       title: document.getElementById('ka-ser-title').value.trim(),
@@ -2317,27 +2335,27 @@ function kBuildReading(data) {
 }
 
 // Returns array of HTML strings (one per page) for a devotion session.
-// Page splitting is done by DOM measurement after render — see kioskSplitOverflows().
-// This function always returns a single page; splitting happens post-render.
+// Builds the devotion kiosk slide — clean banner + structured sections
 function kBuildDevotionPages(data, session) {
   const isAM = session === 'ambition';
   const d = isAM ? data?.ambition : data?.preparation;
-  const title = escK(d?.title || (isAM ? 'Morning Devotion' : 'Evening Devotion'));
-  const scripture = d?.scripture ? `<div class="k-dev-scripture">${escK(d.scripture)}</div>` : '';
-  const leader = d?.leader ? `<div style="font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;color:var(--cream-dim)">Led by ${escK(d.leader)}</div>` : '';
-  const bg = isAM ? 'var(--teal)' : 'var(--amber)';
-  const badge = isAM ? '☀ Ambition — Morning Devotion' : '🌙 Preparation — Evening Devotion';
-  const radial = `<div class="k-radial" style="width:500px;height:500px;background:${bg};bottom:-100px;right:-100px"></div>`;
-  const points = (d?.points||[]).filter(Boolean);
-  // Store raw points on a data attribute so splitter can access them
-  const pointsHtml = points.length
-    ? `<div class="k-dev-points" data-session="${session}">${points.map((p,i)=>`<div class="k-dev-point" data-pt="${i}">${escK(p)}</div>`).join('')}</div>`
-    : '';
-  return [`${radial}<div class="k-body"><div class="k-dev-wrap">
-      <div class="k-dev-badge ${session}">${badge}</div>
-      <div class="k-dev-title">${title}</div>
-      ${scripture}${leader}${pointsHtml}
-    </div></div>`];
+  const bannerText = isAM ? 'AMBITION — AM Devotion' : 'PREPARATION — PM Devotion';
+  const leader = d?.leader ? `<span class="k-dev-leader">Led by ${escK(d.leader)}</span>` : '';
+  const ref = d?.scripture ? `<div class="k-dev-ref">${escK(d.scripture)}</div>` : '';
+  const passageText = d?.passage ? `<div class="k-dev-passage">${escK(d.passage)}</div>` : '';
+  const meaningText = d?.meaning ? `<div class="k-dev-body">${escK(d.meaning)}</div>` : '';
+  const applicationText = d?.application ? `<div class="k-dev-body">${escK(d.application)}</div>` : '';
+
+  return [`<div class="k-dev-banner ${session}">${bannerText}${leader}</div>
+    <div class="k-dev-content">
+      <div class="k-dev-section">
+        <div class="k-dev-label">Passage</div>
+        ${ref}
+        ${passageText}
+      </div>
+      ${meaningText ? `<div class="k-dev-section"><div class="k-dev-label">Meaning</div>${meaningText}</div>` : ''}
+      ${applicationText ? `<div class="k-dev-section"><div class="k-dev-label">Application</div>${applicationText}</div>` : ''}
+    </div>`];
 }
 
 // Legacy single-content wrapper
@@ -2590,7 +2608,8 @@ function kioskRender(defs) {
     const el = document.createElement('div');
     el.className = 'k-slide' + (idx === 0 ? ' active' : '');
     el.id = `kslide-${idx}`;
-    el.innerHTML = kioskHeader(def.badge) + def.content + kioskFooter(idx, total);
+    const isDevotion = def.id === 'ambition' || def.id === 'preparation';
+    el.innerHTML = (isDevotion ? '' : kioskHeader(def.badge)) + def.content + kioskFooter(idx, total);
     container.appendChild(el);
     if(def.image) kaApplyImage(el, def.image);
   });
@@ -2603,8 +2622,13 @@ function kioskStartProgress() {
   clearTimeout(kioskAdvTimer);
   const pbar = document.getElementById('kpbar');
   if (pbar) { pbar.style.transition='none'; pbar.style.width='0%'; }
-  setTimeout(() => { if(pbar){ pbar.style.transition=`width ${KIOSK_SLIDE_MS}ms linear`; pbar.style.width='100%'; } }, 50);
-  kioskAdvTimer = setTimeout(kioskNext, KIOSK_SLIDE_MS);
+  const currentDef = kioskSlides[kioskCurrent];
+  const ksCfg2 = ksLoad();
+  const perSlideMs = currentDef?.id && ksCfg2.slideDurations?.[currentDef.id]
+    ? ksCfg2.slideDurations[currentDef.id] * 1000
+    : KIOSK_SLIDE_MS;
+  setTimeout(() => { if(pbar){ pbar.style.transition=`width ${perSlideMs}ms linear`; pbar.style.width='100%'; } }, 50);
+  kioskAdvTimer = setTimeout(kioskNext, perSlideMs);
 }
 
 function kioskNext() {
