@@ -11,7 +11,7 @@
 <title>The American Shepherd</title>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-<link href="Shepherdplanner2_files/css2.css" rel="stylesheet">
+<link href="Shepherdplanner3_files/css2_Zl9_.css" rel="stylesheet">
 <style>
 :root{
   --navy:#0e1118;--navy-mid:#161c2a;--navy-soft:#1e2640;--navy-card:#1a2035;--navy-card2:#151c30;
@@ -408,7 +408,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 <div class="sync-indicator ok" id="sync-ind">Kiosk ready ✓</div>
 <div id="login-overlay">
   <div class="login-hero">
-    <img src="Shepherdplanner2_files/G5b3xQ8.png" alt="">
+    <img src="Shepherdplanner3_files/G5b3xQ8_Zl9_.png" alt="">
     <div class="login-hero-overlay"></div>
     <div class="login-hero-text">
       <div class="login-title">The American Shepherd</div>
@@ -455,12 +455,12 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
 
 <header>
 <div class="hero">
-  <img class="hero-img" src="Shepherdplanner2_files/G5b3xQ8.png" alt="The American Shepherd">
+  <img class="hero-img" src="Shepherdplanner3_files/G5b3xQ8_Zl9_.png" alt="The American Shepherd">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div><div class="app-name">The American Shepherd</div><div class="app-tagline">Family Command Center</div></div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-      <div class="hdr-date" id="hdr-date"><div class="hdr-date-day">Friday</div>Jun 12, 2026</div>
+      <div class="hdr-date" id="hdr-date"><div class="hdr-date-day">Tuesday</div>Jun 23, 2026</div>
       <div class="user-pill" onclick="switchUser()" title="Switch user"><span class="user-pill-name" id="current-user-label">—</span><span class="user-pill-icon">⇄</span></div>
     </div>
   </div>
@@ -479,7 +479,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
   <button class="ntab" onclick="showView('calendar')">Calendar</button>
   <button class="ntab" onclick="showView('family')">Family</button>
   <button class="ntab" onclick="showView('settings')">Settings</button>
-  <button class="ntab" onclick="openKioskPicker()" style="color:var(--purple)">Kiosk</button>
+  <button class="ntab" onclick="openKiosk()" style="color:var(--purple)">Kiosk</button>
   <button class="ntab" onclick="openChores()" style="color:var(--amber)">Chores</button>
 </nav>
 
@@ -494,7 +494,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
       <div class="fg"><label class="form-label">Priority</label><select id="pri-sel"><option value="high" selected="selected">High</option><option value="med">Medium</option><option value="low">Low</option></select></div>
     </div>
     <div class="frow">
-      <div class="fg"><label class="form-label">For <span style="font-size:13px;color:var(--smoke)">(hold Ctrl/⌘ for multiple)</span></label><select id="who-sel" multiple="multiple" size="4" style="height:auto;min-height:80px"><option value="David" selected="selected">David</option><option value="Krista">Krista</option><option value="John">John</option><option value="Isaiah">Isaiah</option><option value="Elijah">Elijah</option><option value="Nathan">Nathan</option><option value="Benjamin">Benjamin</option><option value="Thomas">Thomas</option><option value="Melody">Melody</option><option value="Family">Family</option></select></div>
+      <div class="fg"><label class="form-label">For</label><select id="who-sel"><option value="David" selected="selected">David</option><option value="Krista">Krista</option><option value="John">John</option><option value="Samuel">Samuel</option><option value="Isaiah">Isaiah</option><option value="Elijah">Elijah</option><option value="Nathan">Nathan</option><option value="Benjamin">Benjamin</option><option value="Thomas">Thomas</option><option value="Melody">Melody</option><option value="Family">Family</option></select></div>
       <div class="fg"><label class="form-label">Session</label><select id="phase-sel"><option value="" selected="selected">Any</option><option value="ambition">Ambition</option><option value="preparation">Preparation</option><option value="planning">Planning</option></select></div>
     </div>
     <div class="frow">
@@ -623,10 +623,7 @@ input[type=checkbox]{accent-color:var(--amber);width:22px;height:22px;cursor:poi
     <button class="btn btn-sm" onclick="ksSave()">Save Kiosk Settings</button>
   </div>
   <div class="sh">Kiosk Display <span style="font-size:11px;color:var(--smoke)">(TV / Full Screen)</span></div>
-  <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-    <button class="btn" onclick="openKiosk('passive')">▶ Passive (auto-scroll)</button>
-    <button class="btn-ghost" onclick="openKiosk('briefing')" style="border-color:var(--purple);color:var(--purple)">📋 Briefing (manual steps)</button>
-  </div>
+  <button class="btn" onclick="openKiosk()" style="margin-bottom:14px">▶ Show Kiosk</button>
   <div id="kiosk-admin-locked" style="font-size:20px;color:var(--smoke);font-style:italic;margin-bottom:10px">Sign in as David to manage kiosk content.</div>
   <div id="kiosk-admin-panel" style="display:none">
     <div style="font-size:20px;color:var(--cream-dim);margin-bottom:14px">Pre-load content for any date. Leave date blank for standing default (used when no date-specific entry exists).</div>
@@ -678,7 +675,7 @@ Point 3"></textarea></div></div>
   <div class="chores-back" onclick="closeChores()">‹ Back to Planner <span style="font-size:12px;color:var(--smoke);margin-left:8px">(or swipe right)</span></div>
   <div class="chores-hero">
     <div class="chores-title">Household Chores</div>
-    <div class="chores-date" id="chores-date">Friday, Jun 12</div>
+    <div class="chores-date" id="chores-date">Tuesday, Jun 23</div>
   </div>
   <div class="chores-tabs">
     <button class="ctab active" onclick="showCView('today')">Today</button>
@@ -791,6 +788,7 @@ Point 3"></textarea></div></div>
               <option value="David">David</option>
               <option value="Krista">Krista</option>
               <option value="John">John</option>
+              <option value="Samuel">Samuel</option>
               <option value="Isaiah">Isaiah</option>
               <option value="Elijah">Elijah</option>
               <option value="Nathan">Nathan</option>
@@ -811,27 +809,19 @@ Point 3"></textarea></div></div>
         <button class="btn-ghost" onclick="advanceRotation(1)">Next Week ›</button>
         <button class="btn-ghost" onclick="resetRotation()">Reset to Auto</button>
       </div>
-      <div class="divider"></div>
-      <div class="sh">Manual Rotation Overrides</div>
-      <div style="font-size:20px;color:var(--cream-dim);margin-bottom:14px">Pin specific people to rotation slots this week. Leave blank to use auto-rotation.</div>
-      <div id="manual-rot-form"></div>
-      <div style="display:flex;gap:8px;margin-top:12px">
-        <button class="btn btn-sm" onclick="saveManualRot()">Save Overrides</button>
-        <button class="btn-ghost" onclick="clearManualRot()">Clear All Overrides</button>
-      </div>
     </div>
 
   </div>
 </div>
 
 </div><!-- end swipe-wrap -->
-<div id="toast" class="">Kiosk pulled (8 entries)</div>
+<div id="toast" class="">Kiosk pulled (12 entries)</div>
 <script>
 // ── PEOPLE & ROLES ──
 const PEOPLE = ['David','Krista','John','Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas','Melody','Family'];
 const ADULTS = ['David','Krista','John'];
-const OLDER_BOYS = ['Isaiah','Elijah','Nathan','Benjamin']; // mow/cook/grounds
-const ALL_CHILDREN = ['Isaiah','Elijah','Nathan','Benjamin','Thomas']; // rotate kitchen/personal/common
+const OLDER_BOYS = ['Samuel','Isaiah','Elijah','Nathan','Benjamin']; // mow/cook/grounds
+const ALL_CHILDREN = ['Samuel','Isaiah','Elijah','Nathan','Benjamin','Thomas']; // rotate kitchen/personal/common
 
 // ── DEFAULT CHORE SETS ──
 const DEFAULT_CHORES = {
@@ -941,55 +931,19 @@ function rotateArr(arr, weekNum){ return arr.slice(weekNum % arr.length).concat(
 function advanceRotation(dir){ rotationOffset+=dir; localStorage.setItem('asp_rot_offset',rotationOffset); renderRotation(); renderToday(); renderManage(); }
 function resetRotation(){ rotationOffset=0; localStorage.setItem('asp_rot_offset',0); renderRotation(); renderToday(); renderManage(); }
 
-// ── MANUAL ROTATION OVERRIDES ──
-const MANUAL_ROT_SLOTS = [
-  {id:'setup1', label:'Dinner Setup — Person 1'},
-  {id:'setup2', label:'Dinner Setup — Person 2'},
-  {id:'patrol1', label:'Kitchen Patrol — Person 1'},
-  {id:'patrol2', label:'Kitchen Patrol — Person 2'},
-  {id:'grounds_mow', label:'Grounds — Mow'},
-  {id:'grounds_trim', label:'Grounds — Trim'},
-  {id:'grounds_pickup', label:'Grounds — Pickup'},
-  {id:'mealprep_breakfast', label:'Meal Prep — Breakfast'},
-  {id:'mealprep_lunch', label:'Meal Prep — Lunch'},
-];
-function loadManualRot(){ try{return JSON.parse(localStorage.getItem('asp_rot_manual')||'{}')}catch{return{};} }
-function saveManualRot(){
-  const data={};
-  MANUAL_ROT_SLOTS.forEach(s=>{
-    const el=document.getElementById('mrot-'+s.id);
-    if(el&&el.value) data[s.id]=el.value;
-  });
-  localStorage.setItem('asp_rot_manual',JSON.stringify(data));
-  renderRotation(); renderToday(); toast('Overrides saved');
-}
-function clearManualRot(){ localStorage.removeItem('asp_rot_manual'); renderManualRotForm(); renderRotation(); renderToday(); toast('Overrides cleared'); }
-function renderManualRotForm(){
-  const el=document.getElementById('manual-rot-form'); if(!el) return;
-  const data=loadManualRot();
-  const pool=[...OLDER_BOYS,...YOUNGER_CHILDREN];
-  el.innerHTML=MANUAL_ROT_SLOTS.map(s=>{
-    const val=data[s.id]||'';
-    const opts=['<option value="">— auto —</option>',...pool.map(p=>`<option value="${p}" ${val===p?'selected':''}>${p}</option>`)].join('');
-    return `<div class="frow" style="margin-bottom:6px"><div class="fg" style="max-width:260px"><label class="form-label" style="font-size:14px">${s.label}</label><select id="mrot-${s.id}" style="font-size:18px">${opts}</select></div></div>`;
-  }).join('');
-}
-
 const YOUNGER_CHILDREN = ['Thomas']; // under 13
 
 function getKitchenSetupPair(weekNum){
-  const m=loadManualRot();
   const dayIdx = new Date().getDay();
-  const p1 = m.setup1 || OLDER_BOYS[(weekNum + dayIdx) % OLDER_BOYS.length];
-  const p2 = m.setup2 || YOUNGER_CHILDREN[(weekNum + dayIdx) % YOUNGER_CHILDREN.length];
-  return [p1, p2];
+  const older = OLDER_BOYS[(weekNum + dayIdx) % OLDER_BOYS.length];
+  const younger = YOUNGER_CHILDREN[(weekNum + dayIdx) % YOUNGER_CHILDREN.length];
+  return [older, younger];
 }
 function getKitchenPatrol(weekNum){
-  const m=loadManualRot();
   const dayIdx = new Date().getDay();
-  const p1 = m.patrol1 || OLDER_BOYS[(weekNum + dayIdx + 2) % OLDER_BOYS.length];
-  const p2 = m.patrol2 || YOUNGER_CHILDREN[(weekNum + dayIdx) % YOUNGER_CHILDREN.length];
-  return [p1, p2];
+  const older = OLDER_BOYS[(weekNum + dayIdx + 2) % OLDER_BOYS.length]; // offset so different from setup
+  const younger = YOUNGER_CHILDREN[(weekNum + dayIdx) % YOUNGER_CHILDREN.length];
+  return [older, younger]; // returns array now
 }
 function getPersonalAssignment(person, weekNum){
   const chores = DEFAULT_CHORES.personal;
@@ -1009,13 +963,8 @@ function getCommonAssignment(weekNum){
   return map;
 }
 function getGroundsAssignment(weekNum){
-  const m=loadManualRot();
   const older = rotateArr(OLDER_BOYS, weekNum);
-  return {
-    mow: m.grounds_mow || older[0],
-    trim: m.grounds_trim || older[1%OLDER_BOYS.length],
-    pickup: m.grounds_pickup || older[2%OLDER_BOYS.length]
-  };
+  return {mow:older[0], trim:older[1%OLDER_BOYS.length], pickup:older[2%OLDER_BOYS.length]};
 }
 function getWeeklyCommonAssignment(weekNum){
   // Assign each weekly-common chore to a person for the week
@@ -1029,11 +978,7 @@ function getWeeklyCommonAssignment(weekNum){
   return map;
 }
 function getMealPrepAssignment(weekNum){
-  const m=loadManualRot();
-  return {
-    breakfast: m.mealprep_breakfast || OLDER_BOYS[weekNum%OLDER_BOYS.length],
-    lunch: m.mealprep_lunch || OLDER_BOYS[(weekNum+1)%OLDER_BOYS.length]
-  };
+  return {breakfast:OLDER_BOYS[weekNum%OLDER_BOYS.length], lunch:OLDER_BOYS[(weekNum+1)%OLDER_BOYS.length]};
 }
 
 // ── SWIPE NAVIGATION ──
@@ -1386,7 +1331,6 @@ function renderAdults(){
 // ── MANAGE VIEW ──
 function renderManage(){
   document.getElementById('rot-week-num').textContent = getWeekNumber();
-  renderManualRotForm();
   const el = document.getElementById('custom-chores-list');
   if(!customChores.length){el.innerHTML='<div class="empty" style="padding:16px">No custom chores added</div>';return;}
   el.innerHTML = customChores.map(c=>`<div class="chore-row">
@@ -1577,14 +1521,15 @@ function restrictWhoDropdown(){
   const sel = document.getElementById('who-sel');
   if(!sel || !currentUser) return;
   if(FULL_ACCESS.includes(currentUser)){
+    // Show all options
     [...sel.options].forEach(o=>o.style.display='');
-    // Default select self
-    [...sel.options].forEach(o=>o.selected = o.value===currentUser);
+    sel.value = currentUser; // default to self
   } else {
+    // Child: show only themselves
     [...sel.options].forEach(o=>{
       o.style.display = o.value===currentUser?'':'none';
-      o.selected = o.value===currentUser;
     });
+    sel.value = currentUser;
     sel.disabled = true;
   }
 }
@@ -1595,7 +1540,7 @@ function restrictEditWho(id){
   if(!sel || !currentUser) return;
   if(!FULL_ACCESS.includes(currentUser)){
     [...sel.options].forEach(o=>{ o.style.display = o.value===currentUser?'':'none'; });
-    [...sel.options].forEach(o=>o.selected = o.value===currentUser);
+    sel.value = currentUser;
     sel.disabled = true;
   }
 }
@@ -1758,9 +1703,7 @@ function showView(name){
 function addItem(){
   const text=document.getElementById('task-inp').value.trim();if(!text)return;
   const allday=document.getElementById('allday-chk').checked;
-  const whoSel=document.getElementById('who-sel');
-  const who=[...whoSel.selectedOptions].map(o=>o.value).join(',') || 'Family';
-  items.push({id:Date.now(),text,who,type:document.getElementById('type-sel').value,phase:document.getElementById('phase-sel').value,priority:document.getElementById('pri-sel').value,start_date:document.getElementById('start-date-inp').value||null,end_date:document.getElementById('end-date-inp').value||null,allday,start_time:allday?null:document.getElementById('start-time').value,duration:allday?null:parseFloat(document.getElementById('duration').value)||1,repeat:document.getElementById('repeat-sel').value,done:false});
+  items.push({id:Date.now(),text,who:document.getElementById('who-sel').value,type:document.getElementById('type-sel').value,phase:document.getElementById('phase-sel').value,priority:document.getElementById('pri-sel').value,start_date:document.getElementById('start-date-inp').value||null,end_date:document.getElementById('end-date-inp').value||null,allday,start_time:allday?null:document.getElementById('start-time').value,duration:allday?null:parseFloat(document.getElementById('duration').value)||1,repeat:document.getElementById('repeat-sel').value,done:false});
   clearForm();save();render();toast('Added');
 }
 function render(){renderTaskList();renderUnscheduled();}
@@ -1768,7 +1711,7 @@ function render(){renderTaskList();renderUnscheduled();}
 function priBadge(p){const cls={high:'pri-badge-high',med:'pri-badge-med',low:'pri-badge-low'};const lbl={high:'High',med:'Med',low:'Low'};return`<span class="pri-badge ${cls[p]||'pri-badge-med'}">${lbl[p]||p}</span>`;}
 function priDot(p){return`<div class="pri pri-${p||'med'}"></div>`;}
 function pbadge(ph){if(!ph)return'';const cls={ambition:'pb-ambition',preparation:'pb-preparation',planning:'pb-planning'};const lbl={ambition:'Ambition',preparation:'Preparation',planning:'Planning'};return`<span class="pbadge ${cls[ph]}">${lbl[ph]}</span>`;}
-function whobadge(w){if(!w)return'<span class="badge-who">—</span>';return w.split(',').map(n=>`<span class="badge-who">${n.trim()}</span>`).join('');}
+function whobadge(w){return`<span class="badge-who">${w||'—'}</span>`;}
 function typebadge(t){if(t==='event')return'<span class="type-badge type-event">Event</span>';if(t==='appt')return'<span class="type-badge type-appt">Appt</span>';return'<span class="type-badge type-task">Task</span>';}
 function repeatLabel(r){if(!r||r==='none')return'';return`<span class="repeat-badge">${{daily:'↻ Daily',weekly:'↻ Weekly',monthly:'↻ Monthly'}[r]||''}</span>`;}
 function dateDisplay(item){
@@ -1798,8 +1741,7 @@ function renderTaskList(){
 }
 function renderEditForm(item){
   const allday=item.allday!==false;
-  const selectedWho=(item.who||'').split(',').map(s=>s.trim());
-  const whoOpts=PEOPLE.map(p=>`<option value="${p}" ${selectedWho.includes(p)?'selected':''}>${p}</option>`).join('');
+  const whoOpts=PEOPLE.map(p=>`<option value="${p}" ${item.who===p?'selected':''}>${p}</option>`).join('');
   return`<div class="edit-form">
     <div class="sh" style="margin-bottom:10px">Edit Item</div>
     <div class="frow"><div class="fg full"><label class="form-label">Title</label><input type="text" id="e-text-${item.id}" value="${item.text.replace(/"/g,'&quot;')}"/></div></div>
@@ -1808,7 +1750,7 @@ function renderEditForm(item){
       <div class="fg"><label class="form-label">Priority</label><select id="e-pri-${item.id}"><option value="high" ${item.priority==='high'?'selected':''}>High</option><option value="med" ${item.priority==='med'?'selected':''}>Med</option><option value="low" ${item.priority==='low'?'selected':''}>Low</option></select></div>
     </div>
     <div class="frow">
-      <div class="fg"><label class="form-label">For <span style="font-size:13px;color:var(--smoke)">(Ctrl/Cmd+click for multiple)</span></label><select id="e-who-${item.id}" multiple size="4" style="height:auto;min-height:80px">${whoOpts}</select></div>
+      <div class="fg"><label class="form-label">For</label><select id="e-who-${item.id}">${whoOpts}</select></div>
       <div class="fg"><label class="form-label">Session</label><select id="e-phase-${item.id}"><option value="">Any</option><option value="ambition" ${item.phase==='ambition'?'selected':''}>Ambition</option><option value="preparation" ${item.phase==='preparation'?'selected':''}>Preparation</option><option value="planning" ${item.phase==='planning'?'selected':''}>Planning</option></select></div>
     </div>
     <div class="frow">
@@ -1832,8 +1774,7 @@ function saveEdit(id){
   const allday=document.getElementById('e-allday-'+id).checked;
   t.text=document.getElementById('e-text-'+id).value.trim()||t.text;
   t.type=document.getElementById('e-type-'+id).value;
-  const whoSelEl=document.getElementById('e-who-'+id);
-  t.who=[...whoSelEl.selectedOptions].map(o=>o.value).join(',') || t.who;
+  t.who=document.getElementById('e-who-'+id).value;
   t.priority=document.getElementById('e-pri-'+id).value;
   t.phase=document.getElementById('e-phase-'+id).value;
   t.start_date=document.getElementById('e-sdate-'+id).value||null;
@@ -2025,7 +1966,7 @@ function installPWA(){if(!deferredInstall)return;deferredInstall.prompt();deferr
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
-function todayStr(){return new Date().toISOString().slice(0,10);}
+function todayStr(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fmtDate(ds){return new Date(ds+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
 function fmtTime(ts){if(!ts)return'';const[h,m]=ts.split(':');const hr=parseInt(h);return`${hr===0?12:hr>12?hr-12:hr}:${m}${hr<12?'am':'pm'}`;}
 
@@ -2038,8 +1979,8 @@ const KS_SLIDE_DEFS = [
   {id:'datetime',    label:'Daily Overview (Clock + Weather)'},
   {id:'verse',       label:'Memory Verse'},
   {id:'reading',     label:'Reading Assignment'},
-  {id:'ambition',    label:'Morning Devotion (Ambition)',        defaultDuration:60},
-  {id:'preparation', label:'Evening Devotion (Preparation)',     defaultDuration:60},
+  {id:'ambition',    label:'Morning Devotion (Ambition)',        defaultDuration:300},
+  {id:'preparation', label:'Evening Devotion (Preparation)',     defaultDuration:300},
   {id:'sermon',      label:'Sermon Review'},
   {id:'chores',      label:'Chore Rotation'},
   {id:'personal',    label:'Personal Areas'},
@@ -2183,7 +2124,6 @@ let kioskSlides = [];
 let kioskCurrent = 0;
 let kioskAdvTimer = null;
 let kioskRefreshTimer = null;
-let kioskMode = 'passive'; // 'passive' | 'briefing'
 
 // ── Kiosk Admin: key management ──
 function kaKey(date) { return 'asp_kiosk_' + (date || 'default'); }
@@ -2312,7 +2252,7 @@ function kaQuickLoad(key) {
 
 // ── Kiosk data resolver: picks date-specific or falls back to default ──
 function kioskGetData() {
-  const today = new Date().toISOString().slice(0,10);
+  const today = todayStr();
   const specific = localStorage.getItem(kaKey(today));
   if (specific) { try { return JSON.parse(specific); } catch {} }
   const fallback = localStorage.getItem(kaKey(''));
@@ -2355,7 +2295,6 @@ function kioskHeader(badge){
 }
 
 function kioskFooter(idx,total){
-  if(kioskMode==='briefing') return '';
   let dots='';
   for(let i=0;i<total;i++) dots+=`<div class="k-dot${i===idx?' active':''}"></div>`;
   return `<div class="k-footer"><div class="k-dots">${dots}</div><div class="k-pbar-wrap"><div class="k-pbar" id="kpbar"></div></div><div style="font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;color:var(--smoke)">${idx+1} / ${total}</div></div>`;
@@ -2602,7 +2541,7 @@ function kBuildPersonal() {
 }
 
 function kBuildTasks() {
-  const today = new Date().toISOString().slice(0,10);
+  const today = todayStr();
   const todayItems = items.filter(i => !i.done && (
     i.start_date === today ||
     (i.start_date && i.end_date && today >= i.start_date && today <= i.end_date) ||
@@ -2677,18 +2616,11 @@ function kioskRender(defs) {
   kioskSlides = defs;
   kioskCurrent = 0;
   kioskStartProgress();
-  const ctr = document.getElementById('kiosk-briefing-counter');
-  if(ctr) ctr.textContent = `1 / ${defs.length}`;
 }
 
 function kioskStartProgress() {
   clearTimeout(kioskAdvTimer);
   const pbar = document.getElementById('kpbar');
-  if (kioskMode === 'briefing') {
-    // No auto-advance; hide progress bar, show static indicator
-    if (pbar) { pbar.style.transition='none'; pbar.style.width='0%'; }
-    return;
-  }
   if (pbar) { pbar.style.transition='none'; pbar.style.width='0%'; }
   const currentDef = kioskSlides[kioskCurrent];
   const ksCfg2 = ksLoad();
@@ -2709,8 +2641,6 @@ function kioskNext() {
   setTimeout(() => {
     if(oldEl){ oldEl.classList.remove('active','exit'); }
     kioskUpdateDots(); kioskUpdateClocks(); kioskStartProgress();
-    const ctr = document.getElementById('kiosk-briefing-counter');
-    if(ctr) ctr.textContent = `${kioskCurrent+1} / ${total}`;
   }, KIOSK_TRANS_MS);
 }
 
@@ -2755,26 +2685,9 @@ async function kioskInit() {
   });
 }
 
-function openKioskPicker(){
-  const p = document.getElementById('kiosk-picker');
-  if(p) p.style.display='flex';
-}
-function kioskPickerLaunch(mode){
-  const p = document.getElementById('kiosk-picker');
-  if(p) p.style.display='none';
-  openKiosk(mode);
-}
-
-async function openKiosk(mode) {
-  kioskMode = mode || 'passive';
+async function openKiosk() {
   const overlay = document.getElementById('kiosk-overlay');
   overlay.style.display = 'block';
-  // Show/hide briefing nav bar - hidden in all modes (use keyboard/click to advance)
-  const briefingBar = document.getElementById('kiosk-briefing-bar');
-  if (briefingBar) briefingBar.style.display = 'none';
-  // Hide mode badge entirely
-  const modeBadge = document.getElementById('kiosk-mode-badge');
-  if (modeBadge) modeBadge.style.display = 'none';
   await kioskInit();
   // Clock tick
   setInterval(kioskUpdateClocks, 60000);
@@ -2825,8 +2738,6 @@ function kioskPrev() {
   if(oldEl){ oldEl.classList.remove('active'); }
   if(newEl){ newEl.classList.add('active'); }
   kioskUpdateDots(); kioskUpdateClocks(); kioskStartProgress();
-  const ctr = document.getElementById('kiosk-briefing-counter');
-  if(ctr) ctr.textContent = `${kioskCurrent+1} / ${total}`;
 }
 
 function closeKiosk() {
@@ -2836,7 +2747,7 @@ function closeKiosk() {
   document.removeEventListener('keydown', kioskKeyHandler);
 }
 
-// Tap/click anywhere to advance in both modes
+// Tap to advance inside kiosk (delegated — overlay div may be after script in DOM)
 document.addEventListener('click', function(e){
   const overlay = document.getElementById('kiosk-overlay');
   if (!overlay || overlay.style.display === 'none') return;
@@ -2863,31 +2774,11 @@ initLogin();
 restrictWhoDropdown();
 </script>
 
-<!-- ═══════════════ KIOSK MODE PICKER ═══════════════ -->
-<div id="kiosk-picker" style="display:none;position:fixed;inset:0;z-index:950;background:rgba(14,17,24,0.85);display:none;align-items:center;justify-content:center">
-  <div style="background:var(--navy-card);border:1px solid rgba(200,134,10,0.4);border-radius:6px;padding:32px 40px;text-align:center;min-width:320px">
-    <div style="font-family:var(--font-d);font-size:13px;letter-spacing:0.2em;color:var(--amber);text-transform:uppercase;margin-bottom:24px">Launch Kiosk</div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <button onclick="kioskPickerLaunch('passive')" style="background:var(--amber);border:none;color:var(--navy);font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;padding:14px 24px;border-radius:3px;cursor:pointer;text-transform:uppercase">▶ Passive — Auto-Scroll</button>
-      <button onclick="kioskPickerLaunch('briefing')" style="background:none;border:1px solid var(--purple);color:var(--purple);font-family:var(--font-d);font-size:13px;letter-spacing:0.12em;padding:14px 24px;border-radius:3px;cursor:pointer;text-transform:uppercase">📋 Briefing — Manual Steps</button>
-    </div>
-    <button onclick="document.getElementById('kiosk-picker').style.display='none'" style="margin-top:20px;background:none;border:none;color:var(--smoke);font-family:var(--font-d);font-size:11px;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase">Cancel</button>
-  </div>
-</div>
-
 <!-- ═══════════════ KIOSK OVERLAY ═══════════════ -->
 <div id="kiosk-overlay" style="display:none;position:fixed;inset:0;z-index:900;background:#0e1118;overflow:hidden">
   <div id="kiosk-slides-container"></div>
   <!-- Close button (hover to reveal) -->
   <button onclick="closeKiosk()" style="position:fixed;top:14px;right:14px;z-index:999;background:rgba(14,17,24,0.7);border:1px solid rgba(200,134,10,0.3);color:var(--cream-dim);font-family:var(--font-d);font-size:11px;letter-spacing:0.12em;padding:8px 16px;border-radius:2px;cursor:pointer;opacity:0;transition:opacity 0.3s" id="kiosk-close-btn" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">✕ EXIT</button>
-  <!-- Mode badge (top-left) -->
-  <div id="kiosk-mode-badge" style="position:fixed;top:14px;left:14px;z-index:999;background:rgba(14,17,24,0.7);border:1px solid rgba(127,119,221,0.4);color:var(--purple);font-family:var(--font-d);font-size:11px;letter-spacing:0.12em;padding:6px 12px;border-radius:2px;pointer-events:none">▶ PASSIVE</div>
-  <!-- Briefing mode nav bar (bottom center, shown only in briefing mode) -->
-  <div id="kiosk-briefing-bar" style="display:none;position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:999;background:rgba(14,17,24,0.85);border:1px solid rgba(127,119,221,0.5);border-radius:6px;padding:10px 20px;gap:16px;align-items:center">
-    <button onclick="kioskPrev()" style="background:none;border:1px solid var(--border-lt);color:var(--cream);font-family:var(--font-d);font-size:13px;letter-spacing:0.1em;padding:10px 24px;border-radius:3px;cursor:pointer">◀ PREV</button>
-    <span id="kiosk-briefing-counter" style="font-family:var(--font-d);font-size:13px;letter-spacing:0.1em;color:var(--cream-dim);min-width:60px;text-align:center">1 / 1</span>
-    <button onclick="kioskNext()" style="background:var(--purple);border:none;color:#fff;font-family:var(--font-d);font-size:13px;letter-spacing:0.1em;padding:10px 24px;border-radius:3px;cursor:pointer">NEXT ▶</button>
-  </div>
 </div>
 
 
